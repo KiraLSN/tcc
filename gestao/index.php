@@ -97,6 +97,7 @@ $sessao = new Session;
                 <?php
                   if (dashboard == 'ON'):
                      echo ((in_array('1', $arr_permisao)) ? '<a href="' . HOME . 'dashboard"><figure class="icon-dashboard1" style="margin-right: 4%; margin-top: -1.5%; font-size: 1.3em;"></figure> Página inicial</a>' : '' );
+                echo ((in_array('1', $arr_permisao)) ? '<a href="' . HOME . 'projetos"><figure class="icon-dashboard1" style="margin-right: 4%; margin-top: -1.5%; font-size: 1.3em;"></figure> Projetos</a>' : '' );
                   endif;
                   
                   if (cliente == 'ON'):

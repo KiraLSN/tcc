@@ -384,41 +384,42 @@ switch ($_POST['acao']) {
       if ($read->getRowCount() >= 1) :
         foreach ($read->getResult() as $resultado);
 ?>
-        <script>
-          jQuery(function($) {
-            $("#alt_celular").mask("(99)99999-9999");
-            $("#alt_tel").mask("(99)99999-9999");
-          });
-        </script>
-        <form class="form_linha" method="post" name="editar_usuario">
-          <h1 class="topo_modal">Alterar perfil</h1>
-          <div style="width: 75%; float: left">
-            <div class="box box50">
-              <p class="texto_form">Nome completo</p>
-              <input name="nome" type="text" required placeholder="Nome completo" style=" width: 100%;" value="<?= $resultado['nome']; ?>" />
-            </div>
-            <div class="box box50 no-margim">
-              <p class="texto_form">E-mail válido</p>
-              <input name="email" type="email" required placeholder="E-mail válido" style=" width: 100%;" value="<?= $resultado['email']; ?>" />
-            </div>
-            <div class="limpar"></div>
-            <div class="box box33">
-              <p class="texto_form">Telefone</p>
-              <input name="tel" type="text" required placeholder="Telefone" id="alt_celular" style=" width: 100%;" value="<?= $resultado['tel']; ?>" />
-            </div>
-            <div class="box box33">
-              <p class="texto_form">Celular</p>
-              <input name="cel" type="text" required placeholder="Celular" id="alt_tel" style=" width: 100%;" value="<?= $resultado['cel']; ?>" />
-            </div>
-            <div class="box box33 no-margim">
-              <p class="texto_form">Cargo</p>
-              <input name="cargo" type="text" required placeholder="Cargo na empresa" style=" width: 100%;" value="<?= $resultado['cargo']; ?>" />
-            </div>
-            <div class="limpar"></div>
-            <p class="texto_form">Permissão</p>
-            <p class="texto_form">Selecione apenas as permissões que gostaria que este usuário utilizasse.</p>
-            <br>
-            <?php
+<script>
+    jQuery(function($) {
+        $("#alt_celular").mask("(99)99999-9999");
+        $("#alt_tel").mask("(99)99999-9999");
+    });
+
+</script>
+<form class="form_linha" method="post" name="editar_usuario">
+    <h1 class="topo_modal">Alterar perfil</h1>
+    <div style="width: 75%; float: left">
+        <div class="box box50">
+            <p class="texto_form">Nome completo</p>
+            <input name="nome" type="text" required placeholder="Nome completo" style=" width: 100%;" value="<?= $resultado['nome']; ?>" />
+        </div>
+        <div class="box box50 no-margim">
+            <p class="texto_form">E-mail válido</p>
+            <input name="email" type="email" required placeholder="E-mail válido" style=" width: 100%;" value="<?= $resultado['email']; ?>" />
+        </div>
+        <div class="limpar"></div>
+        <div class="box box33">
+            <p class="texto_form">Telefone</p>
+            <input name="tel" type="text" required placeholder="Telefone" id="alt_celular" style=" width: 100%;" value="<?= $resultado['tel']; ?>" />
+        </div>
+        <div class="box box33">
+            <p class="texto_form">Celular</p>
+            <input name="cel" type="text" required placeholder="Celular" id="alt_tel" style=" width: 100%;" value="<?= $resultado['cel']; ?>" />
+        </div>
+        <div class="box box33 no-margim">
+            <p class="texto_form">Cargo</p>
+            <input name="cargo" type="text" required placeholder="Cargo na empresa" style=" width: 100%;" value="<?= $resultado['cargo']; ?>" />
+        </div>
+        <div class="limpar"></div>
+        <p class="texto_form">Permissão</p>
+        <p class="texto_form">Selecione apenas as permissões que gostaria que este usuário utilizasse.</p>
+        <br>
+        <?php
             $read->ExeRead('permissao', 'WHERE id_perfil = :id', "id=" . $c['id'] . "");
 
             if ($read->getRowCount() >= 1) :
@@ -435,203 +436,203 @@ switch ($_POST['acao']) {
 
             endif;
             ?>
-            <div class="box box-media">
-              <?php
+        <div class="box box-media">
+            <?php
               if (dashboard == 'ON') :
               ?>
-                <div class="mylabel">
-                  <input name="acesso[]" <?= (in_array('1', $arr2) ? "checked" : ""); ?> type="checkbox" value="1" id="coding1_">
-                  <div class="slidinggroove"></div>
-                  <label class="mylabel" for="coding1_" name="1">
+            <div class="mylabel">
+                <input name="acesso[]" <?= (in_array('1', $arr2) ? "checked" : ""); ?> type="checkbox" value="1" id="coding1_">
+                <div class="slidinggroove"></div>
+                <label class="mylabel" for="coding1_" name="1">
                     <p class="labelterm">Página inicial</p>
-                  </label>
-                </div>
-              <?php
+                </label>
+            </div>
+            <?php
               endif;
 
               if (depoimentos == 'ON') :
               ?>
-                <div class="mylabel">
-                  <input name="acesso[]" <?= (in_array('2', $arr2) ? "checked" : ""); ?> type="checkbox" value="2" id="coding2_">
-                  <div class="slidinggroove"></div>
-                  <label class="mylabel" for="coding2_" name="2">
+            <div class="mylabel">
+                <input name="acesso[]" <?= (in_array('2', $arr2) ? "checked" : ""); ?> type="checkbox" value="2" id="coding2_">
+                <div class="slidinggroove"></div>
+                <label class="mylabel" for="coding2_" name="2">
                     <p class="labelterm">Depoimentos</p>
-                  </label>
-                </div>
-              <?php
+                </label>
+            </div>
+            <?php
               endif;
 
               if (arquivos == 'ON') :
               ?>
-                <div class="mylabel">
-                  <input name="acesso[]" <?= (in_array('3', $arr2) ? "checked" : ""); ?> type="checkbox" value="3" id="coding3_">
-                  <div class="slidinggroove"></div>
-                  <label class="mylabel" for="coding3_" name="3">
+            <div class="mylabel">
+                <input name="acesso[]" <?= (in_array('3', $arr2) ? "checked" : ""); ?> type="checkbox" value="3" id="coding3_">
+                <div class="slidinggroove"></div>
+                <label class="mylabel" for="coding3_" name="3">
                     <p class="labelterm">Sistema de arquvos</p>
-                  </label>
-                </div>
-              <?php
+                </label>
+            </div>
+            <?php
               endif;
 
               if (newsletter == 'ON') :
               ?>
-                <div class="mylabel">
-                  <input name="acesso[]" <?= (in_array('4', $arr2) ? "checked" : ""); ?> type="checkbox" value="4" id="coding4_">
-                  <div class="slidinggroove"></div>
-                  <label class="mylabel" for="coding4_" name="4">
+            <div class="mylabel">
+                <input name="acesso[]" <?= (in_array('4', $arr2) ? "checked" : ""); ?> type="checkbox" value="4" id="coding4_">
+                <div class="slidinggroove"></div>
+                <label class="mylabel" for="coding4_" name="4">
                     <p class="labelterm">Newsletter</p>
-                  </label>
-                </div>
-              <?php
+                </label>
+            </div>
+            <?php
               endif;
 
               if (sac == 'ON') :
               ?>
-                <div class="mylabel">
-                  <input name="acesso[]" <?= (in_array('5', $arr2) ? "checked" : ""); ?> type="checkbox" value="5" id="coding5_">
-                  <div class="slidinggroove"></div>
-                  <label class="mylabel" for="coding5_" name="5">
+            <div class="mylabel">
+                <input name="acesso[]" <?= (in_array('5', $arr2) ? "checked" : ""); ?> type="checkbox" value="5" id="coding5_">
+                <div class="slidinggroove"></div>
+                <label class="mylabel" for="coding5_" name="5">
                     <p class="labelterm">SAC</p>
-                  </label>
-                </div>
-              <?php
+                </label>
+            </div>
+            <?php
               endif;
 
               if (cadastrar_usuario == 'ON') :
               ?>
-                <div class="mylabel">
-                  <input name="acesso[]" <?= (in_array('6', $arr2) ? "checked" : ""); ?> type="checkbox" value="6" id="coding6_">
-                  <div class="slidinggroove"></div>
-                  <label class="mylabel" for="coding6_" name="6">
+            <div class="mylabel">
+                <input name="acesso[]" <?= (in_array('6', $arr2) ? "checked" : ""); ?> type="checkbox" value="6" id="coding6_">
+                <div class="slidinggroove"></div>
+                <label class="mylabel" for="coding6_" name="6">
                     <p class="labelterm">Perfil</p>
-                  </label>
-                </div>
-              <?php
+                </label>
+            </div>
+            <?php
               endif;
               ?>
-            </div>
+        </div>
 
-            <div class="box box-media">
-              <?php
+        <div class="box box-media">
+            <?php
               if (cliente == 'ON') :
               ?>
-                <div class="mylabel">
-                  <input name="acesso[]" <?= (in_array('7', $arr2) ? "checked" : ""); ?> type="checkbox" value="7" id="coding7_">
-                  <div class="slidinggroove"></div>
-                  <label class="mylabel" for="coding7_" name="7">
+            <div class="mylabel">
+                <input name="acesso[]" <?= (in_array('7', $arr2) ? "checked" : ""); ?> type="checkbox" value="7" id="coding7_">
+                <div class="slidinggroove"></div>
+                <label class="mylabel" for="coding7_" name="7">
                     <p class="labelterm">Empresa</p>
-                  </label>
-                </div>
-              <?php
+                </label>
+            </div>
+            <?php
               endif;
 
               if (cliente_usuario == 'ON') :
               ?>
-                <div class="mylabel">
-                  <input name="acesso[]" <?= (in_array('8', $arr2) ? "checked" : ""); ?> type="checkbox" value="8" id="coding8_">
-                  <div class="slidinggroove"></div>
-                  <label class="mylabel" for="coding8_" name="8">
+            <div class="mylabel">
+                <input name="acesso[]" <?= (in_array('8', $arr2) ? "checked" : ""); ?> type="checkbox" value="8" id="coding8_">
+                <div class="slidinggroove"></div>
+                <label class="mylabel" for="coding8_" name="8">
                     <p class="labelterm">Contatos na empresa</p>
-                  </label>
-                </div>
-              <?php
+                </label>
+            </div>
+            <?php
               endif;
 
               if (blog == 'ON') :
               ?>
-                <div class="mylabel">
-                  <input name="acesso[]" <?= (in_array('9', $arr2) ? "checked" : ""); ?> type="checkbox" value="9" id="coding9_">
-                  <div class="slidinggroove"></div>
-                  <label class="mylabel" for="coding9_" name="9">
+            <div class="mylabel">
+                <input name="acesso[]" <?= (in_array('9', $arr2) ? "checked" : ""); ?> type="checkbox" value="9" id="coding9_">
+                <div class="slidinggroove"></div>
+                <label class="mylabel" for="coding9_" name="9">
                     <p class="labelterm">Blog</p>
-                  </label>
-                </div>
-              <?php
+                </label>
+            </div>
+            <?php
               endif;
 
               if (crm == 'ON') :
               ?>
-                <div class="mylabel">
-                  <input name="acesso[]" <?= (in_array('10', $arr2) ? "checked" : ""); ?> type="checkbox" value="10" id="coding10_">
-                  <div class="slidinggroove"></div>
-                  <label class="mylabel" for="coding10_" name="10">
+            <div class="mylabel">
+                <input name="acesso[]" <?= (in_array('10', $arr2) ? "checked" : ""); ?> type="checkbox" value="10" id="coding10_">
+                <div class="slidinggroove"></div>
+                <label class="mylabel" for="coding10_" name="10">
                     <p class="labelterm">CRM</p>
-                  </label>
-                </div>
-              <?php
+                </label>
+            </div>
+            <?php
               endif;
 
               if (agenda == 'ON') :
               ?>
-                <div class="mylabel">
-                  <input name="acesso[]" <?= (in_array('11', $arr2) ? "checked" : ""); ?> type="checkbox" value="11" id="coding11_">
-                  <div class="slidinggroove"></div>
-                  <label class="mylabel" for="coding11_" name="11">
+            <div class="mylabel">
+                <input name="acesso[]" <?= (in_array('11', $arr2) ? "checked" : ""); ?> type="checkbox" value="11" id="coding11_">
+                <div class="slidinggroove"></div>
+                <label class="mylabel" for="coding11_" name="11">
                     <p class="labelterm">Agenda</p>
-                  </label>
-                </div>
-              <?php
+                </label>
+            </div>
+            <?php
               endif;
 
               if (orientador == 'ON') :
               ?>
-                <div class="mylabel">
-                  <input name="acesso[]" <?= (in_array('12', $arr2) ? "checked" : ""); ?> type="checkbox" value="12" id="coding12_">
-                  <div class="slidinggroove"></div>
-                  <label class="mylabel" for="coding12_" name="12">
+            <div class="mylabel">
+                <input name="acesso[]" <?= (in_array('12', $arr2) ? "checked" : ""); ?> type="checkbox" value="12" id="coding12_">
+                <div class="slidinggroove"></div>
+                <label class="mylabel" for="coding12_" name="12">
                     <p class="labelterm">Orientador</p>
-                  </label>
-                </div>
-              <?php
+                </label>
+            </div>
+            <?php
               endif;
               ?>
-            </div>
+        </div>
 
-            <div class="box box-media no-margim">
+        <div class="box box-media no-margim">
 
-            </div>
-          </div>
+        </div>
+    </div>
 
 
-          <div style="width: 23%; float: right">
+    <div style="width: 23%; float: right">
 
-            <p class="texto_form"></p>
-            <?php
+        <p class="texto_form"></p>
+        <?php
             if ($resultado['avatar'] == '') :
               echo '<img class="user_thumb" style="width: 100%;" alt="Foto do usuário" title="Foto do usuário" src="' . HOME . 'imagens_fixas/sem_imagem.jpg" default="' . HOME . 'imagens_fixas/sem_imagem.jpg">';
             else :
               echo '<img class="user_thumb" style="width: 100%;" alt="Foto do usuário" title="Foto do usuário" src="' . HOME . 'imagens_site/' . $resultado['avatar'] . '" default="' . HOME . 'imagens_site/' . $resultado['avatar'] . '">';
             endif;
             ?>
-            <div class="box_content">
-              <div class="limpar"></div>
-              <div class="mensagem_imagem ds-none">
+        <div class="box_content">
+            <div class="limpar"></div>
+            <div class="mensagem_imagem ds-none">
                 <p><b></b></p>
-              </div>
-              <span class="legend">Foto (500x500px, JPG ou PNG):</span>
-              <div class="limpar" style=" margin-bottom: 2%"></div>
-              <label class="label_file" for='selecao-arquivo2'>Selecionar um arquivo</label>
-              <input id='selecao-arquivo2' type="file" name="user_thumb" class="wc_loadimage upload" />
-
-              <div class="upload_bar m_top m_botton">
-                <div class="upload_progress ds-none">0%</div>
-              </div>
-              <img class="form_load ds-none fl_right" style="margin-left: 10px; margin-top: 2px;" alt="Enviando Requisição!" title="Enviando Requisição!" src="imagens_fixas/carregando2.gif" />
-
             </div>
-          </div>
+            <span class="legend">Foto (500x500px, JPG ou PNG):</span>
+            <div class="limpar" style=" margin-bottom: 2%"></div>
+            <label class="label_file" for='selecao-arquivo2'>Selecionar um arquivo</label>
+            <input id='selecao-arquivo2' type="file" name="user_thumb" class="wc_loadimage upload" />
 
-          <div class="limpar"></div>
-          <br>
-          <input type="hidden" name="id_usuario" value="<?= $resultado['id']; ?>" />
-          <input type="hidden" name="acao" value="editar_usuario" />
-          <span class="carregando2 ds-none"><img src="<?= HOME; ?>imagens_fixas/carregando2.gif" /></span>
-          <button class="btn btn_green fl-left" style="font-size: 0.8em; margin-right: 1%">
-            <figure class="icon-pencil-square-o" style="margin-top: -4%;"></figure> Alterar
-          </button>
-          <div class="limpar"></div>
-        </form>
-    <?php
+            <div class="upload_bar m_top m_botton">
+                <div class="upload_progress ds-none">0%</div>
+            </div>
+            <img class="form_load ds-none fl_right" style="margin-left: 10px; margin-top: 2px;" alt="Enviando Requisição!" title="Enviando Requisição!" src="imagens_fixas/carregando2.gif" />
+
+        </div>
+    </div>
+
+    <div class="limpar"></div>
+    <br>
+    <input type="hidden" name="id_usuario" value="<?= $resultado['id']; ?>" />
+    <input type="hidden" name="acao" value="editar_usuario" />
+    <span class="carregando2 ds-none"><img src="<?= HOME; ?>imagens_fixas/carregando2.gif" /></span>
+    <button class="btn btn_green fl-left" style="font-size: 0.8em; margin-right: 1%">
+        <figure class="icon-pencil-square-o" style="margin-top: -4%;"></figure> Alterar
+    </button>
+    <div class="limpar"></div>
+</form>
+<?php
       else :
         echo '1';
       endif;
@@ -956,22 +957,22 @@ switch ($_POST['acao']) {
     $ultimo->ExeRead('depoimento', "WHERE id = :id", 'id=' . $c['id'] . '');
     foreach ($ultimo->getResult() as $resultado);
     ?>
-    <form class=" form_linha" method="post" name="depoimento_alt">
-      <h1 class="topo_modal">Alterar depoimento</h1>
-      <div class="box box80">
+<form class=" form_linha" method="post" name="depoimento_alt">
+    <h1 class="topo_modal">Alterar depoimento</h1>
+    <div class="box box80">
         <div class="box box50" style="">
-          <p class="texto_form">Nome</p>
-          <input name="nome" type="text" required placeholder="Nome" value="<?= $resultado['nome']; ?>" style=" width: 100%;" />
+            <p class="texto_form">Nome</p>
+            <input name="nome" type="text" required placeholder="Nome" value="<?= $resultado['nome']; ?>" style=" width: 100%;" />
         </div>
         <div class="box box50 no-margim">
-          <p class="texto_form">Empresa</p>
-          <input name="empresa" type="text" required placeholder="Empresa" value="<?= $resultado['empresa']; ?>" style="width: 100%" />
+            <p class="texto_form">Empresa</p>
+            <input name="empresa" type="text" required placeholder="Empresa" value="<?= $resultado['empresa']; ?>" style="width: 100%" />
         </div>
         <div class="limpar"></div>
         <textarea name="txt" id="" rows="5" placeholder="Depoimento" style=" width: 100%; height: 100px"><?= $resultado['txt']; ?></textarea>
-      </div>
+    </div>
 
-      <div class="box box20 no-margim">
+    <div class="box box20 no-margim">
 
         <p class="texto_form"></p>
         <?php
@@ -982,35 +983,35 @@ switch ($_POST['acao']) {
         endif;
         ?>
         <div class="box_content">
-          <div class="limpar"></div>
-          <div class="mensagem_imagem ds-none">
-            <p><b></b></p>
-          </div>
-          <span class="legend">Foto (500x500px, JPG ou PNG):</span>
-          <div class="limpar" style=" margin-bottom: 2%"></div>
-          <label class="label_file" for='selecao-arquivo2'>Selecionar um arquivo</label>
-          <input id='selecao-arquivo2' type="file" name="user_thumb" class="wc_loadimage" />
-          <div class="limpar"></div>
+            <div class="limpar"></div>
+            <div class="mensagem_imagem ds-none">
+                <p><b></b></p>
+            </div>
+            <span class="legend">Foto (500x500px, JPG ou PNG):</span>
+            <div class="limpar" style=" margin-bottom: 2%"></div>
+            <label class="label_file" for='selecao-arquivo2'>Selecionar um arquivo</label>
+            <input id='selecao-arquivo2' type="file" name="user_thumb" class="wc_loadimage" />
+            <div class="limpar"></div>
 
-          <div class="upload_bar m_top m_botton">
-            <div class="upload_progress ds-none">0%</div>
-          </div>
-          <img class="form_load ds-none fl_right" style="margin-left: 10px; margin-top: 2px;" alt="Enviando Requisição!" title="Enviando Requisição!" src="imagens_fixas/carregando2.gif" />
+            <div class="upload_bar m_top m_botton">
+                <div class="upload_progress ds-none">0%</div>
+            </div>
+            <img class="form_load ds-none fl_right" style="margin-left: 10px; margin-top: 2px;" alt="Enviando Requisição!" title="Enviando Requisição!" src="imagens_fixas/carregando2.gif" />
         </div>
 
-      </div>
+    </div>
 
-      <div class="limpar"></div>
-      <br>
-      <input type="hidden" name="id" value="<?= $resultado['id']; ?>" />
-      <input type="hidden" name="acao" value="depoimento_alt" />
-      <span class="carregando2 ds-none"><img src="<?= HOME; ?>imagens_fixas/carregando2.gif" /></span>
-      <button class="btn btn_green fl-left" style="font-size: 0.8em; margin-right: 1%; width: 9%;">
+    <div class="limpar"></div>
+    <br>
+    <input type="hidden" name="id" value="<?= $resultado['id']; ?>" />
+    <input type="hidden" name="acao" value="depoimento_alt" />
+    <span class="carregando2 ds-none"><img src="<?= HOME; ?>imagens_fixas/carregando2.gif" /></span>
+    <button class="btn btn_green fl-left" style="font-size: 0.8em; margin-right: 1%; width: 9%;">
         <figure class="icon-pencil-square-o" style="margin-top: -4%;"></figure> Alterar
-      </button>
-      <div class="limpar"></div>
-    </form>
-    <?php
+    </button>
+    <div class="limpar"></div>
+</form>
+<?php
     break;
   case 'depoimento_alt':
 
@@ -1096,22 +1097,22 @@ switch ($_POST['acao']) {
       if ($area->getRowCount() >= 1) :
         echo '<p class="fl-left relt">' . $area->getRowCount() . ' resultado(s) encontrado(s).</p><br><br>';
     ?>
-        <script type="text/javascript" src="<?= HOME; ?>js/sorttable.js"></script>
-        <p class="texto_form" style=" margin-top: 0;">Você pode ordenar a lista clicando nos titulos da lista abaixo.</p>
-        <table class="lista_base_tabela sortable">
-          <!--<caption></caption>-->
-          <tr style=" width: 100%; border-bottom: 1px solid #000; background-color: #000000; color: #FFF; font-size: 0.9em;">
-            <th width="9%" style=" text-align: center; padding: 1%;">Imagem</th>
-            <th width="25%" style=" text-align: center; padding: 1%;">Nome</th>
-            <th width="20%" style=" text-align: center; padding: 1%;">E-mail</th>
-            <th width="15%" style=" text-align: center; padding: 1%;">CPF ou CNPJ</th>
-            <th width="15%" style=" text-align: center; padding: 1%;">Celular</th>
-            <th width="19%" style=" text-align: center; padding: 1%;"></th>
-            <th width="1%" style="padding: 0%;"></th>
-            <th width="1%" style="padding: 0%"></th>
-          </tr>
-          <div class="limpar"></div>
-          <?php
+<script type="text/javascript" src="<?= HOME; ?>js/sorttable.js"></script>
+<p class="texto_form" style=" margin-top: 0;">Você pode ordenar a lista clicando nos titulos da lista abaixo.</p>
+<table class="lista_base_tabela sortable">
+    <!--<caption></caption>-->
+    <tr style=" width: 100%; border-bottom: 1px solid #000; background-color: #000000; color: #FFF; font-size: 0.9em;">
+        <th width="9%" style=" text-align: center; padding: 1%;">Imagem</th>
+        <th width="25%" style=" text-align: center; padding: 1%;">Nome</th>
+        <th width="20%" style=" text-align: center; padding: 1%;">E-mail</th>
+        <th width="15%" style=" text-align: center; padding: 1%;">CPF ou CNPJ</th>
+        <th width="15%" style=" text-align: center; padding: 1%;">Celular</th>
+        <th width="19%" style=" text-align: center; padding: 1%;"></th>
+        <th width="1%" style="padding: 0%;"></th>
+        <th width="1%" style="padding: 0%"></th>
+    </tr>
+    <div class="limpar"></div>
+    <?php
           foreach ($area->getResult() as $listagem_) :
             if ($listagem_['avatar'] == '') :
               $avatar = Check::Imagem('../imagens_fixas/sem_imagem.jpg', 'Sem imagem', '500', '500', '');
@@ -1119,34 +1120,34 @@ switch ($_POST['acao']) {
               $avatar = '<img src="' . SITE . 'imagens_site/' . $listagem_['avatar'] . '" title="' . $listagem_['nome'] . '"width="500"/>';
             endif;
           ?>
-            <tr class="lista_tabela">
-              <td width="9%"><?= $avatar; ?></td>
-              <td width="25%"><?= $listagem_['nome']; ?></td>
-              <td width="20%"><?= $listagem_['email']; ?></td>
-              <td width="15%"><?= $listagem_['cpf_cnpj_c']; ?></td>
-              <td width="15%"><?= $listagem_['cel']; ?></td>
-              <td width="19%"></td>
-              <td width="1%">
-                <div class="btn btn_green email_cliente" style="" id="<?= $listagem_['id']; ?>" data-balloon-length="medium" data-balloon="Enviar e-mail" data-balloon-pos="up">
-                  <figure class="icon-envelope6"></figure>
-                </div>
-              </td>
-              <td width="1%">
-                <div class="id_cliente_alt btn btn_blue" style="" id="<?= $listagem_['id']; ?>" data-balloon-length="small" data-balloon="Alterar" data-balloon-pos="up">
-                  <figure class="icon-repeat"></figure>
-                </div>
-              </td>
-              <div class="limpar"></div>
-            </tr>
-        <?php
+    <tr class="lista_tabela">
+        <td width="9%"><?= $avatar; ?></td>
+        <td width="25%"><?= $listagem_['nome']; ?></td>
+        <td width="20%"><?= $listagem_['email']; ?></td>
+        <td width="15%"><?= $listagem_['cpf_cnpj_c']; ?></td>
+        <td width="15%"><?= $listagem_['cel']; ?></td>
+        <td width="19%"></td>
+        <td width="1%">
+            <div class="btn btn_green email_cliente" style="" id="<?= $listagem_['id']; ?>" data-balloon-length="medium" data-balloon="Enviar e-mail" data-balloon-pos="up">
+                <figure class="icon-envelope6"></figure>
+            </div>
+        </td>
+        <td width="1%">
+            <div class="id_cliente_alt btn btn_blue" style="" id="<?= $listagem_['id']; ?>" data-balloon-length="small" data-balloon="Alterar" data-balloon-pos="up">
+                <figure class="icon-repeat"></figure>
+            </div>
+        </td>
+        <div class="limpar"></div>
+    </tr>
+    <?php
           endforeach;
         else :
           echo '<br><div class="list" style="color: #000; font-size: 1.1em;"><center>Desculpe, não encontramos nenhuma ocorrência com esses parametros, tente novamente.</center></div> <br>';
         endif;
         ?>
-        <div class="limpar"></div>
-        </table>
-      <?php
+    <div class="limpar"></div>
+</table>
+<?php
     }
     break;
     //===============================================================================================================================
@@ -1159,87 +1160,88 @@ switch ($_POST['acao']) {
     $ultimo->ExeRead('clientes', "WHERE id = :id", 'id=' . $c['id'] . '');
     foreach ($ultimo->getResult() as $resultado);
       ?>
-      <script type="text/javascript" src="<?= HOME; ?>poo/app/Library/tinymce/js/tinymce/tinymce.min.js"></script>
+<script type="text/javascript" src="<?= HOME; ?>poo/app/Library/tinymce/js/tinymce/tinymce.min.js"></script>
 
-      <form class="form" method="post" name="email_cliente_form" style=" width: 80%; margin: 0 auto;">
-        <div style="width: 100%; float: left">
-          <p style=" margin-bottom: 2.5%; color: #fff; font-weight: 600; padding: 1%; padding-top: 1.4%; border-bottom: 1px solid #f1f1f1; border-top: 1px solid #f1f1f1">
+<form class="form" method="post" name="email_cliente_form" style=" width: 80%; margin: 0 auto;">
+    <div style="width: 100%; float: left">
+        <p style=" margin-bottom: 2.5%; color: #fff; font-weight: 600; padding: 1%; padding-top: 1.4%; border-bottom: 1px solid #f1f1f1; border-top: 1px solid #f1f1f1">
             <i class="fa fa-envelope-o" style=" font-size: 1.4em; margin-right: 1%; margin-top: -0.75%;"></i>
             Enviar e-mail para <?= $resultado['nome']; ?>
-          </p>
-          <script type="text/javascript">
+        </p>
+        <script type="text/javascript">
             tinymce.init({
-              selector: "textarea#elm2",
-              theme: "modern",
-              height: 200,
-              relative_urls: false,
-              remove_script_host: false,
-              plugins: [
-                "advlist autolink lists charmap print preview hr pagebreak",
-                "searchreplace wordcount visualblocks visualchars insertdatetime nonbreaking",
-                "table contextmenu directionality emoticons paste textcolor"
-              ],
-              toolbar1: "undo redo | bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | forecolor | preview code ",
-              toolbar2: "",
-              image_advtab: true,
-              style_formats: [{
-                  title: 'Bold text',
-                  inline: 'b'
-                },
-                {
-                  title: 'Red text',
-                  inline: 'span',
-                  styles: {
-                    color: '#ff0000'
-                  }
-                },
-                {
-                  title: 'Red header',
-                  block: 'h1',
-                  styles: {
-                    color: '#ff0000'
-                  }
-                },
-                {
-                  title: 'Example 1',
-                  inline: 'span',
-                  classes: 'example1'
-                },
-                {
-                  title: 'Example 2',
-                  inline: 'span',
-                  classes: 'example2'
-                },
-                {
-                  title: 'Table styles'
-                },
-                {
-                  title: 'Table row 1',
-                  selector: 'tr',
-                  classes: 'tablerow1'
+                selector: "textarea#elm2",
+                theme: "modern",
+                height: 200,
+                relative_urls: false,
+                remove_script_host: false,
+                plugins: [
+                    "advlist autolink lists charmap print preview hr pagebreak",
+                    "searchreplace wordcount visualblocks visualchars insertdatetime nonbreaking",
+                    "table contextmenu directionality emoticons paste textcolor"
+                ],
+                toolbar1: "undo redo | bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | forecolor | preview code ",
+                toolbar2: "",
+                image_advtab: true,
+                style_formats: [{
+                        title: 'Bold text',
+                        inline: 'b'
+                    },
+                    {
+                        title: 'Red text',
+                        inline: 'span',
+                        styles: {
+                            color: '#ff0000'
+                        }
+                    },
+                    {
+                        title: 'Red header',
+                        block: 'h1',
+                        styles: {
+                            color: '#ff0000'
+                        }
+                    },
+                    {
+                        title: 'Example 1',
+                        inline: 'span',
+                        classes: 'example1'
+                    },
+                    {
+                        title: 'Example 2',
+                        inline: 'span',
+                        classes: 'example2'
+                    },
+                    {
+                        title: 'Table styles'
+                    },
+                    {
+                        title: 'Table row 1',
+                        selector: 'tr',
+                        classes: 'tablerow1'
+                    }
+                ],
+                external_filemanager_path: "<?= HOME; ?>poo/app/Library/tinymce/js/filemanager/",
+                filemanager_title: "Responsive Filemanager",
+                external_plugins: {
+                    "filemanager": "<?= HOME; ?>poo/app/Library/tinymce/js/filemanager/plugin.min.js"
                 }
-              ],
-              external_filemanager_path: "<?= HOME; ?>poo/app/Library/tinymce/js/filemanager/",
-              filemanager_title: "Responsive Filemanager",
-              external_plugins: {
-                "filemanager": "<?= HOME; ?>poo/app/Library/tinymce/js/filemanager/plugin.min.js"
-              }
             });
-          </script>
-          <p class="texto_form" style=" color: #fff;">Titulo do e-mail</p>
-          <input name="titulo" type="text" required placeholder="Titulo do e-mail" style=" width: 100%;" value="" />
-          <p class="texto_form" style=" color: #fff;">Descrição do e-mail (Obrigatório)</p>
-          <textarea id="elm2" name="txt" rows="8" style=" width: 100%;"></textarea>
-          <div class="limpar"></div>
-          <br>
-          <input type="hidden" value="<?= $resultado['id']; ?>" name="id" />
-          <span class="carregando2 ds-none"><img src="<?= HOME; ?>imagens_fixas/carregando2.gif" /></span>
-          <div class="limpar"></div>
-          <button class="btn btn_green fl-left" style=" width: 18%; float: right; font-size: 0.8em;"><i class="fa fa-envelope" style=" font-size: 1.3em; margin-right: 1%; margin-top: -1.7%;"></i> Enviar e-mail</button>
-          <div class="limpar"></div>
-        </div>
-      </form>
-      <?php
+
+        </script>
+        <p class="texto_form" style=" color: #fff;">Titulo do e-mail</p>
+        <input name="titulo" type="text" required placeholder="Titulo do e-mail" style=" width: 100%;" value="" />
+        <p class="texto_form" style=" color: #fff;">Descrição do e-mail (Obrigatório)</p>
+        <textarea id="elm2" name="txt" rows="8" style=" width: 100%;"></textarea>
+        <div class="limpar"></div>
+        <br>
+        <input type="hidden" value="<?= $resultado['id']; ?>" name="id" />
+        <span class="carregando2 ds-none"><img src="<?= HOME; ?>imagens_fixas/carregando2.gif" /></span>
+        <div class="limpar"></div>
+        <button class="btn btn_green fl-left" style=" width: 18%; float: right; font-size: 0.8em;"><i class="fa fa-envelope" style=" font-size: 1.3em; margin-right: 1%; margin-top: -1.7%;"></i> Enviar e-mail</button>
+        <div class="limpar"></div>
+    </div>
+</form>
+<?php
       break;
       //===============================================================================================================================
       // ENVIAR E-MAIL PARA O CLIENTE.
@@ -1308,11 +1310,11 @@ switch ($_POST['acao']) {
           $anexo_pasta = NULL
         );
       ?>
-        <div class="mensagem mensagem_success">
-          <span style=" font-weight: 600;">E-mail enviado com sucesso!</span>
-          <p>O cliente recebeu sua mensagem.</p>
-        </div>
-      <?php
+<div class="mensagem mensagem_success">
+    <span style=" font-weight: 600;">E-mail enviado com sucesso!</span>
+    <p>O cliente recebeu sua mensagem.</p>
+</div>
+<?php
       else :
         echo '2';
       endif;
@@ -1342,35 +1344,36 @@ switch ($_POST['acao']) {
     case 'modal_usuario_empresa':
       $c['id'] = $_POST['id'];
       ?>
-      <div class="" style=" background: #fff; padding: 3%">
-        <h1 class="topo_modal">Contatos da empresa</h1>
-        <script>
-          $('.cadastrar_modal').click(function() {
+<div class="" style=" background: #fff; padding: 3%">
+    <h1 class="topo_modal">Contatos da empresa</h1>
+    <script>
+        $('.cadastrar_modal').click(function() {
             $('.lista_atual_modal').slideUp(function() {
-              $('.lista_nova_usuario_modal').slideDown();
+                $('.lista_nova_usuario_modal').slideDown();
             });
             return false;
-          });
-          $('.voltar_lista_modal').click(function() {
+        });
+        $('.voltar_lista_modal').click(function() {
             $('.lista_nova_usuario_modal').slideUp(function() {
-              $('.lista_atual_modal').slideDown();
+                $('.lista_atual_modal').slideDown();
             });
             return false;
-          });
-        </script>
-        <div class="box_conteudo_ lista_atual_modal">
-          <!--LISTA DE CADASTRADOS-->
-          <?php
+        });
+
+    </script>
+    <div class="box_conteudo_ lista_atual_modal">
+        <!--LISTA DE CADASTRADOS-->
+        <?php
           $listagem = new Read;
           $listagem->ExeRead('cliente_contato', 'where id_cliente = ' . $c['id'] . ' and status <> 3');
           echo '<a href="" class="btn btn_green fl-right cadastrar_modal" style=" width: 17%; margin-top: -2%;"><figure class="icon-plus6" style="font-size: 1.1em; margin-top: -0.6%; margin-right: 2%;"></figure> Cadastrar novo contato</a><div class="limpar"></div>';
           if ($listagem->getRowCount() >= 1) :
           ?>
-            <p class="texto_form" style=" margin-top: 0;">Você pode ordenar a lista clicando nos titulos da lista abaixo.</p>
-            <script type="text/javascript" src="<?= HOME; ?>js/sorttable.js"></script>
-            <table class="lista_base_tabela sortable">
-              <!--<caption></caption>-->
-              <tr style=" width: 100%; border-bottom: 1px solid #000; background-color: #000000; color: #FFF; font-size: 0.9em;">
+        <p class="texto_form" style=" margin-top: 0;">Você pode ordenar a lista clicando nos titulos da lista abaixo.</p>
+        <script type="text/javascript" src="<?= HOME; ?>js/sorttable.js"></script>
+        <table class="lista_base_tabela sortable">
+            <!--<caption></caption>-->
+            <tr style=" width: 100%; border-bottom: 1px solid #000; background-color: #000000; color: #FFF; font-size: 0.9em;">
                 <th width="9%" style=" text-align: center; padding: 1%;">Avatar</th>
                 <th width="30%" style=" text-align: center; padding: 1%;">Nome</th>
                 <th width="15%" style=" text-align: center; padding: 1%;">Empresa</th>
@@ -1380,9 +1383,9 @@ switch ($_POST['acao']) {
                 <th width="10%" style=" text-align: center; padding: 1%;">Status</th>
                 <th width="1%" style="padding: 0%;"></th>
                 <th width="1%" style="padding: 0%"></th>
-              </tr>
-              <div class="limpar"></div>
-              <?php
+            </tr>
+            <div class="limpar"></div>
+            <?php
               foreach ($listagem->getResult() as $listagem_) :
 
                 $listagem->ExeRead('cliente', 'WHERE id = :id', "id=" . $listagem_['id_cliente'] . "");
@@ -1394,27 +1397,27 @@ switch ($_POST['acao']) {
                   $avatar = Check::Imagem('../imagens_site/' . $listagem_['avatar'] . '', $listagem_['nome'], '500', '500', '');
                 endif;
               ?>
-                <tr class="lista_tabela">
-                  <td width="9%"><?= $avatar; ?></td>
-                  <td width="30%" data-balloon-length="large" data-balloon="<?= $listagem_['nome']; ?>" data-balloon-pos="up"><?= Check::limitcaracter($listagem_['nome'], 36); ?></td>
-                  <td width="15%"><?= $empresa['nome']; ?></td>
-                  <td width="15%"><?= $listagem_['email']; ?></td>
-                  <td width="10%"><?= $listagem_['senha']; ?></td>
-                  <td width="10%"><?= $listagem_['tel']; ?></td>
-                  <td width="10%">
+            <tr class="lista_tabela">
+                <td width="9%"><?= $avatar; ?></td>
+                <td width="30%" data-balloon-length="large" data-balloon="<?= $listagem_['nome']; ?>" data-balloon-pos="up"><?= Check::limitcaracter($listagem_['nome'], 36); ?></td>
+                <td width="15%"><?= $empresa['nome']; ?></td>
+                <td width="15%"><?= $listagem_['email']; ?></td>
+                <td width="10%"><?= $listagem_['senha']; ?></td>
+                <td width="10%"><?= $listagem_['tel']; ?></td>
+                <td width="10%">
                     <?php
                     if ($listagem_['status'] == '1') :
                     ?>
-                      <p style=" color: green">Ativo</p>
+                    <p style=" color: green">Ativo</p>
                     <?php
                     else :
                     ?>
-                      <p style=" color: red">Inativo</p>
+                    <p style=" color: red">Inativo</p>
                     <?php
                     endif;
                     ?>
-                  </td>
-                  <!-- <td width="1%">
+                </td>
+                <!-- <td width="1%">
                    <div class="btn btn_red excluir_modal" data-excluir="ex_usuario" id="<? //= $listagem_['id']; 
                                                                                         ?>" style="" data-balloon-length="small" data-balloon="Alterar status" data-balloon-pos="up">
                       <i class="fa fa-times icone-funcao"></i>
@@ -1426,13 +1429,13 @@ switch ($_POST['acao']) {
                       <i class="fas fa-exchange-alt"></i>
                    </div>
                 </td>-->
-                  <td width="2%">
+                <td width="2%">
                     <div class="id_usuario_alt btn btn_green" style="" id="<?= $listagem_['id']; ?>" data-balloon-length="small" data-balloon="Alterar" data-balloon-pos="up">
-                      <figure class="icon-edit-3" style="font-size: 1.3em;"></figure>
+                        <figure class="icon-edit-3" style="font-size: 1.3em;"></figure>
                     </div>
-                  </td>
-                  <div class="limpar"></div>
-                </tr>
+                </td>
+                <div class="limpar"></div>
+            </tr>
             <?php
               endforeach;
             else :
@@ -1440,64 +1443,65 @@ switch ($_POST['acao']) {
             endif;
             ?>
             <div class="limpar"></div>
-            </table>
-            <br>
-        </div>
-        <div class="limpar"></div>
-        <div class="lista_nova_modal ds-none"></div>
-        <div class="lista_nova_usuario_modal ds-none">
-          <script>
+        </table>
+        <br>
+    </div>
+    <div class="limpar"></div>
+    <div class="lista_nova_modal ds-none"></div>
+    <div class="lista_nova_usuario_modal ds-none">
+        <script>
             $("#contato_empresa").mask("(99)99999999");
             $("#contato_empresa2").mask("(99)99999999");
-          </script>
-          <form class="form_linha" method="post" name="cad_cliente_usuario">
+
+        </script>
+        <form class="form_linha" method="post" name="cad_cliente_usuario">
             <div class="box box80">
-              <div class="box box50" style=" margin-top: -0.3%">
-                <p class="texto_form">Nome</p>
-                <input name="nome" type="text" required placeholder="Nome" style=" width: 100%;" />
-              </div>
-              <div class="box box50 no-margim">
-                <p class="texto_form">Cargo</p>
-                <input name="cargo" type="text" required placeholder="Cargo" style="width: 100%" />
-              </div>
-              <div class="limpar"></div>
-              <div class="box box33">
-                <p class="texto_form">E-mail</p>
-                <input name="email" type="text" required placeholder="E-mail" style=" width: 100%;" />
-              </div>
-              <div class="box box33">
-                <p class="texto_form">Telefone</p>
-                <input name="tel" type="text" required placeholder="Telefone" id="contato_empresa" style=" width: 100%;" />
-              </div>
-              <div class="box box33 no-margim">
-                <p class="texto_form">Telefone</p>
-                <input name="tel2" type="text" placeholder="Telefone" id="contato_empresa2" style=" width: 100%;" />
-              </div>
-              <div class="limpar"></div>
-              <p class="texto_form">Observações</p>
-              <textarea name="obs" id="" rows="10" placeholder="Observações" style=" width: 100%; height: 150px"></textarea>
+                <div class="box box50" style=" margin-top: -0.3%">
+                    <p class="texto_form">Nome</p>
+                    <input name="nome" type="text" required placeholder="Nome" style=" width: 100%;" />
+                </div>
+                <div class="box box50 no-margim">
+                    <p class="texto_form">Cargo</p>
+                    <input name="cargo" type="text" required placeholder="Cargo" style="width: 100%" />
+                </div>
+                <div class="limpar"></div>
+                <div class="box box33">
+                    <p class="texto_form">E-mail</p>
+                    <input name="email" type="text" required placeholder="E-mail" style=" width: 100%;" />
+                </div>
+                <div class="box box33">
+                    <p class="texto_form">Telefone</p>
+                    <input name="tel" type="text" required placeholder="Telefone" id="contato_empresa" style=" width: 100%;" />
+                </div>
+                <div class="box box33 no-margim">
+                    <p class="texto_form">Telefone</p>
+                    <input name="tel2" type="text" placeholder="Telefone" id="contato_empresa2" style=" width: 100%;" />
+                </div>
+                <div class="limpar"></div>
+                <p class="texto_form">Observações</p>
+                <textarea name="obs" id="" rows="10" placeholder="Observações" style=" width: 100%; height: 150px"></textarea>
             </div>
 
             <div class="box box20 no-margim">
-              <p class="texto_form">Foto do contato</p>
-              <img class="user_thumb" style="width: 100%;" alt="Foto do usuário" title="Foto do usuário" src="<?= HOME; ?>imagens_fixas/sem_imagem.jpg" default="<?= HOME; ?>imagens_fixas/sem_imagem.jpg">
-              <div class="box_content">
-                <div class="limpar"></div>
-                <div class="mensagem_imagem ds-none">
-                  <p><b></b></p>
-                </div>
-                <span class="legend">Foto (500x500px, JPG ou PNG):</span>
-                <div class="limpar" style=" margin-bottom: 2%"></div>
-                <label class="label_file" for='selecao-arquivo'>Selecionar um arquivo</label>
-                <input id='selecao-arquivo' type="file" name="user_thumb" class="wc_loadimage" />
-                <div class="limpar"></div>
+                <p class="texto_form">Foto do contato</p>
+                <img class="user_thumb" style="width: 100%;" alt="Foto do usuário" title="Foto do usuário" src="<?= HOME; ?>imagens_fixas/sem_imagem.jpg" default="<?= HOME; ?>imagens_fixas/sem_imagem.jpg">
+                <div class="box_content">
+                    <div class="limpar"></div>
+                    <div class="mensagem_imagem ds-none">
+                        <p><b></b></p>
+                    </div>
+                    <span class="legend">Foto (500x500px, JPG ou PNG):</span>
+                    <div class="limpar" style=" margin-bottom: 2%"></div>
+                    <label class="label_file" for='selecao-arquivo'>Selecionar um arquivo</label>
+                    <input id='selecao-arquivo' type="file" name="user_thumb" class="wc_loadimage" />
+                    <div class="limpar"></div>
 
-                <div class="upload_bar m_top m_botton">
-                  <div class="upload_progress ds-none">0%</div>
-                </div>
-                <img class="form_load ds-none fl_right" style="margin-left: 10px; margin-top: 2px;" alt="Enviando Requisição!" title="Enviando Requisição!" src="imagens_fixas/carregando2.gif" />
+                    <div class="upload_bar m_top m_botton">
+                        <div class="upload_progress ds-none">0%</div>
+                    </div>
+                    <img class="form_load ds-none fl_right" style="margin-left: 10px; margin-top: 2px;" alt="Enviando Requisição!" title="Enviando Requisição!" src="imagens_fixas/carregando2.gif" />
 
-              </div>
+                </div>
             </div>
 
             <div class="limpar"></div>
@@ -1506,17 +1510,17 @@ switch ($_POST['acao']) {
             <input type="hidden" name="empresa" value="<?= $c['id']; ?>" />
             <span class="carregando2 ds-none"><img src="<?= HOME; ?>imagens_fixas/carregando2.gif" /></span>
             <button class="btn btn_green fl-left" style="font-size: 0.8em; margin-right: 3%">
-              <figure class="icon-save2" style="margin-top: -6%;"></figure> Cadastrar
+                <figure class="icon-save2" style="margin-top: -6%;"></figure> Cadastrar
             </button>
             <div class="btn btn_blue fl-left voltar_lista_modal" style="font-size: 0.8em; margin-right: 1%">
-              <figure class="icon-arrow-back" style="margin-top: -6%;"></figure> Voltar a lista
+                <figure class="icon-arrow-back" style="margin-top: -6%;"></figure> Voltar a lista
             </div>
             <div class="limpar"></div>
-          </form>
-        </div>
-        <div class="limpar"></div>
-      </div>
-    <?php
+        </form>
+    </div>
+    <div class="limpar"></div>
+</div>
+<?php
       break;
     case 'cad_cliente_usuario':
 
@@ -1607,67 +1611,68 @@ switch ($_POST['acao']) {
       $ultimo->ExeRead('cliente_contato', "WHERE id = :id", 'id=' . $c['id'] . '');
       foreach ($ultimo->getResult() as $resultado);
     ?>
-      <script>
-        $("#mascara_celular22").mask("(99)99999-9999");
-        $("#mascara_telefone22").mask("(99)99999-9999");
-        $("#mascara_telefone23").mask("(99)99999-9999");
-      </script>
-      <form class="form_linha" method="post" name="editar_cliente_usuario" enctype="multipart/form-data">
-        <h1 class="topo_modal">Alterar contato da empresa</h1>
-        <div class="box box80">
-          <div class="box box50" style="">
+<script>
+    $("#mascara_celular22").mask("(99)99999-9999");
+    $("#mascara_telefone22").mask("(99)99999-9999");
+    $("#mascara_telefone23").mask("(99)99999-9999");
+
+</script>
+<form class="form_linha" method="post" name="editar_cliente_usuario" enctype="multipart/form-data">
+    <h1 class="topo_modal">Alterar contato da empresa</h1>
+    <div class="box box80">
+        <div class="box box50" style="">
             <p class="texto_form">Nome</p>
             <input name="nome" type="text" required placeholder="Nome" value="<?= $resultado['nome']; ?>" style=" width: 100%;" />
-          </div>
-          <div class="box box50 no-margim">
+        </div>
+        <div class="box box50 no-margim">
             <p class="texto_form">Cargo</p>
             <input name="cargo" type="text" required placeholder="Cargo" value="<?= $resultado['cargo']; ?>" style="width: 100%" />
-          </div>
-          <div class="limpar"></div>
-          <div class="box box33">
+        </div>
+        <div class="limpar"></div>
+        <div class="box box33">
             <p class="texto_form">E-mail</p>
             <input name="email" type="text" placeholder="E-mail" value="<?= $resultado['email']; ?>" style=" width: 100%;" />
-          </div>
-          <div class="box box33">
+        </div>
+        <div class="box box33">
             <p class="texto_form">Telefone</p>
             <input name="tel" type="text" required placeholder="Telefone" value="<?= $resultado['tel']; ?>" id="mascara_celular22" style=" width: 100%;" />
-          </div>
-          <div class="box box33 no-margim">
+        </div>
+        <div class="box box33 no-margim">
             <p class="texto_form">Telefone</p>
             <input name="tel2" type="text" placeholder="Telefone" value="<?= $resultado['tel2']; ?>" id="mascara_telefone22" style=" width: 100%;" />
-          </div>
-          <div class="limpar"></div>
-          <div class="box box50">
+        </div>
+        <div class="limpar"></div>
+        <div class="box box50">
             <p class="texto_form">Senha</p>
             <input name="senha" type="text" placeholder="Senha" required value="<?= $resultado['senha']; ?>" style=" width: 100%;" />
-          </div>
-          <div class="box box50 no-margim">
+        </div>
+        <div class="box box50 no-margim">
             <p class="texto_form">Status (obrigatório)</p>
             <select name="status" required class="" style="width: 100%;">
-              <option <?= ($resultado['status'] == '1' ? "selected" : ""); ?> value="1">Ativo</option>
-              <option <?= ($resultado['status'] == '2' ? "selected" : ""); ?> value="2">Inativo</option>
+                <option <?= ($resultado['status'] == '1' ? "selected" : ""); ?> value="1">Ativo</option>
+                <option <?= ($resultado['status'] == '2' ? "selected" : ""); ?> value="2">Inativo</option>
             </select>
-          </div>
-
-          <div class="limpar"></div>
-          <textarea name="obs" rows="5" placeholder="Observações" style=" width: 100%; height: 100px"><?= $resultado['obs']; ?></textarea>
         </div>
 
+        <div class="limpar"></div>
+        <textarea name="obs" rows="5" placeholder="Observações" style=" width: 100%; height: 100px"><?= $resultado['obs']; ?></textarea>
+    </div>
 
-        <div class="box box20 no-margim">
 
-          <p class="texto_form"></p>
-          <?php
+    <div class="box box20 no-margim">
+
+        <p class="texto_form"></p>
+        <?php
           if ($resultado['avatar'] == '') :
             echo '<img class="user_thumb" style="width: 100%;" alt="Foto do usuário" title="Foto do usuário" src="' . HOME . 'imagens_fixas/sem_imagem.jpg" default="' . HOME . 'imagens_fixas/sem_imagem.jpg">';
           else :
             echo '<img class="user_thumb" style="width: 100%;" alt="Foto do usuário" title="Foto do usuário" src="' . HOME . 'imagens_site/' . $resultado['avatar'] . '" default="' . HOME . 'imagens_site/' . $resultado['avatar'] . '">';
           endif;
           ?>
-          <div class="box_content">
+        <div class="box_content">
             <div class="limpar"></div>
             <div class="mensagem_imagem ds-none">
-              <p><b></b></p>
+                <p><b></b></p>
             </div>
             <span class="legend">Foto (500x500px, JPG ou PNG):</span>
             <div class="limpar" style=" margin-bottom: 2%"></div>
@@ -1676,25 +1681,25 @@ switch ($_POST['acao']) {
             <div class="limpar"></div>
 
             <div class="upload_bar m_top m_botton">
-              <div class="upload_progress ds-none">0%</div>
+                <div class="upload_progress ds-none">0%</div>
             </div>
             <img class="form_load ds-none fl_right" style="margin-left: 10px; margin-top: 2px;" alt="Enviando Requisição!" title="Enviando Requisição!" src="imagens_fixas/carregando2.gif" />
-          </div>
-
         </div>
 
-        <div class="limpar"></div>
-        <br>
-        <input type="hidden" name="id" value="<?= $resultado['id']; ?>" />
-        <input type="hidden" name="empresa" value="<?= $resultado['id_cliente']; ?>" />
-        <input type="hidden" name="acao" value="editar_cliente_usuario" />
-        <span class="carregando2 ds-none"><img src="<?= HOME; ?>imagens_fixas/carregando2.gif" /></span>
-        <button class="btn btn_green fl-left" style="font-size: 0.8em; margin-right: 1%; width: 9%;">
-          <figure class="icon-pencil-square-o" style="margin-top: -4%;"></figure> Alterar
-        </button>
-        <div class="limpar"></div>
-      </form>
-    <?php
+    </div>
+
+    <div class="limpar"></div>
+    <br>
+    <input type="hidden" name="id" value="<?= $resultado['id']; ?>" />
+    <input type="hidden" name="empresa" value="<?= $resultado['id_cliente']; ?>" />
+    <input type="hidden" name="acao" value="editar_cliente_usuario" />
+    <span class="carregando2 ds-none"><img src="<?= HOME; ?>imagens_fixas/carregando2.gif" /></span>
+    <button class="btn btn_green fl-left" style="font-size: 0.8em; margin-right: 1%; width: 9%;">
+        <figure class="icon-pencil-square-o" style="margin-top: -4%;"></figure> Alterar
+    </button>
+    <div class="limpar"></div>
+</form>
+<?php
       break;
     case 'editar_cliente_usuario':
 
@@ -1755,345 +1760,347 @@ switch ($_POST['acao']) {
     case 'cad_portolio':
       $c2['id'] = $_POST['id'];
     ?>
-      <h1 class="topo_modal">Portfólio</h1>
-      <div class="box box100" style="padding: 1%; width: 100%">
-        <script>
-          $('.abrir_novo').click(function() {
+<h1 class="topo_modal">Portfólio</h1>
+<div class="box box100" style="padding: 1%; width: 100%">
+    <script>
+        $('.abrir_novo').click(function() {
             $('.alterados_portifolio').slideUp(function() {
-              $('.novo_portifolio').slideDown();
+                $('.novo_portifolio').slideDown();
             });
-          });
-        </script>
+        });
 
-        <?php
+    </script>
+
+    <?php
         $ultimo2 = new Read;
         $ultimo2->ExeRead('portfolio', "WHERE id_cliente = :id", 'id=' . $c2['id'] . '');
         if ($ultimo2->getResult()) :
         ?>
-          <div class="final__dropdown fl-left">
-            <button class="final__dropdown__hover">
-              <figure class="icon-th-menu" style="margin-top: -29%"></figure>
-            </button>
-            <div class="final__dropdown__menu b-shadow">
-              <?php
+    <div class="final__dropdown fl-left">
+        <button class="final__dropdown__hover">
+            <figure class="icon-th-menu" style="margin-top: -29%"></figure>
+        </button>
+        <div class="final__dropdown__menu b-shadow">
+            <?php
               foreach ($ultimo2->getResult() as $resultado2) :
                 echo '<a class="ale_portolio_" style="cursor: pointer; width: 100%; margin-bottom: 1%; text-align: left; color: #fff;" id="' . $resultado2['id'] . '">' . $resultado2['tipo'] . '</a>';
               endforeach;
               ?>
-            </div>
-          </div>
-          <div class="btn btn_green abrir_novo fl-left" style="padding: 1.12% 2%; margin-left: 2%;">Cadastrar portfólio</div>
-        <?php
+        </div>
+    </div>
+    <div class="btn btn_green abrir_novo fl-left" style="padding: 1.12% 2%; margin-left: 2%;">Cadastrar portfólio</div>
+    <?php
         else :
           echo '<div style="cursor: pointer; width: 100%; margin-bottom: 1%; text-align: left; color: #fff;"class="">Não há projeto cadastrado</div>';
         endif;
         ?>
-      </div>
-      <div class="box box100 no-margim alterados_portifolio" style=" width: 100%"></div>
-      <div class="box box100 no-margim novo_portifolio" style=" width: 100%">
-        <script>
-          jQuery(function($) {
+</div>
+<div class="box box100 no-margim alterados_portifolio" style=" width: 100%"></div>
+<div class="box box100 no-margim novo_portifolio" style=" width: 100%">
+    <script>
+        jQuery(function($) {
             $("#mascara_celular22").mask("(99)99999-9999");
             $("#mascara_telefone22").mask("(99)99999-9999");
             $("#mascara_telefone23").mask("(99)99999-9999");
 
             tinymce.init({
-              selector: "textarea#elm4",
-              theme: "modern",
-              height: 300,
-              menubar: false,
-              relative_urls: false,
-              remove_script_host: false,
-              plugins: [
-                "advlist autolink link image lists charmap print preview hr anchor pagebreak",
-                "searchreplace wordcount visualblocks visualchars insertdatetime media nonbreaking",
-                "table contextmenu directionality emoticons paste textcolor responsivefilemanager"
-              ],
-              toolbar1: "undo redo | bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | styleselect | link unlink anchor | image media | responsivefilemanager | forecolor backcolor | print preview code ",
-              toolbar2: "",
-              image_advtab: true,
-              style_formats: [{
-                  title: 'Bold text',
-                  inline: 'b'
-                },
-                {
-                  title: 'Red text',
-                  inline: 'span',
-                  styles: {
-                    color: '#ff0000'
-                  }
-                },
-                {
-                  title: 'Red header',
-                  block: 'h1',
-                  styles: {
-                    color: '#ff0000'
-                  }
-                },
-                {
-                  title: 'Example 1',
-                  inline: 'span',
-                  classes: 'example1'
-                },
-                {
-                  title: 'Example 2',
-                  inline: 'span',
-                  classes: 'example2'
-                },
-                {
-                  title: 'Table styles'
-                },
-                {
-                  title: 'Table row 1',
-                  selector: 'tr',
-                  classes: 'tablerow1'
+                selector: "textarea#elm4",
+                theme: "modern",
+                height: 300,
+                menubar: false,
+                relative_urls: false,
+                remove_script_host: false,
+                plugins: [
+                    "advlist autolink link image lists charmap print preview hr anchor pagebreak",
+                    "searchreplace wordcount visualblocks visualchars insertdatetime media nonbreaking",
+                    "table contextmenu directionality emoticons paste textcolor responsivefilemanager"
+                ],
+                toolbar1: "undo redo | bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | styleselect | link unlink anchor | image media | responsivefilemanager | forecolor backcolor | print preview code ",
+                toolbar2: "",
+                image_advtab: true,
+                style_formats: [{
+                        title: 'Bold text',
+                        inline: 'b'
+                    },
+                    {
+                        title: 'Red text',
+                        inline: 'span',
+                        styles: {
+                            color: '#ff0000'
+                        }
+                    },
+                    {
+                        title: 'Red header',
+                        block: 'h1',
+                        styles: {
+                            color: '#ff0000'
+                        }
+                    },
+                    {
+                        title: 'Example 1',
+                        inline: 'span',
+                        classes: 'example1'
+                    },
+                    {
+                        title: 'Example 2',
+                        inline: 'span',
+                        classes: 'example2'
+                    },
+                    {
+                        title: 'Table styles'
+                    },
+                    {
+                        title: 'Table row 1',
+                        selector: 'tr',
+                        classes: 'tablerow1'
+                    }
+                ],
+                external_filemanager_path: "<?= HOME; ?>poo/app/Library/tinymce/js/filemanager/",
+                filemanager_title: "Responsive Filemanager",
+                external_plugins: {
+                    "filemanager": "<?= HOME; ?>poo/app/Library/tinymce/js/filemanager/plugin.min.js"
                 }
-              ],
-              external_filemanager_path: "<?= HOME; ?>poo/app/Library/tinymce/js/filemanager/",
-              filemanager_title: "Responsive Filemanager",
-              external_plugins: {
-                "filemanager": "<?= HOME; ?>poo/app/Library/tinymce/js/filemanager/plugin.min.js"
-              }
             });
-          });
-          $("select").select2();
-        </script>
-        <form class="form_linha" method="post" name="cad_portfolionovo" enctype="multipart/form-data">
-          <div class="box box80">
+        });
+        $("select").select2();
+
+    </script>
+    <form class="form_linha" method="post" name="cad_portfolionovo" enctype="multipart/form-data">
+        <div class="box box80">
             <div class="box box100" style=' width: 100%'>
-              <p class="texto_form">Tipo do serviço</p>
-              <select name="tipo" required class="" style="width: 100%;">
-                <option value="Site com painel de controle">Site com painel de controle</option>
-                <option value="Vitrine de produto ou serviço com painel de controle">Vitrine de produto ou serviço com painel de controle</option>
-                <option value="E-commerce com painel de controle">E-commerce com painel de controle</option>
-                <option value="Blog com painel de controle">Blog com painel de controle</option>
-                <option value="Hotsite ou Landing Page">Hotsite ou Landing Page</option>
-                <option value="Sistema online ou intranet">Sistema online ou intranet</option>
-              </select>
+                <p class="texto_form">Tipo do serviço</p>
+                <select name="tipo" required class="" style="width: 100%;">
+                    <option value="Site com painel de controle">Site com painel de controle</option>
+                    <option value="Vitrine de produto ou serviço com painel de controle">Vitrine de produto ou serviço com painel de controle</option>
+                    <option value="E-commerce com painel de controle">E-commerce com painel de controle</option>
+                    <option value="Blog com painel de controle">Blog com painel de controle</option>
+                    <option value="Hotsite ou Landing Page">Hotsite ou Landing Page</option>
+                    <option value="Sistema online ou intranet">Sistema online ou intranet</option>
+                </select>
             </div>
             <div class="limpar"></div>
 
             <div class="box box50">
-              <p class="texto_form">Depoimento</p>
-              <select name="depoimento" class="" style="width: 100%;">
-                <option value="">Não há depoimento</option>
-                <?php
+                <p class="texto_form">Depoimento</p>
+                <select name="depoimento" class="" style="width: 100%;">
+                    <option value="">Não há depoimento</option>
+                    <?php
                 $ultimo2->ExeRead('depoimento');
                 foreach ($ultimo2->getResult() as $resultado_depo2) :
                 ?>
-                  <option value="<?= $resultado_depo2['id']; ?>"><?= $resultado_depo2['nome']; ?> - <?= $resultado_depo2['empresa']; ?></option>
-                <?php
+                    <option value="<?= $resultado_depo2['id']; ?>"><?= $resultado_depo2['nome']; ?> - <?= $resultado_depo2['empresa']; ?></option>
+                    <?php
                 endforeach;
                 ?>
-              </select>
+                </select>
             </div>
             <div class="box box50 no-margim">
-              <p class="texto_form">Endereço completo do projeto</p>
-              <input name="url" type="text" required placeholder="Endereço completo do projeto" value="" style=" width: 100%;" />
+                <p class="texto_form">Endereço completo do projeto</p>
+                <input name="url" type="text" required placeholder="Endereço completo do projeto" value="" style=" width: 100%;" />
             </div>
             <div class="limpar"></div>
             <div class="box box20">
-              <p class="texto_form">Design Responsivo</p>
-              <select name="responsivo" required class="" style="width: 100%;">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
-              </select>
+                <p class="texto_form">Design Responsivo</p>
+                <select name="responsivo" required class="" style="width: 100%;">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                </select>
             </div>
             <div class="box box20">
-              <p class="texto_form">HTML5</p>
-              <select name="html5" required class="" style="width: 100%;">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
-              </select>
+                <p class="texto_form">HTML5</p>
+                <select name="html5" required class="" style="width: 100%;">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                </select>
             </div>
             <div class="box box20">
-              <p class="texto_form">CSS</p>
-              <select name="css" required class="" style="width: 100%;">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
-              </select>
+                <p class="texto_form">CSS</p>
+                <select name="css" required class="" style="width: 100%;">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                </select>
             </div>
 
             <div class="box box20">
-              <p class="texto_form">Javascript</p>
-              <select name="java" required class="" style="width: 100%;">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
-              </select>
+                <p class="texto_form">Javascript</p>
+                <select name="java" required class="" style="width: 100%;">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                </select>
             </div>
 
             <div class="box box20 no-margim">
-              <p class="texto_form">PHP</p>
-              <select name="php" required class="" style="width: 100%;">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
-              </select>
+                <p class="texto_form">PHP</p>
+                <select name="php" required class="" style="width: 100%;">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                </select>
             </div>
             <div class="limpar"></div>
 
             <div class="box box20">
-              <p class="texto_form">Jquery/Ajax</p>
-              <select name="jquery" required class="" style="width: 100%;">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
-              </select>
+                <p class="texto_form">Jquery/Ajax</p>
+                <select name="jquery" required class="" style="width: 100%;">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                </select>
             </div>
 
             <div class="box box20">
-              <p class="texto_form">Api externas</p>
-              <select name="api" required class="" style="width: 100%;">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
-              </select>
+                <p class="texto_form">Api externas</p>
+                <select name="api" required class="" style="width: 100%;">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                </select>
             </div>
 
             <div class="box box20">
-              <p class="texto_form">SEO</p>
-              <select name="seo" required class="" style="width: 100%;">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
-              </select>
+                <p class="texto_form">SEO</p>
+                <select name="seo" required class="" style="width: 100%;">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                </select>
             </div>
 
             <div class="box box20">
-              <p class="texto_form">SMO</p>
-              <select name="smo" required class="" style="width: 100%;">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
-              </select>
+                <p class="texto_form">SMO</p>
+                <select name="smo" required class="" style="width: 100%;">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                </select>
             </div>
 
 
 
             <div class="box box20 no-margim">
-              <p class="texto_form">Mysql</p>
-              <select name="mysql" required class="" style="width: 100%;">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
-              </select>
+                <p class="texto_form">Mysql</p>
+                <select name="mysql" required class="" style="width: 100%;">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                </select>
             </div>
 
             <div class="limpar"></div>
 
             <div class="box box20">
-              <p class="texto_form">Status</p>
-              <select name="status" required class="" style="width: 100%;">
-                <option value="1">Aparecer no site</option>
-                <option value="2">Não aparecer no site</option>
-              </select>
+                <p class="texto_form">Status</p>
+                <select name="status" required class="" style="width: 100%;">
+                    <option value="1">Aparecer no site</option>
+                    <option value="2">Não aparecer no site</option>
+                </select>
             </div>
             <div class="box box20">
-              <p class="texto_form">Site online</p>
-              <select name="site_online" required class="" style="width: 100%;">
-                <option value="1">Sim</option>
-                <option value="2">Não</option>
-              </select>
+                <p class="texto_form">Site online</p>
+                <select name="site_online" required class="" style="width: 100%;">
+                    <option value="1">Sim</option>
+                    <option value="2">Não</option>
+                </select>
             </div>
             <div class="limpar"></div>
             <br>
             <textarea name="obs" id="elm4" rows="10" placeholder="Observações" style=" width: 100%; height: 150px"></textarea>
-          </div>
+        </div>
 
 
-          <div class="box box20">
+        <div class="box box20">
 
             <p class="texto_form">Capa</p>
             <img class="user_thumb" style="width: 100%;" alt="Foto do usuário" title="Foto do usuário" src="<?= HOME; ?>imagens_fixas/sem_imagem.jpg" default="<?= HOME; ?>imagens_fixas/sem_imagem.jpg">
             <div class="box_content">
-              <div class="limpar"></div>
-              <div class="mensagem_imagem ds-none">
-                <p><b></b></p>
-              </div>
-              <span class="legend">Foto (800x418px, JPG ou PNG):</span>
-              <div class="limpar" style=" margin-bottom: 2%"></div>
-              <label class="label_file" for='selecao-arquivo4'>Selecionar um arquivo</label>
-              <input id='selecao-arquivo4' type="file" name="user_thumb" class="wc_loadimage" />
-              <div class="limpar"></div>
+                <div class="limpar"></div>
+                <div class="mensagem_imagem ds-none">
+                    <p><b></b></p>
+                </div>
+                <span class="legend">Foto (800x418px, JPG ou PNG):</span>
+                <div class="limpar" style=" margin-bottom: 2%"></div>
+                <label class="label_file" for='selecao-arquivo4'>Selecionar um arquivo</label>
+                <input id='selecao-arquivo4' type="file" name="user_thumb" class="wc_loadimage" />
+                <div class="limpar"></div>
 
-              <div class="upload_bar m_top m_botton">
-                <div class="upload_progress ds-none">0%</div>
-              </div>
-              <img class="form_load ds-none fl_right" style="margin-left: 10px; margin-top: 2px;" alt="Enviando Requisição!" title="Enviando Requisição!" src="imagens_fixas/carregando2.gif" />
+                <div class="upload_bar m_top m_botton">
+                    <div class="upload_progress ds-none">0%</div>
+                </div>
+                <img class="form_load ds-none fl_right" style="margin-left: 10px; margin-top: 2px;" alt="Enviando Requisição!" title="Enviando Requisição!" src="imagens_fixas/carregando2.gif" />
             </div>
             <br>
 
@@ -2113,15 +2120,15 @@ switch ($_POST['acao']) {
             <input type="hidden" name="acao" value="capa_larga" />
 
             <button class="btn btn_green fl-left" style="font-size: 0.8em; margin-right: 1%; width: 80%">
-              <figure class="icon-pencil-square-o" style=" font-size: 1.2em; margin-top: -2%; margin-right: 1%;"></figure> Cadastrar
+                <figure class="icon-pencil-square-o" style=" font-size: 1.2em; margin-top: -2%; margin-right: 1%;"></figure> Cadastrar
             </button>
             <span class="carregando2 ds-none"><img src="<?= HOME; ?>imagens_fixas/carregando2.gif" /></span>
             <div class="limpar"></div>
-        </form>
-        <div class="limpar"></div>
-      </div>
-      </div>
-    <?php
+    </form>
+    <div class="limpar"></div>
+</div>
+</div>
+<?php
       break;
     case 'cad_portfolionovo':
       $c['tipo'] = $_POST['tipo'];
@@ -2209,13 +2216,13 @@ switch ($_POST['acao']) {
       $ultimo->ExeRead('portfolio', "WHERE id = :id", 'id=' . $c['id'] . '');
       foreach ($ultimo->getResult() as $resultado);
     ?>
-      <script>
-        jQuery(function($) {
-          $("#mascara_celular22").mask("(99)99999-9999");
-          $("#mascara_telefone22").mask("(99)99999-9999");
-          $("#mascara_telefone23").mask("(99)99999-9999");
+<script>
+    jQuery(function($) {
+        $("#mascara_celular22").mask("(99)99999-9999");
+        $("#mascara_telefone22").mask("(99)99999-9999");
+        $("#mascara_telefone23").mask("(99)99999-9999");
 
-          tinymce.init({
+        tinymce.init({
             selector: "textarea#elm8",
             theme: "modern",
             height: 300,
@@ -2223,290 +2230,291 @@ switch ($_POST['acao']) {
             relative_urls: false,
             remove_script_host: false,
             plugins: [
-              "advlist autolink link image lists charmap print preview hr anchor pagebreak",
-              "searchreplace wordcount visualblocks visualchars insertdatetime media nonbreaking",
-              "table contextmenu directionality emoticons paste textcolor responsivefilemanager"
+                "advlist autolink link image lists charmap print preview hr anchor pagebreak",
+                "searchreplace wordcount visualblocks visualchars insertdatetime media nonbreaking",
+                "table contextmenu directionality emoticons paste textcolor responsivefilemanager"
             ],
             toolbar1: "undo redo | bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | styleselect | link unlink anchor | image media | responsivefilemanager | forecolor backcolor | print preview code ",
             toolbar2: "",
             image_advtab: true,
             style_formats: [{
-                title: 'Bold text',
-                inline: 'b'
-              },
-              {
-                title: 'Red text',
-                inline: 'span',
-                styles: {
-                  color: '#ff0000'
+                    title: 'Bold text',
+                    inline: 'b'
+                },
+                {
+                    title: 'Red text',
+                    inline: 'span',
+                    styles: {
+                        color: '#ff0000'
+                    }
+                },
+                {
+                    title: 'Red header',
+                    block: 'h1',
+                    styles: {
+                        color: '#ff0000'
+                    }
+                },
+                {
+                    title: 'Example 1',
+                    inline: 'span',
+                    classes: 'example1'
+                },
+                {
+                    title: 'Example 2',
+                    inline: 'span',
+                    classes: 'example2'
+                },
+                {
+                    title: 'Table styles'
+                },
+                {
+                    title: 'Table row 1',
+                    selector: 'tr',
+                    classes: 'tablerow1'
                 }
-              },
-              {
-                title: 'Red header',
-                block: 'h1',
-                styles: {
-                  color: '#ff0000'
-                }
-              },
-              {
-                title: 'Example 1',
-                inline: 'span',
-                classes: 'example1'
-              },
-              {
-                title: 'Example 2',
-                inline: 'span',
-                classes: 'example2'
-              },
-              {
-                title: 'Table styles'
-              },
-              {
-                title: 'Table row 1',
-                selector: 'tr',
-                classes: 'tablerow1'
-              }
             ],
             external_filemanager_path: "<?= HOME; ?>poo/app/Library/tinymce/js/filemanager/",
             filemanager_title: "Responsive Filemanager",
             external_plugins: {
-              "filemanager": "<?= HOME; ?>poo/app/Library/tinymce/js/filemanager/plugin.min.js"
+                "filemanager": "<?= HOME; ?>poo/app/Library/tinymce/js/filemanager/plugin.min.js"
             }
-          });
         });
-        $("select").select2();
-      </script>
-      <form class="form_linha" method="post" name="cad_portfolioo" enctype="multipart/form-data">
-        <div class="box box80">
-          <div class="box box100" style=' width: 100%'>
+    });
+    $("select").select2();
+
+</script>
+<form class="form_linha" method="post" name="cad_portfolioo" enctype="multipart/form-data">
+    <div class="box box80">
+        <div class="box box100" style=' width: 100%'>
             <p class="texto_form">Tipo do serviço</p>
             <select name="tipo" required class="" style="width: 100%;">
-              <option <?= ($resultado['tipo'] == 'Site com painel de controle' ? "selected" : ""); ?> value="Site com painel de controle">Site com painel de controle</option>
-              <option <?= ($resultado['tipo'] == 'Vitrine de produto ou serviço com painel de controle' ? "selected" : ""); ?> value="Vitrine de produto ou serviço com painel de controle">Vitrine de produto ou serviço com painel de controle</option>
-              <option <?= ($resultado['tipo'] == 'E-commerce com painel de controle' ? "selected" : ""); ?> value="E-commerce com painel de controle">E-commerce com painel de controle</option>
-              <option <?= ($resultado['tipo'] == 'Blog com painel de controle' ? "selected" : ""); ?> value="Blog com painel de controle">Blog com painel de controle</option>
-              <option <?= ($resultado['tipo'] == 'Hotsite ou Landing Page' ? "selected" : ""); ?> value="Hotsite ou Landing Page">Hotsite ou Landing Page</option>
-              <option <?= ($resultado['tipo'] == 'Sistema online ou intranet' ? "selected" : ""); ?> value="Sistema online ou intranet">Sistema online ou intranet</option>
+                <option <?= ($resultado['tipo'] == 'Site com painel de controle' ? "selected" : ""); ?> value="Site com painel de controle">Site com painel de controle</option>
+                <option <?= ($resultado['tipo'] == 'Vitrine de produto ou serviço com painel de controle' ? "selected" : ""); ?> value="Vitrine de produto ou serviço com painel de controle">Vitrine de produto ou serviço com painel de controle</option>
+                <option <?= ($resultado['tipo'] == 'E-commerce com painel de controle' ? "selected" : ""); ?> value="E-commerce com painel de controle">E-commerce com painel de controle</option>
+                <option <?= ($resultado['tipo'] == 'Blog com painel de controle' ? "selected" : ""); ?> value="Blog com painel de controle">Blog com painel de controle</option>
+                <option <?= ($resultado['tipo'] == 'Hotsite ou Landing Page' ? "selected" : ""); ?> value="Hotsite ou Landing Page">Hotsite ou Landing Page</option>
+                <option <?= ($resultado['tipo'] == 'Sistema online ou intranet' ? "selected" : ""); ?> value="Sistema online ou intranet">Sistema online ou intranet</option>
             </select>
-          </div>
-          <div class="limpar"></div>
+        </div>
+        <div class="limpar"></div>
 
-          <div class="box box50">
+        <div class="box box50">
             <p class="texto_form">Depoimento</p>
             <select name="depoimento" class="" style="width: 100%;">
-              <option <?= ($resultado['id_depoimento'] == '' ? "selected" : ""); ?> value="">Não há depoimento</option>
-              <?php
+                <option <?= ($resultado['id_depoimento'] == '' ? "selected" : ""); ?> value="">Não há depoimento</option>
+                <?php
               $ultimo->ExeRead('depoimento');
               foreach ($ultimo->getResult() as $resultado_depo) :
               ?>
                 <option <?= ($resultado['id_depoimento'] == $resultado_depo['id'] ? "selected" : ""); ?> value="<?= $resultado_depo['id']; ?>"><?= $resultado_depo['nome']; ?> - <?= $resultado_depo['empresa']; ?></option>
-              <?php
+                <?php
               endforeach;
               ?>
             </select>
-          </div>
-          <div class="box box50 no-margim">
+        </div>
+        <div class="box box50 no-margim">
             <p class="texto_form">Endereço completo do projeto</p>
             <input name="url" type="text" required placeholder="Endereço completo do projeto" value="<?= $resultado['url']; ?>" style=" width: 100%;" />
-          </div>
-          <div class="limpar"></div>
-          <div class="box box20">
+        </div>
+        <div class="limpar"></div>
+        <div class="box box20">
             <p class="texto_form">Design Responsivo</p>
             <select name="responsivo" required class="" style="width: 100%;">
-              <option <?= ($resultado['responsivo'] == '1' ? "selected" : ""); ?> value="1">1</option>
-              <option <?= ($resultado['responsivo'] == '2' ? "selected" : ""); ?> value="2">2</option>
-              <option <?= ($resultado['responsivo'] == '3' ? "selected" : ""); ?> value="3">3</option>
-              <option <?= ($resultado['responsivo'] == '4' ? "selected" : ""); ?> value="4">4</option>
-              <option <?= ($resultado['responsivo'] == '5' ? "selected" : ""); ?> value="5">5</option>
-              <option <?= ($resultado['responsivo'] == '6' ? "selected" : ""); ?> value="6">6</option>
-              <option <?= ($resultado['responsivo'] == '7' ? "selected" : ""); ?> value="7">7</option>
-              <option <?= ($resultado['responsivo'] == '8' ? "selected" : ""); ?> value="8">8</option>
-              <option <?= ($resultado['responsivo'] == '9' ? "selected" : ""); ?> value="9">9</option>
-              <option <?= ($resultado['responsivo'] == '10' ? "selected" : ""); ?> value="10">10</option>
+                <option <?= ($resultado['responsivo'] == '1' ? "selected" : ""); ?> value="1">1</option>
+                <option <?= ($resultado['responsivo'] == '2' ? "selected" : ""); ?> value="2">2</option>
+                <option <?= ($resultado['responsivo'] == '3' ? "selected" : ""); ?> value="3">3</option>
+                <option <?= ($resultado['responsivo'] == '4' ? "selected" : ""); ?> value="4">4</option>
+                <option <?= ($resultado['responsivo'] == '5' ? "selected" : ""); ?> value="5">5</option>
+                <option <?= ($resultado['responsivo'] == '6' ? "selected" : ""); ?> value="6">6</option>
+                <option <?= ($resultado['responsivo'] == '7' ? "selected" : ""); ?> value="7">7</option>
+                <option <?= ($resultado['responsivo'] == '8' ? "selected" : ""); ?> value="8">8</option>
+                <option <?= ($resultado['responsivo'] == '9' ? "selected" : ""); ?> value="9">9</option>
+                <option <?= ($resultado['responsivo'] == '10' ? "selected" : ""); ?> value="10">10</option>
             </select>
-          </div>
-          <div class="box box20">
+        </div>
+        <div class="box box20">
             <p class="texto_form">HTML5</p>
             <select name="html5" required class="" style="width: 100%;">
-              <option <?= ($resultado['html5'] == '1' ? "selected" : ""); ?> value="1">1</option>
-              <option <?= ($resultado['html5'] == '2' ? "selected" : ""); ?> value="2">2</option>
-              <option <?= ($resultado['html5'] == '3' ? "selected" : ""); ?> value="3">3</option>
-              <option <?= ($resultado['html5'] == '4' ? "selected" : ""); ?> value="4">4</option>
-              <option <?= ($resultado['html5'] == '5' ? "selected" : ""); ?> value="5">5</option>
-              <option <?= ($resultado['html5'] == '6' ? "selected" : ""); ?> value="6">6</option>
-              <option <?= ($resultado['html5'] == '7' ? "selected" : ""); ?> value="7">7</option>
-              <option <?= ($resultado['html5'] == '8' ? "selected" : ""); ?> value="8">8</option>
-              <option <?= ($resultado['html5'] == '9' ? "selected" : ""); ?> value="9">9</option>
-              <option <?= ($resultado['html5'] == '10' ? "selected" : ""); ?> value="10">10</option>
+                <option <?= ($resultado['html5'] == '1' ? "selected" : ""); ?> value="1">1</option>
+                <option <?= ($resultado['html5'] == '2' ? "selected" : ""); ?> value="2">2</option>
+                <option <?= ($resultado['html5'] == '3' ? "selected" : ""); ?> value="3">3</option>
+                <option <?= ($resultado['html5'] == '4' ? "selected" : ""); ?> value="4">4</option>
+                <option <?= ($resultado['html5'] == '5' ? "selected" : ""); ?> value="5">5</option>
+                <option <?= ($resultado['html5'] == '6' ? "selected" : ""); ?> value="6">6</option>
+                <option <?= ($resultado['html5'] == '7' ? "selected" : ""); ?> value="7">7</option>
+                <option <?= ($resultado['html5'] == '8' ? "selected" : ""); ?> value="8">8</option>
+                <option <?= ($resultado['html5'] == '9' ? "selected" : ""); ?> value="9">9</option>
+                <option <?= ($resultado['html5'] == '10' ? "selected" : ""); ?> value="10">10</option>
             </select>
-          </div>
-          <div class="box box20">
+        </div>
+        <div class="box box20">
             <p class="texto_form">CSS</p>
             <select name="css" required class="" style="width: 100%;">
-              <option <?= ($resultado['css'] == '1' ? "selected" : ""); ?> value="1">1</option>
-              <option <?= ($resultado['css'] == '2' ? "selected" : ""); ?> value="2">2</option>
-              <option <?= ($resultado['css'] == '3' ? "selected" : ""); ?> value="3">3</option>
-              <option <?= ($resultado['css'] == '4' ? "selected" : ""); ?> value="4">4</option>
-              <option <?= ($resultado['css'] == '5' ? "selected" : ""); ?> value="5">5</option>
-              <option <?= ($resultado['css'] == '6' ? "selected" : ""); ?> value="6">6</option>
-              <option <?= ($resultado['css'] == '7' ? "selected" : ""); ?> value="7">7</option>
-              <option <?= ($resultado['css'] == '8' ? "selected" : ""); ?> value="8">8</option>
-              <option <?= ($resultado['css'] == '9' ? "selected" : ""); ?> value="9">9</option>
-              <option <?= ($resultado['css'] == '10' ? "selected" : ""); ?> value="10">10</option>
+                <option <?= ($resultado['css'] == '1' ? "selected" : ""); ?> value="1">1</option>
+                <option <?= ($resultado['css'] == '2' ? "selected" : ""); ?> value="2">2</option>
+                <option <?= ($resultado['css'] == '3' ? "selected" : ""); ?> value="3">3</option>
+                <option <?= ($resultado['css'] == '4' ? "selected" : ""); ?> value="4">4</option>
+                <option <?= ($resultado['css'] == '5' ? "selected" : ""); ?> value="5">5</option>
+                <option <?= ($resultado['css'] == '6' ? "selected" : ""); ?> value="6">6</option>
+                <option <?= ($resultado['css'] == '7' ? "selected" : ""); ?> value="7">7</option>
+                <option <?= ($resultado['css'] == '8' ? "selected" : ""); ?> value="8">8</option>
+                <option <?= ($resultado['css'] == '9' ? "selected" : ""); ?> value="9">9</option>
+                <option <?= ($resultado['css'] == '10' ? "selected" : ""); ?> value="10">10</option>
             </select>
-          </div>
+        </div>
 
-          <div class="box box20">
+        <div class="box box20">
             <p class="texto_form">Javascript</p>
             <select name="java" required class="" style="width: 100%;">
-              <option <?= ($resultado['java'] == '1' ? "selected" : ""); ?> value="1">1</option>
-              <option <?= ($resultado['java'] == '2' ? "selected" : ""); ?> value="2">2</option>
-              <option <?= ($resultado['java'] == '3' ? "selected" : ""); ?> value="3">3</option>
-              <option <?= ($resultado['java'] == '4' ? "selected" : ""); ?> value="4">4</option>
-              <option <?= ($resultado['java'] == '5' ? "selected" : ""); ?> value="5">5</option>
-              <option <?= ($resultado['java'] == '6' ? "selected" : ""); ?> value="6">6</option>
-              <option <?= ($resultado['java'] == '7' ? "selected" : ""); ?> value="7">7</option>
-              <option <?= ($resultado['java'] == '8' ? "selected" : ""); ?> value="8">8</option>
-              <option <?= ($resultado['java'] == '9' ? "selected" : ""); ?> value="9">9</option>
-              <option <?= ($resultado['java'] == '10' ? "selected" : ""); ?> value="10">10</option>
+                <option <?= ($resultado['java'] == '1' ? "selected" : ""); ?> value="1">1</option>
+                <option <?= ($resultado['java'] == '2' ? "selected" : ""); ?> value="2">2</option>
+                <option <?= ($resultado['java'] == '3' ? "selected" : ""); ?> value="3">3</option>
+                <option <?= ($resultado['java'] == '4' ? "selected" : ""); ?> value="4">4</option>
+                <option <?= ($resultado['java'] == '5' ? "selected" : ""); ?> value="5">5</option>
+                <option <?= ($resultado['java'] == '6' ? "selected" : ""); ?> value="6">6</option>
+                <option <?= ($resultado['java'] == '7' ? "selected" : ""); ?> value="7">7</option>
+                <option <?= ($resultado['java'] == '8' ? "selected" : ""); ?> value="8">8</option>
+                <option <?= ($resultado['java'] == '9' ? "selected" : ""); ?> value="9">9</option>
+                <option <?= ($resultado['java'] == '10' ? "selected" : ""); ?> value="10">10</option>
             </select>
-          </div>
+        </div>
 
-          <div class="box box20 no-margim">
+        <div class="box box20 no-margim">
             <p class="texto_form">PHP</p>
             <select name="php" required class="" style="width: 100%;">
-              <option <?= ($resultado['php'] == '1' ? "selected" : ""); ?> value="1">1</option>
-              <option <?= ($resultado['php'] == '2' ? "selected" : ""); ?> value="2">2</option>
-              <option <?= ($resultado['php'] == '3' ? "selected" : ""); ?> value="3">3</option>
-              <option <?= ($resultado['php'] == '4' ? "selected" : ""); ?> value="4">4</option>
-              <option <?= ($resultado['php'] == '5' ? "selected" : ""); ?> value="5">5</option>
-              <option <?= ($resultado['php'] == '6' ? "selected" : ""); ?> value="6">6</option>
-              <option <?= ($resultado['php'] == '7' ? "selected" : ""); ?> value="7">7</option>
-              <option <?= ($resultado['php'] == '8' ? "selected" : ""); ?> value="8">8</option>
-              <option <?= ($resultado['php'] == '9' ? "selected" : ""); ?> value="9">9</option>
-              <option <?= ($resultado['php'] == '10' ? "selected" : ""); ?> value="10">10</option>
+                <option <?= ($resultado['php'] == '1' ? "selected" : ""); ?> value="1">1</option>
+                <option <?= ($resultado['php'] == '2' ? "selected" : ""); ?> value="2">2</option>
+                <option <?= ($resultado['php'] == '3' ? "selected" : ""); ?> value="3">3</option>
+                <option <?= ($resultado['php'] == '4' ? "selected" : ""); ?> value="4">4</option>
+                <option <?= ($resultado['php'] == '5' ? "selected" : ""); ?> value="5">5</option>
+                <option <?= ($resultado['php'] == '6' ? "selected" : ""); ?> value="6">6</option>
+                <option <?= ($resultado['php'] == '7' ? "selected" : ""); ?> value="7">7</option>
+                <option <?= ($resultado['php'] == '8' ? "selected" : ""); ?> value="8">8</option>
+                <option <?= ($resultado['php'] == '9' ? "selected" : ""); ?> value="9">9</option>
+                <option <?= ($resultado['php'] == '10' ? "selected" : ""); ?> value="10">10</option>
             </select>
-          </div>
-          <div class="limpar"></div>
+        </div>
+        <div class="limpar"></div>
 
-          <div class="box box20">
+        <div class="box box20">
             <p class="texto_form">Jquery/Ajax</p>
             <select name="jquery" required class="" style="width: 100%;">
-              <option <?= ($resultado['jquery'] == '1' ? "selected" : ""); ?> value="1">1</option>
-              <option <?= ($resultado['jquery'] == '2' ? "selected" : ""); ?> value="2">2</option>
-              <option <?= ($resultado['jquery'] == '3' ? "selected" : ""); ?> value="3">3</option>
-              <option <?= ($resultado['jquery'] == '4' ? "selected" : ""); ?> value="4">4</option>
-              <option <?= ($resultado['jquery'] == '5' ? "selected" : ""); ?> value="5">5</option>
-              <option <?= ($resultado['jquery'] == '6' ? "selected" : ""); ?> value="6">6</option>
-              <option <?= ($resultado['jquery'] == '7' ? "selected" : ""); ?> value="7">7</option>
-              <option <?= ($resultado['jquery'] == '8' ? "selected" : ""); ?> value="8">8</option>
-              <option <?= ($resultado['jquery'] == '9' ? "selected" : ""); ?> value="9">9</option>
-              <option <?= ($resultado['jquery'] == '10' ? "selected" : ""); ?> value="10">10</option>
+                <option <?= ($resultado['jquery'] == '1' ? "selected" : ""); ?> value="1">1</option>
+                <option <?= ($resultado['jquery'] == '2' ? "selected" : ""); ?> value="2">2</option>
+                <option <?= ($resultado['jquery'] == '3' ? "selected" : ""); ?> value="3">3</option>
+                <option <?= ($resultado['jquery'] == '4' ? "selected" : ""); ?> value="4">4</option>
+                <option <?= ($resultado['jquery'] == '5' ? "selected" : ""); ?> value="5">5</option>
+                <option <?= ($resultado['jquery'] == '6' ? "selected" : ""); ?> value="6">6</option>
+                <option <?= ($resultado['jquery'] == '7' ? "selected" : ""); ?> value="7">7</option>
+                <option <?= ($resultado['jquery'] == '8' ? "selected" : ""); ?> value="8">8</option>
+                <option <?= ($resultado['jquery'] == '9' ? "selected" : ""); ?> value="9">9</option>
+                <option <?= ($resultado['jquery'] == '10' ? "selected" : ""); ?> value="10">10</option>
             </select>
-          </div>
+        </div>
 
-          <div class="box box20">
+        <div class="box box20">
             <p class="texto_form">Api externas</p>
             <select name="api" required class="" style="width: 100%;">
-              <option <?= ($resultado['api'] == '1' ? "selected" : ""); ?> value="1">1</option>
-              <option <?= ($resultado['api'] == '2' ? "selected" : ""); ?> value="2">2</option>
-              <option <?= ($resultado['api'] == '3' ? "selected" : ""); ?> value="3">3</option>
-              <option <?= ($resultado['api'] == '4' ? "selected" : ""); ?> value="4">4</option>
-              <option <?= ($resultado['api'] == '5' ? "selected" : ""); ?> value="5">5</option>
-              <option <?= ($resultado['api'] == '6' ? "selected" : ""); ?> value="6">6</option>
-              <option <?= ($resultado['api'] == '7' ? "selected" : ""); ?> value="7">7</option>
-              <option <?= ($resultado['api'] == '8' ? "selected" : ""); ?> value="8">8</option>
-              <option <?= ($resultado['api'] == '9' ? "selected" : ""); ?> value="9">9</option>
-              <option <?= ($resultado['api'] == '10' ? "selected" : ""); ?> value="10">10</option>
+                <option <?= ($resultado['api'] == '1' ? "selected" : ""); ?> value="1">1</option>
+                <option <?= ($resultado['api'] == '2' ? "selected" : ""); ?> value="2">2</option>
+                <option <?= ($resultado['api'] == '3' ? "selected" : ""); ?> value="3">3</option>
+                <option <?= ($resultado['api'] == '4' ? "selected" : ""); ?> value="4">4</option>
+                <option <?= ($resultado['api'] == '5' ? "selected" : ""); ?> value="5">5</option>
+                <option <?= ($resultado['api'] == '6' ? "selected" : ""); ?> value="6">6</option>
+                <option <?= ($resultado['api'] == '7' ? "selected" : ""); ?> value="7">7</option>
+                <option <?= ($resultado['api'] == '8' ? "selected" : ""); ?> value="8">8</option>
+                <option <?= ($resultado['api'] == '9' ? "selected" : ""); ?> value="9">9</option>
+                <option <?= ($resultado['api'] == '10' ? "selected" : ""); ?> value="10">10</option>
             </select>
-          </div>
+        </div>
 
-          <div class="box box20">
+        <div class="box box20">
             <p class="texto_form">SEO</p>
             <select name="seo" required class="" style="width: 100%;">
-              <option <?= ($resultado['seo'] == '1' ? "selected" : ""); ?> value="1">1</option>
-              <option <?= ($resultado['seo'] == '2' ? "selected" : ""); ?> value="2">2</option>
-              <option <?= ($resultado['seo'] == '3' ? "selected" : ""); ?> value="3">3</option>
-              <option <?= ($resultado['seo'] == '4' ? "selected" : ""); ?> value="4">4</option>
-              <option <?= ($resultado['seo'] == '5' ? "selected" : ""); ?> value="5">5</option>
-              <option <?= ($resultado['seo'] == '6' ? "selected" : ""); ?> value="6">6</option>
-              <option <?= ($resultado['seo'] == '7' ? "selected" : ""); ?> value="7">7</option>
-              <option <?= ($resultado['seo'] == '8' ? "selected" : ""); ?> value="8">8</option>
-              <option <?= ($resultado['seo'] == '9' ? "selected" : ""); ?> value="9">9</option>
-              <option <?= ($resultado['seo'] == '10' ? "selected" : ""); ?> value="10">10</option>
+                <option <?= ($resultado['seo'] == '1' ? "selected" : ""); ?> value="1">1</option>
+                <option <?= ($resultado['seo'] == '2' ? "selected" : ""); ?> value="2">2</option>
+                <option <?= ($resultado['seo'] == '3' ? "selected" : ""); ?> value="3">3</option>
+                <option <?= ($resultado['seo'] == '4' ? "selected" : ""); ?> value="4">4</option>
+                <option <?= ($resultado['seo'] == '5' ? "selected" : ""); ?> value="5">5</option>
+                <option <?= ($resultado['seo'] == '6' ? "selected" : ""); ?> value="6">6</option>
+                <option <?= ($resultado['seo'] == '7' ? "selected" : ""); ?> value="7">7</option>
+                <option <?= ($resultado['seo'] == '8' ? "selected" : ""); ?> value="8">8</option>
+                <option <?= ($resultado['seo'] == '9' ? "selected" : ""); ?> value="9">9</option>
+                <option <?= ($resultado['seo'] == '10' ? "selected" : ""); ?> value="10">10</option>
             </select>
-          </div>
+        </div>
 
-          <div class="box box20">
+        <div class="box box20">
             <p class="texto_form">SMO</p>
             <select name="smo" required class="" style="width: 100%;">
-              <option <?= ($resultado['smo'] == '1' ? "selected" : ""); ?> value="1">1</option>
-              <option <?= ($resultado['smo'] == '2' ? "selected" : ""); ?> value="2">2</option>
-              <option <?= ($resultado['smo'] == '3' ? "selected" : ""); ?> value="3">3</option>
-              <option <?= ($resultado['smo'] == '4' ? "selected" : ""); ?> value="4">4</option>
-              <option <?= ($resultado['smo'] == '5' ? "selected" : ""); ?> value="5">5</option>
-              <option <?= ($resultado['smo'] == '6' ? "selected" : ""); ?> value="6">6</option>
-              <option <?= ($resultado['smo'] == '7' ? "selected" : ""); ?> value="7">7</option>
-              <option <?= ($resultado['smo'] == '8' ? "selected" : ""); ?> value="8">8</option>
-              <option <?= ($resultado['smo'] == '9' ? "selected" : ""); ?> value="9">9</option>
-              <option <?= ($resultado['smo'] == '10' ? "selected" : ""); ?> value="10">10</option>
+                <option <?= ($resultado['smo'] == '1' ? "selected" : ""); ?> value="1">1</option>
+                <option <?= ($resultado['smo'] == '2' ? "selected" : ""); ?> value="2">2</option>
+                <option <?= ($resultado['smo'] == '3' ? "selected" : ""); ?> value="3">3</option>
+                <option <?= ($resultado['smo'] == '4' ? "selected" : ""); ?> value="4">4</option>
+                <option <?= ($resultado['smo'] == '5' ? "selected" : ""); ?> value="5">5</option>
+                <option <?= ($resultado['smo'] == '6' ? "selected" : ""); ?> value="6">6</option>
+                <option <?= ($resultado['smo'] == '7' ? "selected" : ""); ?> value="7">7</option>
+                <option <?= ($resultado['smo'] == '8' ? "selected" : ""); ?> value="8">8</option>
+                <option <?= ($resultado['smo'] == '9' ? "selected" : ""); ?> value="9">9</option>
+                <option <?= ($resultado['smo'] == '10' ? "selected" : ""); ?> value="10">10</option>
             </select>
-          </div>
-
-
-
-          <div class="box box20 no-margim">
-            <p class="texto_form">Mysql</p>
-            <select name="mysql" required class="" style="width: 100%;">
-              <option <?= ($resultado['mysql'] == '1' ? "selected" : ""); ?> value="1">1</option>
-              <option <?= ($resultado['mysql'] == '2' ? "selected" : ""); ?> value="2">2</option>
-              <option <?= ($resultado['mysql'] == '3' ? "selected" : ""); ?> value="3">3</option>
-              <option <?= ($resultado['mysql'] == '4' ? "selected" : ""); ?> value="4">4</option>
-              <option <?= ($resultado['mysql'] == '5' ? "selected" : ""); ?> value="5">5</option>
-              <option <?= ($resultado['mysql'] == '6' ? "selected" : ""); ?> value="6">6</option>
-              <option <?= ($resultado['mysql'] == '7' ? "selected" : ""); ?> value="7">7</option>
-              <option <?= ($resultado['mysql'] == '8' ? "selected" : ""); ?> value="8">8</option>
-              <option <?= ($resultado['mysql'] == '9' ? "selected" : ""); ?> value="9">9</option>
-              <option <?= ($resultado['mysql'] == '10' ? "selected" : ""); ?> value="10">10</option>
-            </select>
-          </div>
-
-          <div class="limpar"></div>
-
-          <div class="box box20">
-            <p class="texto_form">Status</p>
-            <select name="status" required class="" style="width: 100%;">
-              <option <?= ($resultado['status'] == '1' ? "selected" : ""); ?> value="1">Aparecer no site</option>
-              <option <?= ($resultado['status'] == '2' ? "selected" : ""); ?> value="2">Não aparecer no site</option>
-            </select>
-          </div>
-          <div class="box box20">
-            <p class="texto_form">Site online</p>
-            <select name="site_online" required class="" style="width: 100%;">
-              <option <?= ($resultado['site_online'] == '1' ? "selected" : ""); ?> value="1">Sim</option>
-              <option <?= ($resultado['site_online'] == '2' ? "selected" : ""); ?> value="2">Não</option>
-            </select>
-          </div>
-          <div class="limpar"></div>
-          <br>
-          <textarea name="obs" id="elm8" rows="10" placeholder="Observações" style=" width: 100%; height: 150px"><?= $resultado['txt']; ?></textarea>
         </div>
 
 
-        <div class="box box20 no-margim">
 
-          <p class="texto_form"></p>
-          <?php
+        <div class="box box20 no-margim">
+            <p class="texto_form">Mysql</p>
+            <select name="mysql" required class="" style="width: 100%;">
+                <option <?= ($resultado['mysql'] == '1' ? "selected" : ""); ?> value="1">1</option>
+                <option <?= ($resultado['mysql'] == '2' ? "selected" : ""); ?> value="2">2</option>
+                <option <?= ($resultado['mysql'] == '3' ? "selected" : ""); ?> value="3">3</option>
+                <option <?= ($resultado['mysql'] == '4' ? "selected" : ""); ?> value="4">4</option>
+                <option <?= ($resultado['mysql'] == '5' ? "selected" : ""); ?> value="5">5</option>
+                <option <?= ($resultado['mysql'] == '6' ? "selected" : ""); ?> value="6">6</option>
+                <option <?= ($resultado['mysql'] == '7' ? "selected" : ""); ?> value="7">7</option>
+                <option <?= ($resultado['mysql'] == '8' ? "selected" : ""); ?> value="8">8</option>
+                <option <?= ($resultado['mysql'] == '9' ? "selected" : ""); ?> value="9">9</option>
+                <option <?= ($resultado['mysql'] == '10' ? "selected" : ""); ?> value="10">10</option>
+            </select>
+        </div>
+
+        <div class="limpar"></div>
+
+        <div class="box box20">
+            <p class="texto_form">Status</p>
+            <select name="status" required class="" style="width: 100%;">
+                <option <?= ($resultado['status'] == '1' ? "selected" : ""); ?> value="1">Aparecer no site</option>
+                <option <?= ($resultado['status'] == '2' ? "selected" : ""); ?> value="2">Não aparecer no site</option>
+            </select>
+        </div>
+        <div class="box box20">
+            <p class="texto_form">Site online</p>
+            <select name="site_online" required class="" style="width: 100%;">
+                <option <?= ($resultado['site_online'] == '1' ? "selected" : ""); ?> value="1">Sim</option>
+                <option <?= ($resultado['site_online'] == '2' ? "selected" : ""); ?> value="2">Não</option>
+            </select>
+        </div>
+        <div class="limpar"></div>
+        <br>
+        <textarea name="obs" id="elm8" rows="10" placeholder="Observações" style=" width: 100%; height: 150px"><?= $resultado['txt']; ?></textarea>
+    </div>
+
+
+    <div class="box box20 no-margim">
+
+        <p class="texto_form"></p>
+        <?php
           if ($resultado['capa'] == '') :
             echo '<img class="user_thumb" style="width: 100%;" alt="Foto do usuário" title="Foto do usuário" src="' . HOME . 'imagens_fixas/sem_imagem.jpg" default="' . HOME . 'imagens_fixas/sem_imagem.jpg">';
           else :
             echo '<img class="user_thumb" style="width: 100%;" alt="Foto do usuário" title="Foto do usuário" src="' . HOME . 'imagens_site/' . $resultado['capa'] . '" default="' . HOME . 'imagens_site/' . $resultado['capa'] . '">';
           endif;
           ?>
-          <div class="box_content">
+        <div class="box_content">
             <div class="limpar"></div>
             <div class="mensagem_imagem ds-none">
-              <p><b></b></p>
+                <p><b></b></p>
             </div>
             <span class="legend">Foto (800x418px, JPG ou PNG):</span>
             <div class="limpar" style=" margin-bottom: 2%"></div>
@@ -2515,36 +2523,36 @@ switch ($_POST['acao']) {
             <div class="limpar"></div>
 
             <div class="upload_bar m_top m_botton">
-              <div class="upload_progress ds-none">0%</div>
+                <div class="upload_progress ds-none">0%</div>
             </div>
             <img class="form_load ds-none fl_right" style="margin-left: 10px; margin-top: 2px;" alt="Enviando Requisição!" title="Enviando Requisição!" src="imagens_fixas/carregando2.gif" />
-          </div>
-          <br>
-
-          <span class="legend">Foto completa</span>
-          <div class="limpar" style=" margin-bottom: 2%"></div>
-          <label class="label_file" for='selecao-arquivo5'>Selecionar um arquivo</label>
-          <input id='selecao-arquivo5' type="file" name="img_documento" class="wc_loadimage" />
-          <div class="limpar"></div>
-
-          <a href="<?= HOME; ?>imagens_site/<?= $resultado['capa_larga']; ?>" target="_blank" style=" width: 100%"><i class="fas fa-laptop"></i> Imagem completa</a>
-          <div class="limpar"></div>
-          <br>
-          <button class="btn btn_green fl-left" style="font-size: 0.8em; margin-right: 1%; width: 60%;">
-            <figure class="icon-pencil-square-o" style=" font-size: 1.2em; margin-top: -2%; margin-right: 1%;"></figure> Alterar
-          </button>
-          <span class="carregando2 ds-none"><img src="<?= HOME; ?>imagens_fixas/carregando2.gif" /></span>
         </div>
+        <br>
 
+        <span class="legend">Foto completa</span>
+        <div class="limpar" style=" margin-bottom: 2%"></div>
+        <label class="label_file" for='selecao-arquivo5'>Selecionar um arquivo</label>
+        <input id='selecao-arquivo5' type="file" name="img_documento" class="wc_loadimage" />
+        <div class="limpar"></div>
+
+        <a href="<?= HOME; ?>imagens_site/<?= $resultado['capa_larga']; ?>" target="_blank" style=" width: 100%"><i class="fas fa-laptop"></i> Imagem completa</a>
         <div class="limpar"></div>
         <br>
-        <input type="hidden" name="id" value="<?= $resultado['id']; ?>" />
-        <input type="hidden" name="acao" value="capa_larga" />
+        <button class="btn btn_green fl-left" style="font-size: 0.8em; margin-right: 1%; width: 60%;">
+            <figure class="icon-pencil-square-o" style=" font-size: 1.2em; margin-top: -2%; margin-right: 1%;"></figure> Alterar
+        </button>
+        <span class="carregando2 ds-none"><img src="<?= HOME; ?>imagens_fixas/carregando2.gif" /></span>
+    </div>
+
+    <div class="limpar"></div>
+    <br>
+    <input type="hidden" name="id" value="<?= $resultado['id']; ?>" />
+    <input type="hidden" name="acao" value="capa_larga" />
 
 
-        <div class="limpar"></div>
-      </form>
-    <?php
+    <div class="limpar"></div>
+</form>
+<?php
       break;
     case 'cad_portfolioo':
 
@@ -2742,140 +2750,141 @@ switch ($_POST['acao']) {
       $ultimo->ExeRead('cliente', "WHERE id = :id", 'id=' . $c['id'] . '');
       foreach ($ultimo->getResult() as $resultado);
     ?>
-      <script>
-        jQuery(function($) {
-          $("#mascara_celular22").mask("(99)99999-9999");
-          $("#mascara_telefone22").mask("(99)99999-9999");
-          $("#mascara_telefone23").mask("(99)99999-9999");
-          //$(".js-example-basic-single").select2({ dropdownParent: "#modal-container" });
-          $("select").select2();
-        });
-      </script>
-      <form class="form_linha" method="post" name="editar_cliente" enctype="multipart/form-data">
-        <h1 class="topo_modal">Alterar empresa</h1>
-        <div class="limpar"></div>
-        <div class="box box80">
-          <div class="box box50">
+<script>
+    jQuery(function($) {
+        $("#mascara_celular22").mask("(99)99999-9999");
+        $("#mascara_telefone22").mask("(99)99999-9999");
+        $("#mascara_telefone23").mask("(99)99999-9999");
+        //$(".js-example-basic-single").select2({ dropdownParent: "#modal-container" });
+        $("select").select2();
+    });
+
+</script>
+<form class="form_linha" method="post" name="editar_cliente" enctype="multipart/form-data">
+    <h1 class="topo_modal">Alterar empresa</h1>
+    <div class="limpar"></div>
+    <div class="box box80">
+        <div class="box box50">
             <p class="texto_form">Nome fantasia</p>
             <input name="nome" type="text" required placeholder="Nome fantasia" value="<?= $resultado['nome']; ?>" style=" width: 100%;" />
-          </div>
-          <div class="box box50 no-margim">
+        </div>
+        <div class="box box50 no-margim">
             <p class="texto_form">Nome da empresa</p>
             <input name="nome_empresa" type="text" placeholder="Nome da empresa" value="<?= $resultado['nome_empresa']; ?>" style=" width: 100%;" />
-          </div>
-          <div class="limpar"></div>
-          <div class="box box33">
+        </div>
+        <div class="limpar"></div>
+        <div class="box box33">
             <p class="texto_form">CNPJ ou CPF</p>
             <input name="cnpj_cpf" type="text" required value="<?= $resultado['cnpj_cpf']; ?>" placeholder="Seu CPF ou CNPJ (obrigatório)" onkeypress='mascaraMutuario(this, cpfCnpj)' onblur='clearTimeout()' style="width: 100%" />
-          </div>
-          <div class="box box33">
+        </div>
+        <div class="box box33">
             <p class="texto_form">Inscrição estadual</p>
             <input name="ie" type="text" placeholder="Inscrição estadual" value="<?= $resultado['ie']; ?>" style=" width: 100%;" />
-          </div>
-          <div class="box box33 no-margim">
+        </div>
+        <div class="box box33 no-margim">
             <p class="texto_form">Inscrição municipal</p>
             <input name="im" type="text" placeholder="Inscrição municipal" value="<?= $resultado['im']; ?>" style=" width: 100%;" />
-          </div>
-          <div class="limpar"></div>
-          <div class="box box33">
+        </div>
+        <div class="limpar"></div>
+        <div class="box box33">
             <p class="texto_form">Telefone</p>
             <input name="tel" type="text" required placeholder="Telefone" value="<?= $resultado['tel']; ?>" id="mascara_telefone2" style=" width: 100%;" />
-          </div>
-          <div class="box box33">
+        </div>
+        <div class="box box33">
             <p class="texto_form">Telefone</p>
             <input name="tel2" type="text" placeholder="Telefone" value="<?= $resultado['tel2']; ?>" id="mascara_celular2" style=" width: 100%;" />
-          </div>
-          <div class="box box33 no-margim">
+        </div>
+        <div class="box box33 no-margim">
             <p class="texto_form">Telefone</p>
             <input name="tel3" type="text" placeholder="Telefone" value="<?= $resultado['tel3']; ?>" id="mascara_celular3" style=" width: 100%;" />
-          </div>
-
-          <div class="limpar"></div>
-          <div class="box box50">
-            <p class="texto_form">Categoria</p>
-            <select name="categoria" required style="width: 100%;">
-              <option <?= ($resultado['categoria'] == '1' ? "selected" : ""); ?> value="1">Cliente efetivo</option>
-              <option <?= ($resultado['categoria'] == '2' ? "selected" : ""); ?> value="2">Cliente em potencial</option>
-              <option <?= ($resultado['categoria'] == '3' ? "selected" : ""); ?> value="3">Concorrente</option>
-              <option <?= ($resultado['categoria'] == '4' ? "selected" : ""); ?> value="4">Fornecedor</option>
-              <option <?= ($resultado['categoria'] == '5' ? "selected" : ""); ?> value="5">Parceiro</option>
-            </select>
-          </div>
-          <div class="box box50 no-margim">
-            <p class="texto_form">Origem</p>
-            <select name="origem" required style="width: 100%;">
-              <option <?= ($resultado['origem'] == '1' ? "selected" : ""); ?> value="1">Site</option>
-              <option <?= ($resultado['origem'] == '2' ? "selected" : ""); ?> value="2">Telefone/Celular</option>
-              <option <?= ($resultado['origem'] == '3' ? "selected" : ""); ?> value="3">Formulário de contato</option>
-              <option <?= ($resultado['origem'] == '4' ? "selected" : ""); ?> value="4">Whatsapp</option>
-              <option <?= ($resultado['origem'] == '5' ? "selected" : ""); ?> value="5">E-mail</option>
-              <option <?= ($resultado['origem'] == '6' ? "selected" : ""); ?> value="6">Facebook</option>
-              <option <?= ($resultado['origem'] == '7' ? "selected" : ""); ?> value="7">Instagram</option>
-              <option <?= ($resultado['origem'] == '8' ? "selected" : ""); ?> value="8">Twitter</option>
-            </select>
-          </div>
-          <div class="limpar"></div>
-          <p class="legenda_form">Endereço completo</p>
-          <div class="box box-completa">
-            <input name="cep" class="cep_cad_parsa" type="text" placeholder="Seu CEP *" value="<?= $resultado['cep']; ?>" id="csp mascara_cep" style=" width: 99%;" />
-            <div class="load2" style=" display: none"></div>
-          </div>
-          <div class="box box70">
-            <input name="rua" type="text" placeholder="Rua, Avenida" value="<?= $resultado['logado']; ?>" id="logradourop" style=" width: 100%;" />
-          </div>
-          <div class="box box30 no-margim">
-            <input name="numero" type="text" placeholder="Nº" value="<?= $resultado['numero']; ?>" style=" width: 100%;" />
-          </div>
-          <div class="limpar"></div>
-
-          <div class="box box-completa">
-            <input name="complemento" type="text" placeholder="Complemento" value="<?= $resultado['complemento']; ?>" style=" width: 99%;" />
-          </div>
-          <div class="limpar"></div>
-
-          <div class="box box35">
-            <input name="bairro" type="text" placeholder="Bairro" value="<?= $resultado['bairro']; ?>" id="bairrop" style=" width: 100%;" />
-          </div>
-          <div class="box box35">
-            <input name="cidade" type="text" placeholder="Cidade" value="<?= $resultado['municipio']; ?>" id="localidadep" style=" width: 100%;" />
-          </div>
-
-          <div class="box box30 no-margim">
-            <input name="estado" type="text" placeholder="Estado" value="<?= $resultado['estado']; ?>" id="ufp" style=" width: 100%;" />
-          </div>
-          <div class="limpar"></div>
-          <div class="box box50">
-            <p class="texto_form">Status (obrigatório)</p>
-            <select name="status" required class="js-example-basic-single" style="width: 100%;">
-              <option <?= ($resultado['status'] == '1' ? "selected" : ""); ?> value="1">Ativo</option>
-              <option <?= ($resultado['status'] == '2' ? "selected" : ""); ?> value="2">Inativo</option>
-            </select>
-          </div>
-          <div class="box box50 no-margim">
-            <p class="texto_form">Propaganda</p>
-            <select name="propaganda" required class="js-example-basic-single" style="width: 100%;">
-              <option <?= ($resultado['propaganda'] == '1' ? "selected" : ""); ?> value="1">Aparecer no site</option>
-              <option <?= ($resultado['propaganda'] == '2' ? "selected" : ""); ?> value="2">Não aparecer no site</option>
-            </select>
-          </div>
-          <div class="limpar"></div>
-          <textarea name="obs" id="elm4" rows="10" placeholder="Observações" style=" width: 100%; height: 150px"><?= $resultado['obs']; ?></textarea>
         </div>
 
+        <div class="limpar"></div>
+        <div class="box box50">
+            <p class="texto_form">Categoria</p>
+            <select name="categoria" required style="width: 100%;">
+                <option <?= ($resultado['categoria'] == '1' ? "selected" : ""); ?> value="1">Cliente efetivo</option>
+                <option <?= ($resultado['categoria'] == '2' ? "selected" : ""); ?> value="2">Cliente em potencial</option>
+                <option <?= ($resultado['categoria'] == '3' ? "selected" : ""); ?> value="3">Concorrente</option>
+                <option <?= ($resultado['categoria'] == '4' ? "selected" : ""); ?> value="4">Fornecedor</option>
+                <option <?= ($resultado['categoria'] == '5' ? "selected" : ""); ?> value="5">Parceiro</option>
+            </select>
+        </div>
+        <div class="box box50 no-margim">
+            <p class="texto_form">Origem</p>
+            <select name="origem" required style="width: 100%;">
+                <option <?= ($resultado['origem'] == '1' ? "selected" : ""); ?> value="1">Site</option>
+                <option <?= ($resultado['origem'] == '2' ? "selected" : ""); ?> value="2">Telefone/Celular</option>
+                <option <?= ($resultado['origem'] == '3' ? "selected" : ""); ?> value="3">Formulário de contato</option>
+                <option <?= ($resultado['origem'] == '4' ? "selected" : ""); ?> value="4">Whatsapp</option>
+                <option <?= ($resultado['origem'] == '5' ? "selected" : ""); ?> value="5">E-mail</option>
+                <option <?= ($resultado['origem'] == '6' ? "selected" : ""); ?> value="6">Facebook</option>
+                <option <?= ($resultado['origem'] == '7' ? "selected" : ""); ?> value="7">Instagram</option>
+                <option <?= ($resultado['origem'] == '8' ? "selected" : ""); ?> value="8">Twitter</option>
+            </select>
+        </div>
+        <div class="limpar"></div>
+        <p class="legenda_form">Endereço completo</p>
+        <div class="box box-completa">
+            <input name="cep" class="cep_cad_parsa" type="text" placeholder="Seu CEP *" value="<?= $resultado['cep']; ?>" id="csp mascara_cep" style=" width: 99%;" />
+            <div class="load2" style=" display: none"></div>
+        </div>
+        <div class="box box70">
+            <input name="rua" type="text" placeholder="Rua, Avenida" value="<?= $resultado['logado']; ?>" id="logradourop" style=" width: 100%;" />
+        </div>
+        <div class="box box30 no-margim">
+            <input name="numero" type="text" placeholder="Nº" value="<?= $resultado['numero']; ?>" style=" width: 100%;" />
+        </div>
+        <div class="limpar"></div>
 
-        <div class="box box20 no-margim">
+        <div class="box box-completa">
+            <input name="complemento" type="text" placeholder="Complemento" value="<?= $resultado['complemento']; ?>" style=" width: 99%;" />
+        </div>
+        <div class="limpar"></div>
 
-          <?php
+        <div class="box box35">
+            <input name="bairro" type="text" placeholder="Bairro" value="<?= $resultado['bairro']; ?>" id="bairrop" style=" width: 100%;" />
+        </div>
+        <div class="box box35">
+            <input name="cidade" type="text" placeholder="Cidade" value="<?= $resultado['municipio']; ?>" id="localidadep" style=" width: 100%;" />
+        </div>
+
+        <div class="box box30 no-margim">
+            <input name="estado" type="text" placeholder="Estado" value="<?= $resultado['estado']; ?>" id="ufp" style=" width: 100%;" />
+        </div>
+        <div class="limpar"></div>
+        <div class="box box50">
+            <p class="texto_form">Status (obrigatório)</p>
+            <select name="status" required class="js-example-basic-single" style="width: 100%;">
+                <option <?= ($resultado['status'] == '1' ? "selected" : ""); ?> value="1">Ativo</option>
+                <option <?= ($resultado['status'] == '2' ? "selected" : ""); ?> value="2">Inativo</option>
+            </select>
+        </div>
+        <div class="box box50 no-margim">
+            <p class="texto_form">Propaganda</p>
+            <select name="propaganda" required class="js-example-basic-single" style="width: 100%;">
+                <option <?= ($resultado['propaganda'] == '1' ? "selected" : ""); ?> value="1">Aparecer no site</option>
+                <option <?= ($resultado['propaganda'] == '2' ? "selected" : ""); ?> value="2">Não aparecer no site</option>
+            </select>
+        </div>
+        <div class="limpar"></div>
+        <textarea name="obs" id="elm4" rows="10" placeholder="Observações" style=" width: 100%; height: 150px"><?= $resultado['obs']; ?></textarea>
+    </div>
+
+
+    <div class="box box20 no-margim">
+
+        <?php
           if ($resultado['logo'] == '') :
             echo '<img class="user_thumb" style="width: 100%; border: 1px solid #000;" alt="Foto do usuário" title="Foto do usuário" src="' . HOME . 'imagens_fixas/sem_imagem.jpg" default="' . HOME . 'imagens_fixas/sem_imagem.jpg">';
           else :
             echo '<img class="user_thumb" style="width: 100%; border: 1px solid #000;" alt="Foto do usuário" title="Foto do usuário" src="' . HOME . 'imagens_site/' . $resultado['logo'] . '" default="' . HOME . 'imagens_site/' . $resultado['logo'] . '">';
           endif;
           ?>
-          <div class="box_content">
+        <div class="box_content">
             <div class="limpar"></div>
             <div class="mensagem_imagem ds-none">
-              <p><b></b></p>
+                <p><b></b></p>
             </div>
             <p class="texto_form">Foto (500x500px, JPG ou PNG):</p>
             <div class="limpar" style=" margin-bottom: 2%"></div>
@@ -2883,29 +2892,29 @@ switch ($_POST['acao']) {
             <input id='selecao-arquivo2' type="file" name="user_thumb" class="wc_loadimage" />
             <div class="limpar"></div>
             <div class="upload_bar m_top m_botton">
-              <div class="upload_progress ds-none">0%</div>
+                <div class="upload_progress ds-none">0%</div>
             </div>
             <img class="form_load ds-none fl_right" style="margin-left: 10px; margin-top: 2px;" alt="Enviando Requisição!" title="Enviando Requisição!" src="imagens_fixas/carregando2.gif" />
             <div class="limpar"></div>
             <br> <br>
             <button class="btn btn_green fl-left" style="font-size: 0.8em; margin-right: 1%;">
-              <figure class="icon-pencil-square-o" style="margin-top: -4%;"></figure> Alterar
+                <figure class="icon-pencil-square-o" style="margin-top: -4%;"></figure> Alterar
             </button>
-          </div>
-          <br>
-          <div class="limpar"></div>
-          <br>
-
         </div>
-
+        <br>
         <div class="limpar"></div>
         <br>
-        <input type="hidden" name="id" value="<?= $resultado['id']; ?>" />
-        <input type="hidden" name="acao" value="editar_cliente" />
-        <span class="carregando2 ds-none"><img src="<?= HOME; ?>imagens_fixas/carregando2.gif" /></span>
-        <div class="limpar"></div>
-      </form>
-      <?php
+
+    </div>
+
+    <div class="limpar"></div>
+    <br>
+    <input type="hidden" name="id" value="<?= $resultado['id']; ?>" />
+    <input type="hidden" name="acao" value="editar_cliente" />
+    <span class="carregando2 ds-none"><img src="<?= HOME; ?>imagens_fixas/carregando2.gif" /></span>
+    <div class="limpar"></div>
+</form>
+<?php
       break;
     case 'editar_cliente':
 
@@ -3064,167 +3073,168 @@ switch ($_POST['acao']) {
         if ($read->getRowCount() >= 1) :
           foreach ($read->getResult() as $resultado);
       ?>
-          <script type="text/javascript">
-            tinymce.init({
-              selector: "textarea#elm2",
-              theme: "modern",
-              height: 300,
-              menubar: true,
-              relative_urls: false,
-              //remove_script_host: false,
-              //inline: true,
-              plugins: [
-                "advlist autolink link image lists charmap print preview hr anchor pagebreak",
-                "searchreplace wordcount visualblocks visualchars insertdatetime media nonbreaking",
-                "table contextmenu directionality emoticons paste textcolor responsivefilemanager source code"
-              ],
-              toolbar1: "undo redo | bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | styleselect | link unlink anchor | image media | responsivefilemanager | forecolor backcolor | print preview code | source code",
-              toolbar2: "",
-              image_advtab: true,
-              style_formats: [{
-                  title: 'Bold text',
-                  inline: 'b'
-                },
-                {
-                  title: 'Red text',
-                  inline: 'span',
-                  styles: {
+<script type="text/javascript">
+    tinymce.init({
+        selector: "textarea#elm2",
+        theme: "modern",
+        height: 300,
+        menubar: true,
+        relative_urls: false,
+        //remove_script_host: false,
+        //inline: true,
+        plugins: [
+            "advlist autolink link image lists charmap print preview hr anchor pagebreak",
+            "searchreplace wordcount visualblocks visualchars insertdatetime media nonbreaking",
+            "table contextmenu directionality emoticons paste textcolor responsivefilemanager source code"
+        ],
+        toolbar1: "undo redo | bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | styleselect | link unlink anchor | image media | responsivefilemanager | forecolor backcolor | print preview code | source code",
+        toolbar2: "",
+        image_advtab: true,
+        style_formats: [{
+                title: 'Bold text',
+                inline: 'b'
+            },
+            {
+                title: 'Red text',
+                inline: 'span',
+                styles: {
                     color: '#ff0000'
-                  }
-                },
-                {
-                  title: 'Red header',
-                  block: 'h1',
-                  styles: {
-                    color: '#ff0000'
-                  }
-                },
-                {
-                  title: 'Example 1',
-                  inline: 'span',
-                  classes: 'example1'
-                },
-                {
-                  title: 'Example 2',
-                  inline: 'span',
-                  classes: 'example2'
-                },
-                {
-                  title: 'Table styles'
-                },
-                {
-                  title: 'Table row 1',
-                  selector: 'tr',
-                  classes: 'tablerow1'
                 }
-              ],
-              external_filemanager_path: "" + urlbase + "poo/app/Library/tinymce/js/filemanager/",
-              filemanager_title: "Responsive Filemanager",
-              external_plugins: {
-                "filemanager": "" + urlbase + "poo/app/Library/tinymce/js/filemanager/plugin.min.js"
-              }
-            });
-          </script>
-          <form class="form_linha" method="post" name="editar_noticia">
-            <h1 class="topo_modal">Alterar post</h1>
-            <div class="box box80">
-              <div class="box box33">
-                <p class="texto_form">Titulo</p>
-                <input name="nome" type="text" value="<?= $resultado['titulo']; ?>" required placeholder="Titulo" style=" width: 100%;" />
-              </div>
-              <div class="box  box33">
-                <p class="texto_form">Língua</p>
-                <select name="lingua" required class="js-example-basic-single" style="width: 100%;">
-                  <option <?= ($resultado['lingua'] == 'pt' ? "selected" : ""); ?> value="pt">Português</option>
-                  <!-- <option <? //= ( $resultado['lingua'] == 'usa' ? "selected" : "" ); 
+            },
+            {
+                title: 'Red header',
+                block: 'h1',
+                styles: {
+                    color: '#ff0000'
+                }
+            },
+            {
+                title: 'Example 1',
+                inline: 'span',
+                classes: 'example1'
+            },
+            {
+                title: 'Example 2',
+                inline: 'span',
+                classes: 'example2'
+            },
+            {
+                title: 'Table styles'
+            },
+            {
+                title: 'Table row 1',
+                selector: 'tr',
+                classes: 'tablerow1'
+            }
+        ],
+        external_filemanager_path: "" + urlbase + "poo/app/Library/tinymce/js/filemanager/",
+        filemanager_title: "Responsive Filemanager",
+        external_plugins: {
+            "filemanager": "" + urlbase + "poo/app/Library/tinymce/js/filemanager/plugin.min.js"
+        }
+    });
+
+</script>
+<form class="form_linha" method="post" name="editar_noticia">
+    <h1 class="topo_modal">Alterar post</h1>
+    <div class="box box80">
+        <div class="box box33">
+            <p class="texto_form">Titulo</p>
+            <input name="nome" type="text" value="<?= $resultado['titulo']; ?>" required placeholder="Titulo" style=" width: 100%;" />
+        </div>
+        <div class="box  box33">
+            <p class="texto_form">Língua</p>
+            <select name="lingua" required class="js-example-basic-single" style="width: 100%;">
+                <option <?= ($resultado['lingua'] == 'pt' ? "selected" : ""); ?> value="pt">Português</option>
+                <!-- <option <? //= ( $resultado['lingua'] == 'usa' ? "selected" : "" ); 
                                 ?> value="usa">Inglês</option>
                 <option <? //= ( $resultado['lingua'] == 'es' ? "selected" : "" ); 
                         ?> value="es">Espanhol</option> -->
-                </select>
-              </div>
-              <div class="box box33 no-margim">
-                <p class="texto_form">Categoria</p>
-                <select name="categoria" required class="js-example-basic-single" style="width: 100%;">
-                  <?php
+            </select>
+        </div>
+        <div class="box box33 no-margim">
+            <p class="texto_form">Categoria</p>
+            <select name="categoria" required class="js-example-basic-single" style="width: 100%;">
+                <?php
                   $corretor = new Read;
                   $corretor->ExeRead('noticia_categoria', 'WHERE status = "1"');
                   if ($corretor->getRowCount() >= 1) :
                     foreach ($corretor->getResult() as $examinado) :
                   ?>
-                      <option <?= ($resultado['categoria'] == $examinado['id'] ? "selected" : ""); ?> value="<?= $examinado['id']; ?>"><?= $examinado['nome']; ?></option>
-                  <?php
+                <option <?= ($resultado['categoria'] == $examinado['id'] ? "selected" : ""); ?> value="<?= $examinado['id']; ?>"><?= $examinado['nome']; ?></option>
+                <?php
                     endforeach;
                   else :
                     echo ' <option value="">Não há categoria cadastrada!</option> ';
                   endif;
                   ?>
-                </select>
-              </div>
-              <div class="limpar"></div>
-              <div class="box box-completa">
-                <p class="texto_form">Chamada da notícia</p>
-                <textarea name="chamada" rows="5" style=" width: 100%" required placeholder="Chamada da notícia"><?= $resultado['chamada']; ?></textarea>
-              </div>
-              <div class="limpar"></div>
-              <div class="box box50">
-                <p class="texto_form">Vídeo do youtube (Apenas o código)</p>
-                <input name="video" type="text" placeholder="Vídeo do youtube (Apenas o código)" value="<?= $resultado['video']; ?>" style=" width: 100%;" />
-              </div>
-              <div class="box box50 no-margim">
-                <p class="texto_form">Status</p>
-                <select name="status" required class="" style="width: 100%;">
-                  <option <?= ($resultado['status'] == '1' ? "selected" : ""); ?> value="1">Ativo</option>
-                  <option <?= ($resultado['status'] == '2' ? "selected" : ""); ?> value="2">Inativo</option>
-                </select>
-              </div>
-              <div class="limpar"></div>
-              <div class="box box-completa">
-                <p class="texto_form">Notícia completa</p>
-                <textarea id="elm2" name="txt" rows="10" style=" width: 100%"><?= $resultado['texto']; ?></textarea>
-              </div>
-              <div class="limpar"></div>
-            </div>
+            </select>
+        </div>
+        <div class="limpar"></div>
+        <div class="box box-completa">
+            <p class="texto_form">Chamada da notícia</p>
+            <textarea name="chamada" rows="5" style=" width: 100%" required placeholder="Chamada da notícia"><?= $resultado['chamada']; ?></textarea>
+        </div>
+        <div class="limpar"></div>
+        <div class="box box50">
+            <p class="texto_form">Vídeo do youtube (Apenas o código)</p>
+            <input name="video" type="text" placeholder="Vídeo do youtube (Apenas o código)" value="<?= $resultado['video']; ?>" style=" width: 100%;" />
+        </div>
+        <div class="box box50 no-margim">
+            <p class="texto_form">Status</p>
+            <select name="status" required class="" style="width: 100%;">
+                <option <?= ($resultado['status'] == '1' ? "selected" : ""); ?> value="1">Ativo</option>
+                <option <?= ($resultado['status'] == '2' ? "selected" : ""); ?> value="2">Inativo</option>
+            </select>
+        </div>
+        <div class="limpar"></div>
+        <div class="box box-completa">
+            <p class="texto_form">Notícia completa</p>
+            <textarea id="elm2" name="txt" rows="10" style=" width: 100%"><?= $resultado['texto']; ?></textarea>
+        </div>
+        <div class="limpar"></div>
+    </div>
 
 
-            <div class="box box20">
-              <p class="texto_form"></p>
-              <?php
+    <div class="box box20">
+        <p class="texto_form"></p>
+        <?php
               if ($resultado['capa'] == '') :
                 echo '<img class="user_thumb" style="width: 100%;" alt="Foto do usuário" title="Foto do usuário" src="' . HOME . 'imagens_fixas/sem_imagem.jpg" default="' . HOME . 'imagens_fixas/sem_imagem.jpg">';
               else :
                 echo '<img class="user_thumb" style="width: 100%;" alt="Foto do usuário" title="Foto do usuário" src="' . HOME . 'imagens_site/' . $resultado['capa'] . '" default="' . HOME . 'imagens_site/' . $resultado['capa'] . '">';
               endif;
               ?>
-              <div class="box_content">
-                <div class="limpar"></div>
-                <div class="mensagem_imagem ds-none">
-                  <p><b></b></p>
-                </div>
-                <div class="limpar" style=" margin-bottom: 2%"></div>
-                <label class="label_file" for='selecao-arquivo5'>Selecionar um arquivo</label>
-                <input id='selecao-arquivo5' type="file" name="user_thumb" class="wc_loadimage" />
-                <div class="limpar"></div>
-                <div class="upload_bar m_top m_botton">
-                  <div class="upload_progress ds-none">0%</div>
-                </div>
-                <img class="form_load ds-none fl_right" style="margin-left: 10px; margin-top: 2px;" alt="Enviando Requisição!" title="Enviando Requisição!" src="imagens_fixas/carregando2.gif" />
-                <div class="limpar"></div>
-                <br>
-                <button class="btn btn_green fl-left" style="font-size: 0.8em; margin-right: 1%;">
-                  <figure class="icon-pencil-square-o" style=" font-size: 1.2em; margin-top: -2%;"></figure> Alterar
-                </button>
-              </div>
+        <div class="box_content">
+            <div class="limpar"></div>
+            <div class="mensagem_imagem ds-none">
+                <p><b></b></p>
             </div>
-
+            <div class="limpar" style=" margin-bottom: 2%"></div>
+            <label class="label_file" for='selecao-arquivo5'>Selecionar um arquivo</label>
+            <input id='selecao-arquivo5' type="file" name="user_thumb" class="wc_loadimage" />
+            <div class="limpar"></div>
+            <div class="upload_bar m_top m_botton">
+                <div class="upload_progress ds-none">0%</div>
+            </div>
+            <img class="form_load ds-none fl_right" style="margin-left: 10px; margin-top: 2px;" alt="Enviando Requisição!" title="Enviando Requisição!" src="imagens_fixas/carregando2.gif" />
             <div class="limpar"></div>
             <br>
-            <input type="hidden" name="id_noticia" value="<?= $resultado['id']; ?>" />
-            <input type="hidden" name="acao" value="editar_noticia" />
+            <button class="btn btn_green fl-left" style="font-size: 0.8em; margin-right: 1%;">
+                <figure class="icon-pencil-square-o" style=" font-size: 1.2em; margin-top: -2%;"></figure> Alterar
+            </button>
+        </div>
+    </div>
 
-            <span class="carregando2 ds-none"><img src="<?= HOME; ?>imagens_fixas/carregando2.gif" /></span>
-            <div class="limpar"></div>
-          </form>
-      <?php
+    <div class="limpar"></div>
+    <br>
+    <input type="hidden" name="id_noticia" value="<?= $resultado['id']; ?>" />
+    <input type="hidden" name="acao" value="editar_noticia" />
+
+    <span class="carregando2 ds-none"><img src="<?= HOME; ?>imagens_fixas/carregando2.gif" /></span>
+    <div class="limpar"></div>
+</form>
+<?php
         else :
           echo '1';
         endif;
@@ -3405,24 +3415,24 @@ switch ($_POST['acao']) {
       $ultimo->ExeRead('noticia_categoria', "WHERE id = :id", 'id=' . $c['id'] . '');
       foreach ($ultimo->getResult() as $resultado);
       ?>
-      <form class="form_linha" method="post" name="alt_categoria_blog">
-        <p class="texto_form">Nome da categoria</p>
-        <input name="nome" type="text" required placeholder="Nome da categoria" value="<?= $resultado['nome']; ?>" style=" width: 100%;" />
-        <p class="texto_form">Língua</p>
-        <select name="lingua" required class="" style="width: 100%;">
-          <option <?= ($resultado['lingua'] == 'pt' ? "selected" : ""); ?> value="pt">Português</option>
-          <!--<option <? //= ( $resultado['lingua'] == 'usa' ? "selected" : "" ); 
+<form class="form_linha" method="post" name="alt_categoria_blog">
+    <p class="texto_form">Nome da categoria</p>
+    <input name="nome" type="text" required placeholder="Nome da categoria" value="<?= $resultado['nome']; ?>" style=" width: 100%;" />
+    <p class="texto_form">Língua</p>
+    <select name="lingua" required class="" style="width: 100%;">
+        <option <?= ($resultado['lingua'] == 'pt' ? "selected" : ""); ?> value="pt">Português</option>
+        <!--<option <? //= ( $resultado['lingua'] == 'usa' ? "selected" : "" ); 
                       ?> value="usa">Inglês</option>-->
-          <!--!<option <? //= ( $resultado['lingua'] == 'es' ? "selected" : "" ); 
+        <!--!<option <? //= ( $resultado['lingua'] == 'es' ? "selected" : "" ); 
                         ?> value="es">Espanhol</option>-->
-        </select>
-        <div class="limpar" style=" margin-bottom: 5%"></div>
-        <button class="btn btn_green fl-left" style="font-size: 0.8em; margin-right: 1%">
-          <figure class="icon-save2" style="margin-top: -6%;"></figure> Alterar
-        </button>
-        <input name="id" type="hidden" value="<?= $c['id']; ?>" />
-      </form>
-      <?php
+    </select>
+    <div class="limpar" style=" margin-bottom: 5%"></div>
+    <button class="btn btn_green fl-left" style="font-size: 0.8em; margin-right: 1%">
+        <figure class="icon-save2" style="margin-top: -6%;"></figure> Alterar
+    </button>
+    <input name="id" type="hidden" value="<?= $c['id']; ?>" />
+</form>
+<?php
       break;
       //===============================================================================================================================
       // CRM
@@ -3496,165 +3506,166 @@ switch ($_POST['acao']) {
         if ($read->getRowCount() >= 1) :
           foreach ($read->getResult() as $resultado);
       ?>
-          <script type="text/javascript">
-            tinymce.init({
-              selector: "textarea#elm4",
-              theme: "modern",
-              height: 300,
-              menubar: false,
-              relative_urls: false,
-              remove_script_host: false,
-              plugins: [
-                "advlist autolink link image lists charmap print preview hr anchor pagebreak",
-                "searchreplace wordcount visualblocks visualchars insertdatetime media nonbreaking",
-                "table contextmenu directionality emoticons paste textcolor responsivefilemanager"
-              ],
-              toolbar1: "undo redo | bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | styleselect | link unlink anchor | image media | responsivefilemanager | forecolor backcolor | print preview code ",
-              toolbar2: "",
-              image_advtab: true,
-              style_formats: [{
-                  title: 'Bold text',
-                  inline: 'b'
-                },
-                {
-                  title: 'Red text',
-                  inline: 'span',
-                  styles: {
+<script type="text/javascript">
+    tinymce.init({
+        selector: "textarea#elm4",
+        theme: "modern",
+        height: 300,
+        menubar: false,
+        relative_urls: false,
+        remove_script_host: false,
+        plugins: [
+            "advlist autolink link image lists charmap print preview hr anchor pagebreak",
+            "searchreplace wordcount visualblocks visualchars insertdatetime media nonbreaking",
+            "table contextmenu directionality emoticons paste textcolor responsivefilemanager"
+        ],
+        toolbar1: "undo redo | bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | styleselect | link unlink anchor | image media | responsivefilemanager | forecolor backcolor | print preview code ",
+        toolbar2: "",
+        image_advtab: true,
+        style_formats: [{
+                title: 'Bold text',
+                inline: 'b'
+            },
+            {
+                title: 'Red text',
+                inline: 'span',
+                styles: {
                     color: '#ff0000'
-                  }
-                },
-                {
-                  title: 'Red header',
-                  block: 'h1',
-                  styles: {
-                    color: '#ff0000'
-                  }
-                },
-                {
-                  title: 'Example 1',
-                  inline: 'span',
-                  classes: 'example1'
-                },
-                {
-                  title: 'Example 2',
-                  inline: 'span',
-                  classes: 'example2'
-                },
-                {
-                  title: 'Table styles'
-                },
-                {
-                  title: 'Table row 1',
-                  selector: 'tr',
-                  classes: 'tablerow1'
                 }
-              ],
-              external_filemanager_path: "<?= HOME; ?>poo/app/Library/tinymce/js/filemanager/",
-              filemanager_title: "Responsive Filemanager",
-              external_plugins: {
-                "filemanager": "<?= HOME; ?>poo/app/Library/tinymce/js/filemanager/plugin.min.js"
-              }
-            });
+            },
+            {
+                title: 'Red header',
+                block: 'h1',
+                styles: {
+                    color: '#ff0000'
+                }
+            },
+            {
+                title: 'Example 1',
+                inline: 'span',
+                classes: 'example1'
+            },
+            {
+                title: 'Example 2',
+                inline: 'span',
+                classes: 'example2'
+            },
+            {
+                title: 'Table styles'
+            },
+            {
+                title: 'Table row 1',
+                selector: 'tr',
+                classes: 'tablerow1'
+            }
+        ],
+        external_filemanager_path: "<?= HOME; ?>poo/app/Library/tinymce/js/filemanager/",
+        filemanager_title: "Responsive Filemanager",
+        external_plugins: {
+            "filemanager": "<?= HOME; ?>poo/app/Library/tinymce/js/filemanager/plugin.min.js"
+        }
+    });
 
 
-            $("#telefone_crm4").mask("(99)99999999");
-            $("#telefone_crm5").mask("(99)99999999");
-            $("#telefone_crm6").mask("(99)99999999");
-          </script>
-          <form class="form_linha" method="post" name="editar_crm">
-            <h1 class="topo_modal">Alterar contato de venda</h1>
-            <div class="box box100" style=" width: 100%">
-              <div class="box box50">
-                <p class="texto_form">Nome</p>
-                <input name="nome" type="text" required placeholder="Nome" value="<?= $resultado['nome']; ?>" style=" width: 100%;" />
-              </div>
-              <div class="box box50 no-margim">
-                <p class="texto_form">E-mail</p>
-                <input name="email" type="email" required placeholder="E-mail" value="<?= $resultado['email']; ?>" style=" width: 100%;" />
-              </div>
-              <div class="limpar"></div>
-              <div class="box box20">
-                <p class="texto_form">Origem do contato</p>
-                <select name="tipo_contato" required class="" style="width: 100%;">
-                  <option <?= ($resultado['tipo_contato'] == '1' ? "selected" : ""); ?> value="1">E-mail</option>
-                  <option <?= ($resultado['tipo_contato'] == '2' ? "selected" : ""); ?> value="2">Telefone</option>
-                  <option <?= ($resultado['tipo_contato'] == '3' ? "selected" : ""); ?> value="3">Celular</option>
-                  <option <?= ($resultado['tipo_contato'] == '4' ? "selected" : ""); ?> value="4">Facebook</option>
-                  <option <?= ($resultado['tipo_contato'] == '5' ? "selected" : ""); ?> value="5">Twitter</option>
-                  <option <?= ($resultado['tipo_contato'] == '6' ? "selected" : ""); ?> value="6">Instagram</option>
-                  <option <?= ($resultado['tipo_contato'] == '7' ? "selected" : ""); ?> value="7">Chat do site</option>
-                  <option <?= ($resultado['tipo_contato'] == '8' ? "selected" : ""); ?> value="8">Formuário do site</option>
-                  <option <?= ($resultado['tipo_contato'] == '9' ? "selected" : ""); ?> value="9">Vendedor</option>
-                  <option <?= ($resultado['tipo_contato'] == '10' ? "selected" : ""); ?> value="10">Parceiros</option>
-                  <option <?= ($resultado['tipo_contato'] == '11' ? "selected" : ""); ?> value="11">Pessoalmente na loja</option>
-                  <option <?= ($resultado['tipo_contato'] == '12' ? "selected" : ""); ?> value="12">Outros</option>
-                </select>
-              </div>
-              <div class="box box20">
-                <p class="texto_form">Tipo do serviço</p>
-                <select name="tipo_servico" required class="" style="width: 100%;">
-                  <option <?= ($resultado['tipo_servico'] == '1' ? "selected" : ""); ?> value="1">Site comercial</option>
-                  <option <?= ($resultado['tipo_servico'] == '2' ? "selected" : ""); ?> value="2">Hotsite</option>
-                  <option <?= ($resultado['tipo_servico'] == '3' ? "selected" : ""); ?> value="3">Hospedagem</option>
-                  <option <?= ($resultado['tipo_servico'] == '4' ? "selected" : ""); ?> value="4">E-mail marketing</option>
-                  <option <?= ($resultado['tipo_servico'] == '5' ? "selected" : ""); ?> value="5">Portal</option>
-                  <option <?= ($resultado['tipo_servico'] == '6' ? "selected" : ""); ?> value="6">Blog</option>
-                  <option <?= ($resultado['tipo_servico'] == '7' ? "selected" : ""); ?> value="7">Desenvolvimento anual</option>
-                  <option <?= ($resultado['tipo_servico'] == '8' ? "selected" : ""); ?> value="8">Analise do site do cliente</option>
-                  <option <?= ($resultado['tipo_servico'] == '9' ? "selected" : ""); ?> value="9">E-commercer</option>
-                  <option <?= ($resultado['tipo_servico'] == '10' ? "selected" : ""); ?> value="10">Outros</option>
-                </select>
-              </div>
-              <div class="box box20">
-                <p class="texto_form">Telefone</p>
-                <input name="tel" type="text" placeholder="Telefone" value="<?= $resultado['tel']; ?>" id="telefone_crm4" style=" width: 100%;" />
-              </div>
-              <div class="box box20">
-                <p class="texto_form">Telefone</p>
-                <input name="tel2" type="text" placeholder="Telefone" value="<?= $resultado['tel2']; ?>" id="telefone_crm5" style=" width: 100%;" />
-              </div>
-              <div class="box box20 no-margim">
-                <p class="texto_form">Celular</p>
-                <input name="cel" type="text" placeholder="Celular" value="<?= $resultado['cel']; ?>" id="telefone_crm6" style=" width: 100%;" />
-              </div>
-              <div class="limpar"></div>
-              <div class="box box50">
-                <p class="texto_form">Nome empresa</p>
-                <input name="nome_empresa" type="text" placeholder="Nome empresa" value="<?= $resultado['nome_empresa']; ?>" style=" width: 100%;" />
-              </div>
-              <div class="box box50 no-margim">
-                <p class="texto_form">Endereço do site</p>
-                <input name="url_site" type="text" placeholder="Endereço do site" value="<?= $resultado['url_site']; ?>" style=" width: 100%;" />
-              </div>
-              <div class="limpar"></div>
+    $("#telefone_crm4").mask("(99)99999999");
+    $("#telefone_crm5").mask("(99)99999999");
+    $("#telefone_crm6").mask("(99)99999999");
 
-              <div class="box box33">
-                <p class="texto_form">Facebook</p>
-                <input name="facebook" type="text" placeholder="Facebook" value="<?= $resultado['facebook']; ?>" style=" width: 100%;" />
-              </div>
-              <div class="box box33">
-                <p class="texto_form">Instagram</p>
-                <input name="instagram" type="text" placeholder="Instagram" value="<?= $resultado['instagram']; ?>" style=" width: 100%;" />
-              </div>
-              <div class="box box33 no-margim">
-                <p class="texto_form">Twitter</p>
-                <input name="twitter" type="text" placeholder="Twitter" value="<?= $resultado['twitter']; ?>" style=" width: 100%;" />
-              </div>
-              <div class="limpar"></div>
-              <div class="box box-completa">
-                <p class="texto_form">Observações</p>
-                <textarea id="elm4" name="txt" rows="10" style=" width: 100%"><?= $resultado['obs_empresa']; ?></textarea>
-              </div>
-            </div>
-            <div class="limpar"></div>
-            <br>
-            <input type="hidden" name="id_crm" value="<?= $resultado['id']; ?>" />
-            <input type="hidden" name="acao" value="editar_crm" />
+</script>
+<form class="form_linha" method="post" name="editar_crm">
+    <h1 class="topo_modal">Alterar contato de venda</h1>
+    <div class="box box100" style=" width: 100%">
+        <div class="box box50">
+            <p class="texto_form">Nome</p>
+            <input name="nome" type="text" required placeholder="Nome" value="<?= $resultado['nome']; ?>" style=" width: 100%;" />
+        </div>
+        <div class="box box50 no-margim">
+            <p class="texto_form">E-mail</p>
+            <input name="email" type="email" required placeholder="E-mail" value="<?= $resultado['email']; ?>" style=" width: 100%;" />
+        </div>
+        <div class="limpar"></div>
+        <div class="box box20">
+            <p class="texto_form">Origem do contato</p>
+            <select name="tipo_contato" required class="" style="width: 100%;">
+                <option <?= ($resultado['tipo_contato'] == '1' ? "selected" : ""); ?> value="1">E-mail</option>
+                <option <?= ($resultado['tipo_contato'] == '2' ? "selected" : ""); ?> value="2">Telefone</option>
+                <option <?= ($resultado['tipo_contato'] == '3' ? "selected" : ""); ?> value="3">Celular</option>
+                <option <?= ($resultado['tipo_contato'] == '4' ? "selected" : ""); ?> value="4">Facebook</option>
+                <option <?= ($resultado['tipo_contato'] == '5' ? "selected" : ""); ?> value="5">Twitter</option>
+                <option <?= ($resultado['tipo_contato'] == '6' ? "selected" : ""); ?> value="6">Instagram</option>
+                <option <?= ($resultado['tipo_contato'] == '7' ? "selected" : ""); ?> value="7">Chat do site</option>
+                <option <?= ($resultado['tipo_contato'] == '8' ? "selected" : ""); ?> value="8">Formuário do site</option>
+                <option <?= ($resultado['tipo_contato'] == '9' ? "selected" : ""); ?> value="9">Vendedor</option>
+                <option <?= ($resultado['tipo_contato'] == '10' ? "selected" : ""); ?> value="10">Parceiros</option>
+                <option <?= ($resultado['tipo_contato'] == '11' ? "selected" : ""); ?> value="11">Pessoalmente na loja</option>
+                <option <?= ($resultado['tipo_contato'] == '12' ? "selected" : ""); ?> value="12">Outros</option>
+            </select>
+        </div>
+        <div class="box box20">
+            <p class="texto_form">Tipo do serviço</p>
+            <select name="tipo_servico" required class="" style="width: 100%;">
+                <option <?= ($resultado['tipo_servico'] == '1' ? "selected" : ""); ?> value="1">Site comercial</option>
+                <option <?= ($resultado['tipo_servico'] == '2' ? "selected" : ""); ?> value="2">Hotsite</option>
+                <option <?= ($resultado['tipo_servico'] == '3' ? "selected" : ""); ?> value="3">Hospedagem</option>
+                <option <?= ($resultado['tipo_servico'] == '4' ? "selected" : ""); ?> value="4">E-mail marketing</option>
+                <option <?= ($resultado['tipo_servico'] == '5' ? "selected" : ""); ?> value="5">Portal</option>
+                <option <?= ($resultado['tipo_servico'] == '6' ? "selected" : ""); ?> value="6">Blog</option>
+                <option <?= ($resultado['tipo_servico'] == '7' ? "selected" : ""); ?> value="7">Desenvolvimento anual</option>
+                <option <?= ($resultado['tipo_servico'] == '8' ? "selected" : ""); ?> value="8">Analise do site do cliente</option>
+                <option <?= ($resultado['tipo_servico'] == '9' ? "selected" : ""); ?> value="9">E-commercer</option>
+                <option <?= ($resultado['tipo_servico'] == '10' ? "selected" : ""); ?> value="10">Outros</option>
+            </select>
+        </div>
+        <div class="box box20">
+            <p class="texto_form">Telefone</p>
+            <input name="tel" type="text" placeholder="Telefone" value="<?= $resultado['tel']; ?>" id="telefone_crm4" style=" width: 100%;" />
+        </div>
+        <div class="box box20">
+            <p class="texto_form">Telefone</p>
+            <input name="tel2" type="text" placeholder="Telefone" value="<?= $resultado['tel2']; ?>" id="telefone_crm5" style=" width: 100%;" />
+        </div>
+        <div class="box box20 no-margim">
+            <p class="texto_form">Celular</p>
+            <input name="cel" type="text" placeholder="Celular" value="<?= $resultado['cel']; ?>" id="telefone_crm6" style=" width: 100%;" />
+        </div>
+        <div class="limpar"></div>
+        <div class="box box50">
+            <p class="texto_form">Nome empresa</p>
+            <input name="nome_empresa" type="text" placeholder="Nome empresa" value="<?= $resultado['nome_empresa']; ?>" style=" width: 100%;" />
+        </div>
+        <div class="box box50 no-margim">
+            <p class="texto_form">Endereço do site</p>
+            <input name="url_site" type="text" placeholder="Endereço do site" value="<?= $resultado['url_site']; ?>" style=" width: 100%;" />
+        </div>
+        <div class="limpar"></div>
 
-            <span class="carregando2 ds-none"><img src="<?= HOME; ?>imagens_fixas/carregando2.gif" /></span>
-            <div class="limpar"></div>
-          </form>
-      <?php
+        <div class="box box33">
+            <p class="texto_form">Facebook</p>
+            <input name="facebook" type="text" placeholder="Facebook" value="<?= $resultado['facebook']; ?>" style=" width: 100%;" />
+        </div>
+        <div class="box box33">
+            <p class="texto_form">Instagram</p>
+            <input name="instagram" type="text" placeholder="Instagram" value="<?= $resultado['instagram']; ?>" style=" width: 100%;" />
+        </div>
+        <div class="box box33 no-margim">
+            <p class="texto_form">Twitter</p>
+            <input name="twitter" type="text" placeholder="Twitter" value="<?= $resultado['twitter']; ?>" style=" width: 100%;" />
+        </div>
+        <div class="limpar"></div>
+        <div class="box box-completa">
+            <p class="texto_form">Observações</p>
+            <textarea id="elm4" name="txt" rows="10" style=" width: 100%"><?= $resultado['obs_empresa']; ?></textarea>
+        </div>
+    </div>
+    <div class="limpar"></div>
+    <br>
+    <input type="hidden" name="id_crm" value="<?= $resultado['id']; ?>" />
+    <input type="hidden" name="acao" value="editar_crm" />
+
+    <span class="carregando2 ds-none"><img src="<?= HOME; ?>imagens_fixas/carregando2.gif" /></span>
+    <div class="limpar"></div>
+</form>
+<?php
         else :
           echo '1';
         endif;
@@ -3776,131 +3787,132 @@ switch ($_POST['acao']) {
       $ultimo->ExeRead('cliente', "WHERE id = :id", 'id=' . $c['id'] . '');
       foreach ($ultimo->getResult() as $resultado);
       ?>
-      <script>
-        jQuery(function($) {
-          $("#mascara_celular22").mask("(99)999999999");
-          $("#mascara_telefone22").mask("(99)999999999");
-          $("#mascara_telefone222").mask("(99)999999999");
-          $('#datacompleta2').datepicker({
+<script>
+    jQuery(function($) {
+        $("#mascara_celular22").mask("(99)999999999");
+        $("#mascara_telefone22").mask("(99)999999999");
+        $("#mascara_telefone222").mask("(99)999999999");
+        $('#datacompleta2').datepicker({
             language: 'pt-BR',
             todayButton: new Date() // Now can select only dates, which goes after today
-          });
         });
-        $("select").select2();
-      </script>
+    });
+    $("select").select2();
 
-      <form class="form_linha" method="post" name="editar_clientes" enctype="multipart/form-data">
-        <h1 class="topo_modal">Alterar cliente</h1>
-        <div class="box box80">
-          <div class="box box50">
+</script>
+
+<form class="form_linha" method="post" name="editar_clientes" enctype="multipart/form-data">
+    <h1 class="topo_modal">Alterar cliente</h1>
+    <div class="box box80">
+        <div class="box box50">
             <p class="texto_form">Nome completo</p>
             <input name="nome" type="text" required placeholder="Nome completo" value="<?= $resultado['nome']; ?>" style=" width: 100%;" />
-          </div>
-          <div class="box box50 no-margim">
+        </div>
+        <div class="box box50 no-margim">
             <p class="texto_form">E-mail válido</p>
             <input name="email" type="email" required placeholder="E-mail válido" value="<?= $resultado['email']; ?>" style=" width: 100%;" />
-          </div>
-          <div class="limpar"></div>
-          <div class="box box33">
+        </div>
+        <div class="limpar"></div>
+        <div class="box box33">
             <p class="texto_form">CPF ou CNPJ</p>
             <input name="cpf_cnpj_c" type="text" required placeholder="CPF ou CNPJ" style=" width: 100%;" value="<?= $resultado['cnpj_cpf']; ?>" onkeypress='mascaraMutuario(this, cpfCnpj)' onblur='clearTimeout()' />
-          </div>
-          <div class="box box33">
+        </div>
+        <div class="box box33">
             <p class="texto_form">Categoria</p>
             <select name="categoria" required style="width: 100%;">
-              <option <?= ($resultado['categoria'] == '1' ? "selected" : ""); ?> value="1">Cliente efetivo</option>
-              <option <?= ($resultado['categoria'] == '2' ? "selected" : ""); ?> value="2">Cliente em potencial</option>
-              <option <?= ($resultado['categoria'] == '3' ? "selected" : ""); ?> value="3">Concorrente</option>
-              <option <?= ($resultado['categoria'] == '4' ? "selected" : ""); ?> value="4">Fornecedor</option>
-              <option <?= ($resultado['categoria'] == '5' ? "selected" : ""); ?> value="5">Parceiro</option>
+                <option <?= ($resultado['categoria'] == '1' ? "selected" : ""); ?> value="1">Cliente efetivo</option>
+                <option <?= ($resultado['categoria'] == '2' ? "selected" : ""); ?> value="2">Cliente em potencial</option>
+                <option <?= ($resultado['categoria'] == '3' ? "selected" : ""); ?> value="3">Concorrente</option>
+                <option <?= ($resultado['categoria'] == '4' ? "selected" : ""); ?> value="4">Fornecedor</option>
+                <option <?= ($resultado['categoria'] == '5' ? "selected" : ""); ?> value="5">Parceiro</option>
             </select>
-          </div>
-          <div class="box box33">
+        </div>
+        <div class="box box33">
             <p class="texto_form">Origem</p>
             <select name="origem" required style="width: 100%;">
-              <option <?= ($resultado['origem'] == '1' ? "selected" : ""); ?> value="1">Site</option>
-              <option <?= ($resultado['origem'] == '2' ? "selected" : ""); ?> value="2">Telefone/Celular</option>
-              <option <?= ($resultado['origem'] == '3' ? "selected" : ""); ?> value="3">Formulário de contato</option>
-              <option <?= ($resultado['origem'] == '4' ? "selected" : ""); ?> value="4">Whatsapp</option>
-              <option <?= ($resultado['origem'] == '5' ? "selected" : ""); ?> value="5">E-mail</option>
-              <option <?= ($resultado['origem'] == '6' ? "selected" : ""); ?> value="6">Facebook</option>
-              <option <?= ($resultado['origem'] == '7' ? "selected" : ""); ?> value="7">Instagram</option>
-              <option <?= ($resultado['origem'] == '8' ? "selected" : ""); ?> value="8">Twitter</option>
+                <option <?= ($resultado['origem'] == '1' ? "selected" : ""); ?> value="1">Site</option>
+                <option <?= ($resultado['origem'] == '2' ? "selected" : ""); ?> value="2">Telefone/Celular</option>
+                <option <?= ($resultado['origem'] == '3' ? "selected" : ""); ?> value="3">Formulário de contato</option>
+                <option <?= ($resultado['origem'] == '4' ? "selected" : ""); ?> value="4">Whatsapp</option>
+                <option <?= ($resultado['origem'] == '5' ? "selected" : ""); ?> value="5">E-mail</option>
+                <option <?= ($resultado['origem'] == '6' ? "selected" : ""); ?> value="6">Facebook</option>
+                <option <?= ($resultado['origem'] == '7' ? "selected" : ""); ?> value="7">Instagram</option>
+                <option <?= ($resultado['origem'] == '8' ? "selected" : ""); ?> value="8">Twitter</option>
             </select>
-          </div>
-          <div class="limpar"></div>
-          <div class="box box33">
+        </div>
+        <div class="limpar"></div>
+        <div class="box box33">
             <p class="texto_form">Telefone</p>
             <input name="tel" type="text" placeholder="Telefone" id="mascara_telefone22" value="<?= $resultado['tel']; ?>" style=" width: 100%;" />
-          </div>
-          <div class="box box33">
+        </div>
+        <div class="box box33">
             <p class="texto_form">Telefone</p>
             <input name="tel2" type="text" placeholder="Telefone" id="mascara_telefone22" value="<?= $resultado['tel2']; ?>" style=" width: 100%;" />
-          </div>
-          <div class="box box33 no-margim">
+        </div>
+        <div class="box box33 no-margim">
             <p class="texto_form">Celular</p>
             <input name="tel3" type="text" placeholder="Celular" id="mascara_celular222" value="<?= $resultado['tel3']; ?>" style=" width: 100%;" />
-          </div>
-          <div class="limpar"></div>
-          <div class="box box50">
+        </div>
+        <div class="limpar"></div>
+        <div class="box box50">
             <p class="texto_form">Data de nascimento</p>
             <input name="data_nasc" type="text" placeholder="Data de nascimento" value="<?= $resultado['data_nasc']; ?>" style=" width: 100%;" id="datacompleta2" />
-          </div>
-          <div class="box box50 no-margim">
+        </div>
+        <div class="box box50 no-margim">
             <p class="texto_form">Sexo</p>
             <select name="sexo" required style="width: 100%;">
-              <option <?= ($resultado['sexo'] == '1' ? "selected" : ""); ?> value="1">Masculino</option>
-              <option <?= ($resultado['sexo'] == '2' ? "selected" : ""); ?> value="2">Feminino</option>
+                <option <?= ($resultado['sexo'] == '1' ? "selected" : ""); ?> value="1">Masculino</option>
+                <option <?= ($resultado['sexo'] == '2' ? "selected" : ""); ?> value="2">Feminino</option>
             </select>
-          </div>
-          <div class="limpar"></div>
+        </div>
+        <div class="limpar"></div>
 
-          <p class="legenda_form">Endereço completo</p>
-          <div class="box box-completa">
+        <p class="legenda_form">Endereço completo</p>
+        <div class="box box-completa">
             <input name="cep" class="cep_cad_parsa2" type="text" placeholder="Seu CEP *" value="<?= $resultado['cep']; ?>" id="csp mascara_cep" style=" width: 99%;" />
             <div class="load2" style=" display: none"></div>
-          </div>
-          <div class="box box70">
-            <input name="rua" type="text" placeholder="Rua, Avenida" value="<?= $resultado['logado']; ?>" id="logradourop2" style=" width: 100%;" />
-          </div>
-          <div class="box box30 no-margim">
-            <input name="numero" type="text" placeholder="Nº" value="<?= $resultado['numero']; ?>" style=" width: 100%;" />
-          </div>
-          <div class="limpar"></div>
-
-          <div class="box box-completa">
-            <input name="complemento" type="text" placeholder="Complemento" value="<?= $resultado['complemento']; ?>" style=" width: 99%;" />
-          </div>
-          <div class="limpar"></div>
-
-          <div class="box box35">
-            <input name="bairro" type="text" placeholder="Bairro" value="<?= $resultado['bairro']; ?>" id="bairrop2" style=" width: 100%;" />
-          </div>
-          <div class="box box35">
-            <input name="cidade" type="text" placeholder="Cidade" value="<?= $resultado['municipio']; ?>" id="localidadep2" style=" width: 100%;" />
-          </div>
-
-          <div class="box box30 no-margim">
-            <input name="estado" type="text" placeholder="Estado" value="<?= $resultado['estado']; ?>" id="ufp2" style=" width: 100%;" />
-          </div>
-          <div class="limpar"></div>
-          <textarea name="obs" id="" rows="10" placeholder="Observações" style=" width: 100%; height: 150px"><?= $resultado['obs']; ?></textarea>
-          <div class="limpar"></div>
         </div>
-        <div class="box box20 no-margim">
+        <div class="box box70">
+            <input name="rua" type="text" placeholder="Rua, Avenida" value="<?= $resultado['logado']; ?>" id="logradourop2" style=" width: 100%;" />
+        </div>
+        <div class="box box30 no-margim">
+            <input name="numero" type="text" placeholder="Nº" value="<?= $resultado['numero']; ?>" style=" width: 100%;" />
+        </div>
+        <div class="limpar"></div>
 
-          <p class="texto_form"></p>
-          <?php
+        <div class="box box-completa">
+            <input name="complemento" type="text" placeholder="Complemento" value="<?= $resultado['complemento']; ?>" style=" width: 99%;" />
+        </div>
+        <div class="limpar"></div>
+
+        <div class="box box35">
+            <input name="bairro" type="text" placeholder="Bairro" value="<?= $resultado['bairro']; ?>" id="bairrop2" style=" width: 100%;" />
+        </div>
+        <div class="box box35">
+            <input name="cidade" type="text" placeholder="Cidade" value="<?= $resultado['municipio']; ?>" id="localidadep2" style=" width: 100%;" />
+        </div>
+
+        <div class="box box30 no-margim">
+            <input name="estado" type="text" placeholder="Estado" value="<?= $resultado['estado']; ?>" id="ufp2" style=" width: 100%;" />
+        </div>
+        <div class="limpar"></div>
+        <textarea name="obs" id="" rows="10" placeholder="Observações" style=" width: 100%; height: 150px"><?= $resultado['obs']; ?></textarea>
+        <div class="limpar"></div>
+    </div>
+    <div class="box box20 no-margim">
+
+        <p class="texto_form"></p>
+        <?php
           if ($resultado['logo'] == '') :
             echo '<img class="user_thumb" style="width: 100%;" alt="Foto do usuário" title="Foto do usuário" src="' . HOME . 'imagens_fixas/sem_imagem.jpg" default="' . HOME . 'imagens_fixas/sem_imagem.jpg">';
           else :
             echo '<img class="user_thumb" style="width: 100%;" alt="Foto do usuário" title="Foto do usuário" src="' . SITE . 'imagens_site/' . $resultado['logo'] . '" default="' . HOME . 'imagens_site/' . $resultado['logo'] . '">';
           endif;
           ?>
-          <div class="box_content">
+        <div class="box_content">
             <div class="limpar"></div>
             <div class="mensagem_imagem ds-none">
-              <p><b></b></p>
+                <p><b></b></p>
             </div>
             <span class="legend">Foto (500x500px, JPG ou PNG):</span>
             <div class="limpar" style=" margin-bottom: 2%"></div>
@@ -3909,26 +3921,26 @@ switch ($_POST['acao']) {
             <div class="limpar"></div>
 
             <div class="upload_bar m_top m_botton">
-              <div class="upload_progress ds-none">0%</div>
+                <div class="upload_progress ds-none">0%</div>
             </div>
             <img class="form_load ds-none fl_right" style="margin-left: 10px; margin-top: 2px;" alt="Enviando Requisição!" title="Enviando Requisição!" src="imagens_fixas/carregando2.gif" />
             <div class="limpar"></div>
             <br><br>
             <button class="btn btn_green fl-left" style="font-size: 0.8em; margin-right: 1%;">
-              <figure class="icon-pencil-square-o" style="margin-top: -4%;"></figure> Alterar
+                <figure class="icon-pencil-square-o" style="margin-top: -4%;"></figure> Alterar
             </button>
-          </div>
         </div>
+    </div>
 
-        <div class="limpar"></div>
-        <br>
-        <input type="hidden" name="id" value="<?= $resultado['id']; ?>" />
-        <input type="hidden" name="acao" value="editar_clientes" />
-        <span class="carregando2 ds-none"><img src="<?= HOME; ?>imagens_fixas/carregando2.gif" /></span>
+    <div class="limpar"></div>
+    <br>
+    <input type="hidden" name="id" value="<?= $resultado['id']; ?>" />
+    <input type="hidden" name="acao" value="editar_clientes" />
+    <span class="carregando2 ds-none"><img src="<?= HOME; ?>imagens_fixas/carregando2.gif" /></span>
 
-        <div class="limpar"></div>
-      </form>
-    <?php
+    <div class="limpar"></div>
+</form>
+<?php
       break;
     case 'editar_clientes':
 
@@ -4114,46 +4126,47 @@ switch ($_POST['acao']) {
       $ultimo->ExeRead('sac', "WHERE id = :id", 'id=' . $c['id'] . '');
       foreach ($ultimo->getResult() as $resultado);
     ?>
-      <script>
-        jQuery(function($) {
-          $("#mascara_celular22").mask("(99)999999999");
-          $("#mascara_telefone22").mask("(99)999999999");
-          $("#mascara_telefone222").mask("(99)999999999");
-          $('#datacompleta2').datepicker({
+<script>
+    jQuery(function($) {
+        $("#mascara_celular22").mask("(99)999999999");
+        $("#mascara_telefone22").mask("(99)999999999");
+        $("#mascara_telefone222").mask("(99)999999999");
+        $('#datacompleta2').datepicker({
             language: 'pt-BR',
             todayButton: new Date() // Now can select only dates, which goes after today
-          });
         });
-        $("select").select2();
-      </script>
+    });
+    $("select").select2();
 
-      <form class="form_linha" method="post" name="editar_sac" enctype="multipart/form-data">
-        <h1 class="topo_modal">Alterar SAC</h1>
-        <div class="box box100">
-          <div class="box box33">
+</script>
+
+<form class="form_linha" method="post" name="editar_sac" enctype="multipart/form-data">
+    <h1 class="topo_modal">Alterar SAC</h1>
+    <div class="box box100">
+        <div class="box box33">
             <p class="texto_form">Titulo</p>
             <input name="assunto" type="text" required placeholder="Titulo" value="<?= $resultado['assunto']; ?>" style=" width: 100%;" />
-          </div>
-          <div class="box box33">
+        </div>
+        <div class="box box33">
             <p class="texto_form">Prioridade</p>
             <select name="prioridade" class="select " style=" width: 100%;">
-              <option <?= ($resultado['prioridade'] == 'Alta' ? "selected" : ""); ?> value="Alta">Alta</option>
-              <option <?= ($resultado['prioridade'] == 'Média' ? "selected" : ""); ?> value="Média">Média</option>
-              <option <?= ($resultado['prioridade'] == 'Baixa' ? "selected" : ""); ?> value="Baixa">Baixa</option>
+                <option <?= ($resultado['prioridade'] == 'Alta' ? "selected" : ""); ?> value="Alta">Alta</option>
+                <option <?= ($resultado['prioridade'] == 'Média' ? "selected" : ""); ?> value="Média">Média</option>
+                <option <?= ($resultado['prioridade'] == 'Baixa' ? "selected" : ""); ?> value="Baixa">Baixa</option>
             </select>
-          </div>
-          <div class="box box33  no-margim">
+        </div>
+        <div class="box box33  no-margim">
             <p class="texto_form">Departamento</p>
             <select name="departamento" class="select " style=" width: 100%;">
-              <option <?= ($resultado['departamento'] == 'Suporte' ? "selected" : ""); ?> value="Suporte">Suporte</option>
-              <option <?= ($resultado['departamento'] == 'Contas e Vendas' ? "selected" : ""); ?> value="Contas e Vendas">Contas e Vendas</option>
+                <option <?= ($resultado['departamento'] == 'Suporte' ? "selected" : ""); ?> value="Suporte">Suporte</option>
+                <option <?= ($resultado['departamento'] == 'Contas e Vendas' ? "selected" : ""); ?> value="Contas e Vendas">Contas e Vendas</option>
             </select>
-          </div>
-          <div class="limpar"></div>
-          <div class="box box33">
+        </div>
+        <div class="limpar"></div>
+        <div class="box box33">
             <p class="texto_form">Empresa</p>
             <select name="empresa" class="select " style=" width: 100%;">
-              <?php
+                <?php
               $corretor = new Read;
               $corretor->ExeRead('cliente', 'WHERE status = "1"');
               if ($corretor->getRowCount() >= 1) :
@@ -4165,11 +4178,11 @@ switch ($_POST['acao']) {
               endif;
               ?>
             </select>
-          </div>
-          <div class="box box33">
+        </div>
+        <div class="box box33">
             <p class="texto_form">Atendente Responsável</p>
             <select name="responsavel" class="select " style=" width: 100%;">
-              <?php
+                <?php
               $corretor->ExeRead('perfil', 'WHERE status = "1"');
               if ($corretor->getRowCount() >= 1) :
                 foreach ($corretor->getResult() as $examinado) :
@@ -4180,60 +4193,60 @@ switch ($_POST['acao']) {
               endif;
               ?>
             </select>
-          </div>
-          <div class="box box33  no-margim">
+        </div>
+        <div class="box box33  no-margim">
             <p class="texto_form">Origem</p>
             <select name="origem" class="select " style=" width: 100%;">
-              <option <?= ($resultado['origem'] == '1' ? "selected" : ""); ?> value="1">Site</option>
-              <option <?= ($resultado['origem'] == '2' ? "selected" : ""); ?> value="2">Telefone/Celular</option>
-              <option <?= ($resultado['origem'] == '3' ? "selected" : ""); ?> value="3">Formulário de contato</option>
-              <option <?= ($resultado['origem'] == '4' ? "selected" : ""); ?> value="4">Whatsapp</option>
-              <option <?= ($resultado['origem'] == '5' ? "selected" : ""); ?> value="5">E-mail</option>
-              <option <?= ($resultado['origem'] == '6' ? "selected" : ""); ?> value="6">Facebook</option>
-              <option <?= ($resultado['origem'] == '7' ? "selected" : ""); ?> value="7">Instagram</option>
-              <option <?= ($resultado['origem'] == '8' ? "selected" : ""); ?> value="8">Twitter</option>
-              <option <?= ($resultado['origem'] == '9' ? "selected" : ""); ?> value="9">Reclame aqui</option>
+                <option <?= ($resultado['origem'] == '1' ? "selected" : ""); ?> value="1">Site</option>
+                <option <?= ($resultado['origem'] == '2' ? "selected" : ""); ?> value="2">Telefone/Celular</option>
+                <option <?= ($resultado['origem'] == '3' ? "selected" : ""); ?> value="3">Formulário de contato</option>
+                <option <?= ($resultado['origem'] == '4' ? "selected" : ""); ?> value="4">Whatsapp</option>
+                <option <?= ($resultado['origem'] == '5' ? "selected" : ""); ?> value="5">E-mail</option>
+                <option <?= ($resultado['origem'] == '6' ? "selected" : ""); ?> value="6">Facebook</option>
+                <option <?= ($resultado['origem'] == '7' ? "selected" : ""); ?> value="7">Instagram</option>
+                <option <?= ($resultado['origem'] == '8' ? "selected" : ""); ?> value="8">Twitter</option>
+                <option <?= ($resultado['origem'] == '9' ? "selected" : ""); ?> value="9">Reclame aqui</option>
             </select>
-          </div>
-          <div class="limpar" style=" margin-bottom: 1%"></div>
-          <div class="box box25 ">
+        </div>
+        <div class="limpar" style=" margin-bottom: 1%"></div>
+        <div class="box box25 ">
             <p class="texto_form">Status</p>
             <select name="status" class="select " style=" width: 100%;">
-              <option <?= ($resultado['status'] == '1' ? "selected" : ""); ?> value="1">Aberto</option>
-              <option <?= ($resultado['status'] == '2' ? "selected" : ""); ?> value="2">Respondido</option>
-              <option <?= ($resultado['status'] == '3' ? "selected" : ""); ?> value="3">Finalizado</option>
+                <option <?= ($resultado['status'] == '1' ? "selected" : ""); ?> value="1">Aberto</option>
+                <option <?= ($resultado['status'] == '2' ? "selected" : ""); ?> value="2">Respondido</option>
+                <option <?= ($resultado['status'] == '3' ? "selected" : ""); ?> value="3">Finalizado</option>
             </select>
-          </div>
-          <div class="box box25 ">
+        </div>
+        <div class="box box25 ">
             <p class="texto_form">Data de entrega</p>
             <input name="data_entrega" type="text" required placeholder="Data de entrega" value="<?= ($resultado['data_entrega'] == '' ? "" : Check::TimesData($resultado['data_entrega'])); ?>" id="datacompleta2" style=" width: 100%;" />
             </select>
-          </div>
-          <div class="box box25">
+        </div>
+        <div class="box box25">
             <p class="texto_form">Tempo de trabalho (em minutos)</p>
             <input name="tempo_serv" type="text" required placeholder="Tempo de trabalho em minutos" value="<?= $resultado['tempo_serv']; ?>" style=" width: 100%;" />
             </select>
-          </div>
-          <div class="box box25 no-margim">
+        </div>
+        <div class="box box25 no-margim">
             <p class="texto_form">Enviar e-mail para o responsável?</p>
             <select name="enviar" class="select " style=" width: 100%;">
-              <option value="1">Não enviar </option>
-              <option value="2">Enviar e-mail</option>
+                <option value="1">Não enviar </option>
+                <option value="2">Enviar e-mail</option>
             </select>
-          </div>
-          <div class="limpar"></div>
         </div>
         <div class="limpar"></div>
-        <br>
-        <button class="btn btn_green fl-left" style="font-size: 0.8em; margin-right: 1%;">
-          <figure class="icon-pencil-square-o" style="margin-top: -4%;"></figure> Alterar
-        </button>
-        <input type="hidden" name="id" value="<?= $resultado['id']; ?>" />
-        <input type="hidden" name="acao" value="editar_sac" />
-        <span class="carregando2 ds-none"><img src="<?= HOME; ?>imagens_fixas/carregando2.gif" /></span>
-        <div class="limpar"></div>
-      </form>
-    <?php
+    </div>
+    <div class="limpar"></div>
+    <br>
+    <button class="btn btn_green fl-left" style="font-size: 0.8em; margin-right: 1%;">
+        <figure class="icon-pencil-square-o" style="margin-top: -4%;"></figure> Alterar
+    </button>
+    <input type="hidden" name="id" value="<?= $resultado['id']; ?>" />
+    <input type="hidden" name="acao" value="editar_sac" />
+    <span class="carregando2 ds-none"><img src="<?= HOME; ?>imagens_fixas/carregando2.gif" /></span>
+    <div class="limpar"></div>
+</form>
+<?php
       break;
     case 'editar_sac':
       $c['assunto'] = $_POST['assunto'];
@@ -4337,22 +4350,23 @@ switch ($_POST['acao']) {
         foreach ($ultimo->getResult() as $atendente);
       endif;
     ?>
-      <script>
-        $('.botao_cadastro').click(function() {
-          $('.form_info_p').slideUp(function() {
+<script>
+    $('.botao_cadastro').click(function() {
+        $('.form_info_p').slideUp(function() {
             $('.form_integarcao_p').slideDown();
-          });
         });
-        $('.info_cadastro').click(function() {
-          $('.form_integarcao_p').slideUp(function() {
+    });
+    $('.info_cadastro').click(function() {
+        $('.form_integarcao_p').slideUp(function() {
             $('.form_info_p').slideDown();
-          });
         });
-      </script>
-      <div style=" width: 100%; background: #fff; padding: 3%;">
-        <h1 class="topo_modal">Informações do atendimento</h1>
-        <div class="box box30" style=" padding: 1%; background: #fff">
-          <div class="form_info_p">
+    });
+
+</script>
+<div style=" width: 100%; background: #fff; padding: 3%;">
+    <h1 class="topo_modal">Informações do atendimento</h1>
+    <div class="box box30" style=" padding: 1%; background: #fff">
+        <div class="form_info_p">
             <p style=" font-weight: 900; font-size: 0.9em;">Titulo:</p>
             <p style=" font-size: 0.8em; margin-bottom: 3%"><?= $resultado['assunto']; ?></p>
 
@@ -4364,7 +4378,7 @@ switch ($_POST['acao']) {
 
             <p style=" font-weight: 900; font-size: 0.9em;">Status:</p>
             <p style=" font-size: 0.8em; margin-bottom: 3%">
-              <?php
+                <?php
               if ($resultado['status'] == '1') :
                 echo $status = 'Aberto';
               elseif ($resultado['status'] == '2') :
@@ -4386,40 +4400,40 @@ switch ($_POST['acao']) {
                                                             endif;
                                                             ?></p>
             <div class="btn btn_green botao_cadastro" style=" width: 100%; text-align: center; font-size: 0.9em; margin-top: 5%">Cadastrar nova integração</div>
-          </div>
+        </div>
 
-          <div class="form_integarcao_p ds-none">
+        <div class="form_integarcao_p ds-none">
             <form class="form_linha" method="post" name="interagir_form" enctype="multipart/form-data">
-              <p style=" font-weight: 900; font-size: 0.9em; margin-bottom: 5%; border-bottom: 2px solid #000">Nova integração:</p>
-              <div class="box box100" style=" width: 100%">
-                <p class="texto_form">Mensagem</p>
-                <textarea name="obs" id="" required rows="5" placeholder="Mensagem" style=" width: 100%; height: 110px"></textarea>
+                <p style=" font-weight: 900; font-size: 0.9em; margin-bottom: 5%; border-bottom: 2px solid #000">Nova integração:</p>
+                <div class="box box100" style=" width: 100%">
+                    <p class="texto_form">Mensagem</p>
+                    <textarea name="obs" id="" required rows="5" placeholder="Mensagem" style=" width: 100%; height: 110px"></textarea>
+                    <div class="limpar"></div>
+                    <br>
+                    <p class="texto_form">Selecione um ou mais arquivos</p>
+                    <div class="limpar" style=" margin-bottom: 2%"></div>
+                    <label class="label_file" for='selecao-arquivo101'>Selecionar um arquivo</label>
+                    <input id='selecao-arquivo101' type="file" name="img_documento[]" multiple class="" />
+                    <div class="limpar"></div>
+                    <br>
+                    <button class="btn btn_green fl-left" style="font-size: 0.8em; margin-right: 1%; width: 50%; float: left">Cadastrar</button>
+                    <div class="limpar"></div>
+                    <br><br>
+                </div>
                 <div class="limpar"></div>
-                <br>
-                <p class="texto_form">Selecione um ou mais arquivos</p>
-                <div class="limpar" style=" margin-bottom: 2%"></div>
-                <label class="label_file" for='selecao-arquivo101'>Selecionar um arquivo</label>
-                <input id='selecao-arquivo101' type="file" name="img_documento[]" multiple class="" />
+                <input type="hidden" name="id_sac" value="<?= $resultado['id']; ?>" />
+                <input type="hidden" name="id_cliente" value="<?= $cliente_at['id']; ?>" />
+                <input type="hidden" name="token" value="<?= $resultado['token']; ?>" />
+                <input type="hidden" name="acao" value="interagir_form" />
                 <div class="limpar"></div>
-                <br>
-                <button class="btn btn_green fl-left" style="font-size: 0.8em; margin-right: 1%; width: 50%; float: left">Cadastrar</button>
-                <div class="limpar"></div>
-                <br><br>
-              </div>
-              <div class="limpar"></div>
-              <input type="hidden" name="id_sac" value="<?= $resultado['id']; ?>" />
-              <input type="hidden" name="id_cliente" value="<?= $cliente_at['id']; ?>" />
-              <input type="hidden" name="token" value="<?= $resultado['token']; ?>" />
-              <input type="hidden" name="acao" value="interagir_form" />
-              <div class="limpar"></div>
             </form>
             <div class="limpar"></div>
             <div class="btn btn_green info_cadastro" style=" width: 100%; text-align: center; font-size: 0.9em; margin-top: 5%">Mostrar informações</div>
-          </div>
-
         </div>
-        <div class="box box70 no-margim" style=" background: #EFEFF0; padding: 3%; max-height: 400px; overflow: auto;">
-          <?php
+
+    </div>
+    <div class="box box70 no-margim" style=" background: #EFEFF0; padding: 3%; max-height: 400px; overflow: auto;">
+        <?php
           $ultimo->ExeRead('sac_interacao', "WHERE id_sac = :id order by id desc", 'id=' . $resultado['id'] . '');
           foreach ($ultimo->getResult() as $sac_mensagem) :
 
@@ -4429,20 +4443,20 @@ switch ($_POST['acao']) {
               foreach ($ultimo->getResult() as $cliente_);
               //print_r($cliente_);
           ?>
-              <div class="box box100" style=" width: 100%; margin-bottom: 5%">
-                <div class="box box10">
-                  <?php
+        <div class="box box100" style=" width: 100%; margin-bottom: 5%">
+            <div class="box box10">
+                <?php
                   if ($cliente_['avatar'] == '') :
                     echo '<img class="user_thumb radius-circulo" style="width: 100%;" alt="Foto do usuário" title="Foto do usuário" src="' . HOME . 'imagens_fixas/sem_imagem.jpg" default="' . HOME . 'imagens_fixas/sem_imagem.jpg">';
                   else :
                     echo '<img class="user_thumb radius-circulo" style="width: 100%;" alt="Foto do usuário" title="Foto do usuário" src="' . HOME . 'imagens_site/' . $cliente_['avatar'] . '" default="' . HOME . 'imagens_site/' . $cliente_['avatar'] . '">';
                   endif;
                   ?>
-                </div>
+            </div>
 
-                <div class="box box90 no-margim">
-                  <p style=" margin-left: 1.5%; font-size: 0.8em; margin-bottom: 1%;"><?= $cliente_['nome']; ?> / Data: <?= Check::TimesData($sac_mensagem['data']); ?> - <?= $sac_mensagem['hora']; ?></p>
-                  <div style="background: #fff; padding: 2% 3%; margin-left: 1%; width: 100%; font-size: 0.9em;">
+            <div class="box box90 no-margim">
+                <p style=" margin-left: 1.5%; font-size: 0.8em; margin-bottom: 1%;"><?= $cliente_['nome']; ?> / Data: <?= Check::TimesData($sac_mensagem['data']); ?> - <?= $sac_mensagem['hora']; ?></p>
+                <div style="background: #fff; padding: 2% 3%; margin-left: 1%; width: 100%; font-size: 0.9em;">
                     <?= $sac_mensagem['msn']; ?>
                     <?php
                     $ultimo->ExeRead('sac_arquivo', "WHERE id_sac_interacao = :id and id_sac = " . $sac_mensagem['id_sac'] . "", 'id=' . $sac_mensagem['id'] . '');
@@ -4450,27 +4464,27 @@ switch ($_POST['acao']) {
                       echo '<p style=" font-weight: 900; font-size: 0.9em; margin-top: 2%; margin-bottom: 2%; border-bottom: 2px solid #000">Arquivos Anexados:</p>';
                       foreach ($ultimo->getResult() as $sac_arquivo) :
                     ?>
-                        <a style=" font-size: 0.9em;" href="<?= HOME; ?>imagens_site/<?= $sac_arquivo['arquivo']; ?>" target="_blank"><?= $sac_arquivo['token']; ?></a><br>
+                    <a style=" font-size: 0.9em;" href="<?= HOME; ?>imagens_site/<?= $sac_arquivo['arquivo']; ?>" target="_blank"><?= $sac_arquivo['token']; ?></a><br>
                     <?php
                       endforeach;
                     else :
                     endif;
                     ?>
-                  </div>
                 </div>
-                <div class="limpar"></div>
-              </div>
-            <?php
+            </div>
+            <div class="limpar"></div>
+        </div>
+        <?php
             else :
 
               $ultimo->ExeRead('perfil', "WHERE id = :id", 'id=' . $sac_mensagem['atendente'] . '');
               foreach ($ultimo->getResult() as $cliente__);
             ?>
-              <div class="box box100" style=" width: 100%; margin-top: 5%; margin-bottom: 5%">
+        <div class="box box100" style=" width: 100%; margin-top: 5%; margin-bottom: 5%">
 
-                <div class="box box90">
-                  <p style=" float: right; margin-right: 1.5%; font-size: 0.8em; margin-bottom: 1%;">Data: <?= Check::TimesData($sac_mensagem['data']); ?> - <?= $sac_mensagem['hora']; ?> / <?= $cliente__['nome']; ?></p>
-                  <div style=" float: right; background: #6494ED; color: #fff; padding: 2% 3%; margin-right: 1%; width: 100%; font-size: 0.9em;">
+            <div class="box box90">
+                <p style=" float: right; margin-right: 1.5%; font-size: 0.8em; margin-bottom: 1%;">Data: <?= Check::TimesData($sac_mensagem['data']); ?> - <?= $sac_mensagem['hora']; ?> / <?= $cliente__['nome']; ?></p>
+                <div style=" float: right; background: #6494ED; color: #fff; padding: 2% 3%; margin-right: 1%; width: 100%; font-size: 0.9em;">
                     <?= $sac_mensagem['msn']; ?>
                     <?php
                     $ultimo->ExeRead('sac_arquivo', "WHERE id_sac_interacao = :id and id_sac = " . $sac_mensagem['id_sac'] . "", 'id=' . $sac_mensagem['id'] . '');
@@ -4478,34 +4492,34 @@ switch ($_POST['acao']) {
                       echo '<p style=" font-weight: 900; font-size: 0.9em; margin-top: 2%; margin-bottom: 2%; border-bottom: 2px solid #fff">Arquivos Anexados:</p>';
                       foreach ($ultimo->getResult() as $sac_arquivo) :
                     ?>
-                        <a style=" font-size: 0.9em; color: #fff;" href="<?= HOME; ?>imagens_site/<?= $sac_arquivo['arquivo']; ?>" target="_blank"><?= $sac_arquivo['token']; ?></a><br>
+                    <a style=" font-size: 0.9em; color: #fff;" href="<?= HOME; ?>imagens_site/<?= $sac_arquivo['arquivo']; ?>" target="_blank"><?= $sac_arquivo['token']; ?></a><br>
                     <?php
                       endforeach;
                     else :
                     endif;
                     ?>
-                  </div>
                 </div>
-                <div class="box box10 no-margim">
-                  <?php
+            </div>
+            <div class="box box10 no-margim">
+                <?php
                   if ($cliente__['avatar'] == '') :
                     echo '<img class="user_thumb radius-circulo" style="width: 100%;" alt="Foto do usuário" title="Foto do usuário" src="' . HOME . 'imagens_fixas/sem_imagem.jpg" default="' . HOME . 'imagens_fixas/sem_imagem.jpg">';
                   else :
                     echo '<img class="user_thumb radius-circulo" style="width: 100%;" alt="Foto do usuário" title="Foto do usuário" src="' . HOME . 'imagens_site/' . $cliente__['avatar'] . '" default="' . HOME . 'imagens_site/' . $cliente__['avatar'] . '">';
                   endif;
                   ?>
-                </div>
-                <div class="limpar"></div>
-              </div>
-          <?php
+            </div>
+            <div class="limpar"></div>
+        </div>
+        <?php
             endif;
 
           endforeach;
           ?>
-        </div>
-        <div class="limpar"></div>
-      </div>
-    <?php
+    </div>
+    <div class="limpar"></div>
+</div>
+<?php
       break;
     case 'interagir_form':
 
@@ -4587,22 +4601,23 @@ switch ($_POST['acao']) {
         foreach ($ultimo->getResult() as $atendente);
       endif;
     ?>
-      <script>
-        $('.botao_cadastro').click(function() {
-          $('.form_info_p').slideUp(function() {
+<script>
+    $('.botao_cadastro').click(function() {
+        $('.form_info_p').slideUp(function() {
             $('.form_integarcao_p').slideDown();
-          });
         });
-        $('.info_cadastro').click(function() {
-          $('.form_integarcao_p').slideUp(function() {
+    });
+    $('.info_cadastro').click(function() {
+        $('.form_integarcao_p').slideUp(function() {
             $('.form_info_p').slideDown();
-          });
         });
-      </script>
-      <div style=" width: 100%; background: #fff; padding: 3%;">
-        <h1 class="topo_modal">Informações do atendimento</h1>
-        <div class="box box30" style=" padding: 1%; background: #fff">
-          <div class="form_info_p">
+    });
+
+</script>
+<div style=" width: 100%; background: #fff; padding: 3%;">
+    <h1 class="topo_modal">Informações do atendimento</h1>
+    <div class="box box30" style=" padding: 1%; background: #fff">
+        <div class="form_info_p">
             <p style=" font-weight: 900; font-size: 0.9em;">Titulo:</p>
             <p style=" font-size: 0.8em; margin-bottom: 3%"><?= $resultado['assunto']; ?></p>
 
@@ -4614,7 +4629,7 @@ switch ($_POST['acao']) {
 
             <p style=" font-weight: 900; font-size: 0.9em;">Status:</p>
             <p style=" font-size: 0.8em; margin-bottom: 3%">
-              <?php
+                <?php
               if ($resultado['status'] == '1') :
                 echo $status = 'Aberto';
               elseif ($resultado['status'] == '2') :
@@ -4636,40 +4651,40 @@ switch ($_POST['acao']) {
                                                             endif;
                                                             ?></p>
             <div class="btn btn_green botao_cadastro" style=" width: 100%; text-align: center; font-size: 0.9em; margin-top: 5%">Cadastrar nova integração</div>
-          </div>
+        </div>
 
-          <div class="form_integarcao_p ds-none">
+        <div class="form_integarcao_p ds-none">
             <form class="form_linha" method="post" name="interagir_form" enctype="multipart/form-data">
-              <p style=" font-weight: 900; font-size: 0.9em; margin-bottom: 5%; border-bottom: 2px solid #000">Nova integração:</p>
-              <div class="box box100" style=" width: 100%">
-                <p class="texto_form">Mensagem</p>
-                <textarea name="obs" id="" required rows="5" placeholder="Mensagem" style=" width: 100%; height: 110px"></textarea>
+                <p style=" font-weight: 900; font-size: 0.9em; margin-bottom: 5%; border-bottom: 2px solid #000">Nova integração:</p>
+                <div class="box box100" style=" width: 100%">
+                    <p class="texto_form">Mensagem</p>
+                    <textarea name="obs" id="" required rows="5" placeholder="Mensagem" style=" width: 100%; height: 110px"></textarea>
+                    <div class="limpar"></div>
+                    <br>
+                    <p class="texto_form">Selecione um ou mais arquivos</p>
+                    <div class="limpar" style=" margin-bottom: 2%"></div>
+                    <label class="label_file" for='selecao-arquivo111'>Selecionar um arquivo</label>
+                    <input id='selecao-arquivo111' type="file" name="img_documento[]" multiple class="" />
+                    <div class="limpar"></div>
+                    <br>
+                    <button class="btn btn_green fl-left" style="font-size: 0.8em; margin-right: 1%; width: 50%; float: left">Cadastrar</button>
+                    <div class="limpar"></div>
+                    <br><br>
+                </div>
                 <div class="limpar"></div>
-                <br>
-                <p class="texto_form">Selecione um ou mais arquivos</p>
-                <div class="limpar" style=" margin-bottom: 2%"></div>
-                <label class="label_file" for='selecao-arquivo111'>Selecionar um arquivo</label>
-                <input id='selecao-arquivo111' type="file" name="img_documento[]" multiple class="" />
+                <input type="hidden" name="id_sac" value="<?= $resultado['id']; ?>" />
+                <input type="hidden" name="id_cliente" value="<?= $cliente_at['id']; ?>" />
+                <input type="hidden" name="token" value="<?= $resultado['token']; ?>" />
+                <input type="hidden" name="acao" value="interagir_form" />
                 <div class="limpar"></div>
-                <br>
-                <button class="btn btn_green fl-left" style="font-size: 0.8em; margin-right: 1%; width: 50%; float: left">Cadastrar</button>
-                <div class="limpar"></div>
-                <br><br>
-              </div>
-              <div class="limpar"></div>
-              <input type="hidden" name="id_sac" value="<?= $resultado['id']; ?>" />
-              <input type="hidden" name="id_cliente" value="<?= $cliente_at['id']; ?>" />
-              <input type="hidden" name="token" value="<?= $resultado['token']; ?>" />
-              <input type="hidden" name="acao" value="interagir_form" />
-              <div class="limpar"></div>
             </form>
             <div class="limpar"></div>
             <div class="btn btn_green info_cadastro" style=" width: 100%; text-align: center; font-size: 0.9em; margin-top: 5%">Mostrar informações</div>
-          </div>
-
         </div>
-        <div class="box box70 no-margim" style=" background: #EFEFF0; padding: 3%; max-height: 400px; overflow: auto;">
-          <?php
+
+    </div>
+    <div class="box box70 no-margim" style=" background: #EFEFF0; padding: 3%; max-height: 400px; overflow: auto;">
+        <?php
           $ultimo->ExeRead('sac_interacao', "WHERE id_sac = :id order by id desc", 'id=' . $resultado['id'] . '');
           foreach ($ultimo->getResult() as $sac_mensagem) :
 
@@ -4678,20 +4693,20 @@ switch ($_POST['acao']) {
               $ultimo->ExeRead('cliente_contato', "WHERE id = :id", 'id=' . $sac_mensagem['id_cliente_contato'] . '');
               foreach ($ultimo->getResult() as $cliente_);
           ?>
-              <div class="box box100" style=" width: 100%; margin-bottom: 5%">
-                <div class="box box10">
-                  <?php
+        <div class="box box100" style=" width: 100%; margin-bottom: 5%">
+            <div class="box box10">
+                <?php
                   if ($cliente_['avatar'] == '') :
                     echo '<img class="user_thumb radius-circulo" style="width: 100%;" alt="Foto do usuário" title="Foto do usuário" src="' . HOME . 'imagens_fixas/sem_imagem.jpg" default="' . HOME . 'imagens_fixas/sem_imagem.jpg">';
                   else :
                     echo '<img class="user_thumb radius-circulo" style="width: 100%;" alt="Foto do usuário" title="Foto do usuário" src="' . HOME . 'imagens_site/' . $cliente_['avatar'] . '" default="' . HOME . 'imagens_site/' . $cliente_['avatar'] . '">';
                   endif;
                   ?>
-                </div>
+            </div>
 
-                <div class="box box90 no-margim">
-                  <p style=" margin-left: 1.5%; font-size: 0.8em; margin-bottom: 1%;"><?= $cliente_['nome']; ?> / Data: <?= Check::TimesData($sac_mensagem['data']); ?> - <?= $sac_mensagem['hora']; ?></p>
-                  <div style="background: #fff; padding: 2% 3%; margin-left: 1%; width: 100%; font-size: 0.9em;">
+            <div class="box box90 no-margim">
+                <p style=" margin-left: 1.5%; font-size: 0.8em; margin-bottom: 1%;"><?= $cliente_['nome']; ?> / Data: <?= Check::TimesData($sac_mensagem['data']); ?> - <?= $sac_mensagem['hora']; ?></p>
+                <div style="background: #fff; padding: 2% 3%; margin-left: 1%; width: 100%; font-size: 0.9em;">
                     <?= $sac_mensagem['msn']; ?>
                     <?php
                     $ultimo->ExeRead('sac_arquivo', "WHERE id_sac_interacao = :id and id_sac = " . $sac_mensagem['id_sac'] . "", 'id=' . $sac_mensagem['id'] . '');
@@ -4699,27 +4714,27 @@ switch ($_POST['acao']) {
                       echo '<p style=" font-weight: 900; font-size: 0.9em; margin-top: 2%; margin-bottom: 2%; border-bottom: 2px solid #000">Arquivos Anexados:</p>';
                       foreach ($ultimo->getResult() as $sac_arquivo) :
                     ?>
-                        <a style=" font-size: 0.9em;" href="<?= HOME; ?>imagens_site/<?= $sac_arquivo['arquivo']; ?>" target="_blank"><?= $sac_arquivo['token']; ?></a><br>
+                    <a style=" font-size: 0.9em;" href="<?= HOME; ?>imagens_site/<?= $sac_arquivo['arquivo']; ?>" target="_blank"><?= $sac_arquivo['token']; ?></a><br>
                     <?php
                       endforeach;
                     else :
                     endif;
                     ?>
-                  </div>
                 </div>
-                <div class="limpar"></div>
-              </div>
-            <?php
+            </div>
+            <div class="limpar"></div>
+        </div>
+        <?php
             else :
 
               $ultimo->ExeRead('perfil', "WHERE id = :id", 'id=' . $sac_mensagem['atendente'] . '');
               foreach ($ultimo->getResult() as $cliente__);
             ?>
-              <div class="box box100" style=" width: 100%; margin-top: 5%; margin-bottom: 5%">
+        <div class="box box100" style=" width: 100%; margin-top: 5%; margin-bottom: 5%">
 
-                <div class="box box90">
-                  <p style=" float: right; margin-right: 1.5%; font-size: 0.8em; margin-bottom: 1%;">Data: <?= Check::TimesData($sac_mensagem['data']); ?> - <?= $sac_mensagem['hora']; ?> / <?= $cliente__['nome']; ?></p>
-                  <div style=" float: right; background: #6494ED; color: #fff; padding: 2% 3%; margin-right: 1%; width: 100%; font-size: 0.9em;">
+            <div class="box box90">
+                <p style=" float: right; margin-right: 1.5%; font-size: 0.8em; margin-bottom: 1%;">Data: <?= Check::TimesData($sac_mensagem['data']); ?> - <?= $sac_mensagem['hora']; ?> / <?= $cliente__['nome']; ?></p>
+                <div style=" float: right; background: #6494ED; color: #fff; padding: 2% 3%; margin-right: 1%; width: 100%; font-size: 0.9em;">
                     <?= $sac_mensagem['msn']; ?>
                     <?php
                     $ultimo->ExeRead('sac_arquivo', "WHERE id_sac_interacao = :id and id_sac = " . $sac_mensagem['id_sac'] . "", 'id=' . $sac_mensagem['id'] . '');
@@ -4727,34 +4742,34 @@ switch ($_POST['acao']) {
                       echo '<p style=" font-weight: 900; font-size: 0.9em; margin-top: 2%; margin-bottom: 2%; border-bottom: 2px solid #fff">Arquivos Anexados:</p>';
                       foreach ($ultimo->getResult() as $sac_arquivo) :
                     ?>
-                        <a style=" font-size: 0.9em; color: #fff;" href="<?= HOME; ?>imagens_site/<?= $sac_arquivo['arquivo']; ?>" target="_blank"><?= $sac_arquivo['token']; ?></a><br>
+                    <a style=" font-size: 0.9em; color: #fff;" href="<?= HOME; ?>imagens_site/<?= $sac_arquivo['arquivo']; ?>" target="_blank"><?= $sac_arquivo['token']; ?></a><br>
                     <?php
                       endforeach;
                     else :
                     endif;
                     ?>
-                  </div>
                 </div>
-                <div class="box box10 no-margim">
-                  <?php
+            </div>
+            <div class="box box10 no-margim">
+                <?php
                   if ($cliente__['avatar'] == '') :
                     echo '<img class="user_thumb radius-circulo" style="width: 100%;" alt="Foto do usuário" title="Foto do usuário" src="' . HOME . 'imagens_fixas/sem_imagem.jpg" default="' . HOME . 'imagens_fixas/sem_imagem.jpg">';
                   else :
                     echo '<img class="user_thumb radius-circulo" style="width: 100%;" alt="Foto do usuário" title="Foto do usuário" src="' . HOME . 'imagens_site/' . $cliente__['avatar'] . '" default="' . HOME . 'imagens_site/' . $cliente__['avatar'] . '">';
                   endif;
                   ?>
-                </div>
-                <div class="limpar"></div>
-              </div>
-          <?php
+            </div>
+            <div class="limpar"></div>
+        </div>
+        <?php
             endif;
 
           endforeach;
           ?>
-        </div>
-        <div class="limpar"></div>
-      </div>
-      <?php
+    </div>
+    <div class="limpar"></div>
+</div>
+<?php
       if ($resultado['id_cliente_contato'] == '') :
       else :
 
@@ -4842,21 +4857,22 @@ switch ($_POST['acao']) {
       $ultimo->ExeRead('arquivos', "WHERE id = :id", 'id=' . $c['id'] . '');
       foreach ($ultimo->getResult() as $resultado);
       ?>
-      <script>
-        $("select").select2();
-      </script>
-      <form class="form_linha" method="post" name="Alt_arquivo" enctype="multipart/form-data">
-        <h1 class="topo_modal">Alterar arquivo</h1>
-        <div class="box box100" style=" width: 100%">
-          <div class="box box50">
+<script>
+    $("select").select2();
+
+</script>
+<form class="form_linha" method="post" name="Alt_arquivo" enctype="multipart/form-data">
+    <h1 class="topo_modal">Alterar arquivo</h1>
+    <div class="box box100" style=" width: 100%">
+        <div class="box box50">
             <p class="texto_form">Nome</p>
             <input name="nome" type="text" required placeholder="Nome" value="<?= $resultado['nome']; ?>" style=" width: 100%;" />
-          </div>
-          <div class="box box50 no-margim">
+        </div>
+        <div class="box box50 no-margim">
             <p class="texto_form">Empresa</p>
             <select name="id_cliente_vinculo" required class="select " style=" width: 100%;">
-              <option <?= ($resultado['id_cliente_vinculo'] == '' ? "selected" : ""); ?> value="bb">Arquivo não vinculado há empresa ou cliente.</option>
-              <?php
+                <option <?= ($resultado['id_cliente_vinculo'] == '' ? "selected" : ""); ?> value="bb">Arquivo não vinculado há empresa ou cliente.</option>
+                <?php
               $corretor = new Read;
               $corretor->ExeRead('cliente', 'WHERE status = "1"');
               if ($corretor->getRowCount() >= 1) :
@@ -4868,34 +4884,34 @@ switch ($_POST['acao']) {
               endif;
               ?>
             </select>
-          </div>
-          <div class="limpar"></div>
-          <p class="texto_form">Observações</p>
-          <textarea name="obs" rows="5" placeholder="Observações" style=" width: 100%; height: 100px"><?= $resultado['obs']; ?></textarea>
-          <div class="limpar"></div>
-          <br>
-          <p class="texto_form">Selecione um arquivo, Maximo de 100mb</p>
-          <div class="box box25">
+        </div>
+        <div class="limpar"></div>
+        <p class="texto_form">Observações</p>
+        <textarea name="obs" rows="5" placeholder="Observações" style=" width: 100%; height: 100px"><?= $resultado['obs']; ?></textarea>
+        <div class="limpar"></div>
+        <br>
+        <p class="texto_form">Selecione um arquivo, Maximo de 100mb</p>
+        <div class="box box25">
             <div class="limpar"></div>
             <label class="label_file" for='selecao-arquivo4'>Selecionar um arquivo</label>
             <input id='selecao-arquivo4' required type="file" name="documento" multiple class="" />
             <div class="limpar"></div>
-          </div>
-          <div class="box box30" style=" margin-left: 5%;">
+        </div>
+        <div class="box box30" style=" margin-left: 5%;">
             <a style=" font-size: 1.2em;" href="<?= HOME; ?>imagens_site/<?= $resultado['arquivo']; ?>" target="_blank">Arquivo Atual</a>
 
-          </div>
         </div>
+    </div>
 
-        <div class="limpar"></div>
-        <br>
-        <span class="carregando2 ds-none"><img src="<?= HOME; ?>imagens_fixas/carregando2.gif" /></span>
-        <button class="btn btn_green fl-left" style="font-size: 0.8em; margin-right: 1%;">
-          <figure class="icon-pencil-square-o" style="margin-top: -4%;"></figure> Alterar
-        </button>
-      </form>
-      <div class="limpar"></div>
-    <?php
+    <div class="limpar"></div>
+    <br>
+    <span class="carregando2 ds-none"><img src="<?= HOME; ?>imagens_fixas/carregando2.gif" /></span>
+    <button class="btn btn_green fl-left" style="font-size: 0.8em; margin-right: 1%;">
+        <figure class="icon-pencil-square-o" style="margin-top: -4%;"></figure> Alterar
+    </button>
+</form>
+<div class="limpar"></div>
+<?php
       break;
     case 'ex_arquivo':
       $c['id'] = $_POST['del'];
@@ -4982,53 +4998,67 @@ switch ($_POST['acao']) {
     case 'modal_alunos':
       $c['id'] = $_POST['id'];
     ?>
-      <div class="" style=" background: #fff; padding: 3%">
-        <h1 class="topo_modal">Lista de alunos cadastrados</h1>
-        <div class="box_conteudo_ lista_atual_modal">
-          <!--LISTA DE CADASTRADOS-->
-          <?php
+<div class="" style=" background: #fff; padding: 3%">
+    <h1 class="topo_modal">Lista de Projetos Cadastrados</h1>
+    <div class="box_conteudo_ lista_atual_modal">
+        <!--LISTA DE CADASTRADOS-->
+        <?php
           $listagem = new Read;
           $listagem->ExeRead('aluno', 'where id_orientador = ' . $c['id'] . ' and status <> 3');
           if ($listagem->getRowCount() >= 1) :
           ?>
-            <p class="texto_form" style=" margin-top: 0;">Você pode ordenar a lista clicando nos titulos da lista abaixo.</p>
-            <script type="text/javascript" src="<?= HOME; ?>js/sorttable.js"></script>
-            <table class="lista_base_tabela sortable">
-              <!--<caption></caption>-->
-              <tr style=" width: 100%; border-bottom: 1px solid #000; background-color: #000000; color: #FFF; font-size: 0.9em;">
-                <th width="30%" style=" text-align: center; padding: 1%;">Nome</th>
-                <th width="15%" style=" text-align: center; padding: 1%;">Curso</th>
-                <th width="15%" style=" text-align: center; padding: 1%;">CPF</th>
-                <th width="10%" style=" text-align: center; padding: 1%;">Instituição</th>
-                <th width="10%" style=" text-align: center; padding: 1%;">Coeficiente</th>
+        <p class="texto_form" style=" margin-top: 0;">Você pode ordenar a lista clicando nos titulos da lista abaixo.</p>
+        <script type="text/javascript" src="<?= HOME; ?>js/sorttable.js"></script>
+        <table class="lista_base_tabela sortable">
+            <!--<caption></caption>-->
+            <tr style=" width: 100%; border-bottom: 1px solid #000; background-color: #000000; color: #FFF; font-size: 0.9em;">
+                <th width="30%" style=" text-align: center; padding: 1%;">Projeto</th>
+                <th width="15%" style=" text-align: center; padding: 1%;">Tecnico</th>
+                <th width="15%" style=" text-align: center; padding: 1%;">Matricula</th>
+                <th width="10%" style=" text-align: center; padding: 1%;">Expertise</th>
+                <th width="10%" style=" text-align: center; padding: 1%;">Andamento</th>
                 <th width="10%" style=" text-align: center; padding: 1%;">Status</th>
                 <th width="1%" style="padding: 0%;"></th>
                 <th width="1%" style="padding: 0%"></th>
-              </tr>
-              <div class="limpar"></div>
-              <?php
+            </tr>
+            <div class="limpar"></div>
+            <?php
               foreach ($listagem->getResult() as $listagem_) :
               ?>
-                <tr class="lista_tabela">
-                  <td width="30%" data-balloon-length="large" data-balloon="<?= $listagem_['nome']; ?>" data-balloon-pos="up"><?= Check::limitcaracter($listagem_['nome'], 36); ?></td>
-                  <td width="15%"><?= $listagem_['curso']; ?></td>
-                  <td width="15%"><?= $listagem_['cpf']; ?></td>
-                  <td width="10%"><?= $listagem_['faculdade']; ?></td>
-                  <td width="10%"><?= $listagem_['cr']; ?></td>
-                  <td width="10%">
+            <tr class="lista_tabela">
+                <td width="30%" data-balloon-length="large" data-balloon="<?= $listagem_['nome']; ?>" data-balloon-pos="up"><?= Check::limitcaracter($listagem_['nome'], 36); ?></td>
+                <td width="15%"><?= $listagem_['curso']; ?></td>
+                <td width="15%"><?= $listagem_['cpf']; ?></td>
+                <td width="10%"><?= $listagem_['faculdade']; ?></td>
+                <td width="10%"><?= $listagem_['cr']; ?></td>
+                <td width="10%">
                     <?php
-                    if ($listagem_['status'] == '1') :
+                    if ($listagem_['status'] == '1'){
+                        
+                    
                     ?>
-                      <p style=" color: green">Ativo</p>
+                    <p style=" color: green">Ativo</p>
                     <?php
-                    else :
+                    }
+        if(($listagem_['status'] == '0')){
+            
                     ?>
-                      <p style=" color: red">Inativo</p>
+                    <p style=" color: orange">Parado</p>
                     <?php
-                    endif;
+        }
+        if(($listagem_['status'] == '4')){
                     ?>
-                  </td>
-                  <!-- <td width="1%">
+                    <p style=" color: blue">Entregue</p>
+                    <?php
+        }
+        if(($listagem_['status'] == '3')){
+            ?>
+                    <p style=" color: red">Cancelado</p>
+                    <?php
+        }
+        ?>
+                </td>
+                <!-- <td width="1%">
                    <div class="btn btn_red excluir_modal" data-excluir="ex_usuario" id="<? //= $listagem_['id']; 
                                                                                         ?>" style="" data-balloon-length="small" data-balloon="Alterar status" data-balloon-pos="up">
                       <i class="fa fa-times icone-funcao"></i>
@@ -5040,76 +5070,76 @@ switch ($_POST['acao']) {
                       <i class="fas fa-exchange-alt"></i>
                    </div>
                 </td>-->
-                  <!-- <td width="2%">
+                <!-- <td width="2%">
                     <div class="modal_coorientador btn btn_green_escuro" style="" id="<? //= $listagem_['id']; 
                                                                                       ?>" data-balloon-length="small" data-balloon="Co-Orientador cadastrado" data-balloon-pos="up">
                       <figure class="icon-user-circle" style="font-size: 1.3em;"></figure>
                     </div>
                   </td> -->
-                  <td width="2%">
+                <td width="2%">
                     <div class="id_aluno_alt btn btn_green" style="" id="<?= $listagem_['id']; ?>" data-balloon-length="small" data-balloon="Informações" data-balloon-pos="up">
-                      <figure class="icon-edit-3" style="font-size: 1.3em;"></figure>
+                        <figure class="icon-edit-3" style="font-size: 1.3em;"></figure>
                     </div>
-                  </td>
-                  <div class="limpar"></div>
-                </tr>
+                </td>
+                <div class="limpar"></div>
+            </tr>
             <?php
               endforeach;
             else :
-              echo '<div class="list" style="color: #000; font-size: 1.1em;"><center>Não há alunos cadastrados!</center></div>';
+              echo '<div class="list" style="color: #000; font-size: 1.1em;"><center>Não há projetos cadastrados!</center></div>';
             endif;
             ?>
             <div class="limpar"></div>
-            </table>
-            <br>
-        </div>
-        <div class="limpar"></div>
-      </div>
-    <?php
+        </table>
+        <br>
+    </div>
+    <div class="limpar"></div>
+</div>
+<?php
       break;
     case 'modal_coorientador':
       $c['id'] = $_POST['id'];
     ?>
-      <div class="" style=" background: #fff; padding: 3%">
-        <h1 class="topo_modal">Lista de Co-Orientadores</h1>
-        <div class="box_conteudo_ lista_atual_modal">
-          <!--LISTA DE CADASTRADOS-->
-          <?php
+<div class="" style=" background: #fff; padding: 3%">
+    <h1 class="topo_modal">Lista de Co-Orientadores</h1>
+    <div class="box_conteudo_ lista_atual_modal">
+        <!--LISTA DE CADASTRADOS-->
+        <?php
           $listagem = new Read;
           $listagem->ExeRead('co_orientador', 'where id_aluno = ' . $c['id'] . ' and status =1');
           if ($listagem->getRowCount() >= 1) :
             foreach ($listagem->getResult() as $listagem_);
             if ($listagem_['nome'] == "") :
           ?>
-              <p style=" text-align: center; font-size: 1.2em;">Não há co-cordenador neste projeto</p>
-            <?php
+        <p style=" text-align: center; font-size: 1.2em;">Não há Supervisor neste projeto</p>
+        <?php
             else :
             ?>
-              <p class="texto_form" style=" margin-top: 0;">Você pode ordenar a lista clicando nos titulos da lista abaixo.</p>
-              <script type="text/javascript" src="<?= HOME; ?>js/sorttable.js"></script>
-              <table class="lista_base_tabela sortable">
-                <!--<caption></caption>-->
-                <tr style=" width: 100%; border-bottom: 1px solid #000; background-color: #000000; color: #FFF; font-size: 0.9em;">
-                  <th width="60%" style=" text-align: center; padding: 1%;">Nome</th>
-                  <th width="1%" style="padding: 0%"></th>
-                </tr>
-                <div class="limpar"></div>
-                <?php
+        <p class="texto_form" style=" margin-top: 0;">Você pode ordenar a lista clicando nos titulos da lista abaixo.</p>
+        <script type="text/javascript" src="<?= HOME; ?>js/sorttable.js"></script>
+        <table class="lista_base_tabela sortable">
+            <!--<caption></caption>-->
+            <tr style=" width: 100%; border-bottom: 1px solid #000; background-color: #000000; color: #FFF; font-size: 0.9em;">
+                <th width="60%" style=" text-align: center; padding: 1%;">Projeto</th>
+                <th width="1%" style="padding: 0%"></th>
+            </tr>
+            <div class="limpar"></div>
+            <?php
                 foreach ($listagem->getResult() as $listagem_) :
                 ?>
-                  <tr class="lista_tabela">
-                    <td width="60%" data-balloon-length="large" data-balloon="<?= $listagem_['nome']; ?>" data-balloon-pos="up"><?= Check::limitcaracter($listagem_['nome'], 36); ?></td>
-                    <!--<td width="18%"><? //= $listagem_['cpf']; 
+            <tr class="lista_tabela">
+                <td width="60%" data-balloon-length="large" data-balloon="<?= $listagem_['nome']; ?>" data-balloon-pos="up"><?= Check::limitcaracter($listagem_['nome'], 36); ?></td>
+                <!--<td width="18%"><? //= $listagem_['cpf']; 
                                         ?></td>
                        <td width="25%"><? //= $listagem_['curso']; 
                                         ?></td> -->
-                    <td width="1%">
-                      <div class="id_coorientador_alt btn btn_green" style="" id="<?= $listagem_['id']; ?>" data-balloon-length="small" data-balloon="Alterar" data-balloon-pos="up">
+                <td width="1%">
+                    <div class="id_coorientador_alt btn btn_green" style="" id="<?= $listagem_['id']; ?>" data-balloon-length="small" data-balloon="Alterar" data-balloon-pos="up">
                         <figure class="icon-edit-3" style="font-size: 1.3em;"></figure>
-                      </div>
-                    </td>
-                    <div class="limpar"></div>
-                  </tr>
+                    </div>
+                </td>
+                <div class="limpar"></div>
+            </tr>
             <?php
 
                 endforeach;
@@ -5119,12 +5149,12 @@ switch ($_POST['acao']) {
             endif;
             ?>
             <div class="limpar"></div>
-              </table>
-              <br>
-        </div>
-        <div class="limpar"></div>
-      </div>
-    <?php
+        </table>
+        <br>
+    </div>
+    <div class="limpar"></div>
+</div>
+<?php
       break;
     case 'cordenadores_alt':
       $c['id'] = $_POST['id'];
@@ -5147,145 +5177,146 @@ switch ($_POST['acao']) {
       }
 
     ?>
-      <script>
-        jQuery(function($) {
-          $("#mascara_celular22").mask("(99)999999999");
-          $("#mascara_telefone22").mask("(99)999999999");
-          $("#mascara_telefone222").mask("(99)999999999");
-          $('#datacompleta2').datepicker({
+<script>
+    jQuery(function($) {
+        $("#mascara_celular22").mask("(99)999999999");
+        $("#mascara_telefone22").mask("(99)999999999");
+        $("#mascara_telefone222").mask("(99)999999999");
+        $('#datacompleta2').datepicker({
             language: 'pt-BR',
             todayButton: new Date() // Now can select only dates, which goes after today
-          });
         });
-        $("select").select2();
-      </script>
+    });
+    $("select").select2();
 
-      <form class="form_linha" method="post" name="editar_orientador" enctype="multipart/form-data">
-        <h1 class="topo_modal">Alterar orientador</h1>
-        <div class="box box100">
-          <div class="box box50">
+</script>
+
+<form class="form_linha" method="post" name="editar_orientador" enctype="multipart/form-data">
+    <h1 class="topo_modal">Alterar orientador</h1>
+    <div class="box box100">
+        <div class="box box50">
             <p class="texto_form">Nome completo(Obrigatório)</p>
             <input name="nome" type="text" required placeholder="Nome completo" value="<?= $resultado['nome']; ?>" style=" width: 100%;" />
-          </div>
-          <div class="box box50 no-margim">
+        </div>
+        <div class="box box50 no-margim">
             <p class="texto_form">E-mail válido</p>
             <input name="email" type="email" placeholder="E-mail válido" value="<?= $resultado['email']; ?>" style=" width: 100%;" />
-          </div>
-          <div class="limpar"></div>
-          <div class="box box33">
-            <p class="texto_form">CPF(Obrigatório)</p>
+        </div>
+        <div class="limpar"></div>
+        <div class="box box33">
+            <p class="texto_form">Matricula(Obrigatório)</p>
             <input name="cpf" type="text" required placeholder="CPF ou CNPJ" style=" width: 100%;" value="<?= $resultado['cpf']; ?>" onkeypress='mascaraMutuario(this, cpfCnpj)' onblur='clearTimeout()' />
-          </div>
-          <div class="box box33">
-            <p class="texto_form">Vínculo com o ILMD(Obrigatório)</p>
+        </div>
+        <div class="box box33">
+            <p class="texto_form">Cargo</p>
             <input name="ilmd" type="text" required placeholder="Vínculo com o ILMD" value="<?= $resultado['ilmd']; ?>" style=" width: 100%;" />
-          </div>
-          <div class="box box33">
+        </div>
+        <div class="box box33">
             <p class="texto_form">Senha(Obrigatório)</p>
             <input name="senha" type="password" required placeholder="Senha" value="<?= $resultado['senha']; ?>" style=" width: 100%;" />
-          </div>
-          <div class="limpar"></div>
-          <div class="box box50">
-            <p class="texto_form">Resumo do projeto do orientador(Obrigatório)</p>
+        </div>
+        <div class="limpar"></div>
+        <div class="box box50">
+            <p class="texto_form">Resumo do projeto do supervisor(Obrigatório)</p>
             <?php
             if ($resultado_or['arq_1'] <> '') :
             ?>
-              <a href="<?= CORDENADOR; ?>imagens_site/<?= $resultado_or['arq_1']; ?>" target="_blank">Ver arquivo</a>
+            <a href="<?= CORDENADOR; ?>imagens_site/<?= $resultado_or['arq_1']; ?>" target="_blank">Ver arquivo</a>
             <?php
             else :
               echo 'Arquivo não enviado';
             endif;
             ?>
-          </div>
-          <div class="box box50">
+        </div>
+        <div class="box box50">
             <p class="texto_form">Parecer/protocolo do comitê de ética(Obrigatório)</p>
             <?php
             if ($resultado_or['arq_2'] <> '') :
             ?>
-              <a href="<?= CORDENADOR; ?>imagens_site/<?= $resultado_or['arq_2']; ?>" target="_blank">Ver arquivo</a>
+            <a href="<?= CORDENADOR; ?>imagens_site/<?= $resultado_or['arq_2']; ?>" target="_blank">Ver arquivo</a>
             <?php
             else :
               echo 'Arquivo não enviado';
             endif;
             ?>
-          </div>
-          <div class="limpar"></div>
-          <div class="box box50">
+        </div>
+        <div class="limpar"></div>
+        <div class="box box50">
             <p class="texto_form">Comprovante de patrimônio gen.e de conhecimento tradicional(SISGEN)</p>
             <?php
             if ($resultado_or['arq_3'] <> '') :
             ?>
-              <a href="<?= CORDENADOR; ?>imagens_site/<?= $resultado_or['arq_3']; ?>" target="_blank">Ver arquivo</a>
+            <a href="<?= CORDENADOR; ?>imagens_site/<?= $resultado_or['arq_3']; ?>" target="_blank">Ver arquivo</a>
             <?php
             else :
               echo 'Arquivo não enviado';
             endif;
             ?>
-          </div>
-          <div class="box box50">
+        </div>
+        <div class="box box50">
             <p class="texto_form">Autorização pelo sisbio de coleta de material biológico(Obrigatório)</p>
             <?php
             if ($resultado_or['arq_4'] <> '') :
             ?>
-              <a href="<?= CORDENADOR; ?>imagens_site/<?= $resultado_or['arq_4']; ?>" target="_blank">Ver arquivo</a>
+            <a href="<?= CORDENADOR; ?>imagens_site/<?= $resultado_or['arq_4']; ?>" target="_blank">Ver arquivo</a>
             <?php
             else :
               echo 'Arquivo não enviado';
             endif;
             ?>
-          </div>
-          <div class="limpar"></div>
-          <div class="box box50">
+        </div>
+        <div class="limpar"></div>
+        <div class="box box50">
             <p class="texto_form">Currículo na plataforma Lattes do CNPq(Obrigatório)</p>
             <?php
             if ($resultado_or['arq_5'] <> '') :
             ?>
-              <a href="<?= CORDENADOR; ?>imagens_site/<?= $resultado_or['arq_5']; ?>" target="_blank">Ver arquivo</a>
+            <a href="<?= CORDENADOR; ?>imagens_site/<?= $resultado_or['arq_5']; ?>" target="_blank">Ver arquivo</a>
             <?php
             else :
               echo 'Arquivo não enviado';
             endif;
             ?>
-          </div>
-          <div class="box box50">
+        </div>
+        <div class="box box50">
             <p class="texto_form">Cadastros atualizados do orientador no banco da FAPEAM(Obrigatório)</p>
             <?php
             if ($resultado_or['arq_6'] <> '') :
             ?>
-              <a href="<?= CORDENADOR; ?>imagens_site/<?= $resultado_or['arq_6']; ?>" target="_blank">Ver arquivo</a>
+            <a href="<?= CORDENADOR; ?>imagens_site/<?= $resultado_or['arq_6']; ?>" target="_blank">Ver arquivo</a>
             <?php
             else :
               echo 'Arquivo não enviado';
             endif;
             ?>
-          </div>
-          <div class="limpar"></div>
-          <div class="box box50">
+        </div>
+        <div class="limpar"></div>
+        <div class="box box50">
             <p class="texto_form">Cadastro do orientador em grupo de pesquisa ILMD(Obrigatório)</p>
             <?php
             if ($resultado_or['arq_7'] <> '') :
             ?>
-              <a href="<?= CORDENADOR; ?>imagens_site/<?= $resultado_or['arq_7']; ?>" target="_blank">Ver arquivo</a>
+            <a href="<?= CORDENADOR; ?>imagens_site/<?= $resultado_or['arq_7']; ?>" target="_blank">Ver arquivo</a>
             <?php
             else :
               echo 'Arquivo não enviado';
             endif;
             ?>
-          </div>
-          <div class="box box50">
+        </div>
+        <div class="box box50">
             <p class="texto_form">Declaração de participação na orientação(Obrigatório)</p>
             <?php
             if ($resultado_or['arq_8'] <> '') :
             ?>
-              <a href="<?= CORDENADOR; ?>imagens_site/<?= $resultado_or['arq_8']; ?>" target="_blank">Ver arquivo</a>
+            <a href="<?= CORDENADOR; ?>imagens_site/<?= $resultado_or['arq_8']; ?>" target="_blank">Ver arquivo</a>
             <?php
             else :
               echo 'Arquivo não enviado';
             endif;
             ?>
-          </div>
-          <div class="limpar"></div>
-          <!-- <div class="box box50">
+        </div>
+        <div class="limpar"></div>
+        <!-- <div class="box box50">
           <p class="texto_form">Avaliação do orientador(no caso de renovação assinada), assinada(Obrigatório)</p>
           <?php
           //if ($resultado_or['arq_ori13'] <> ''):
@@ -5300,22 +5331,22 @@ switch ($_POST['acao']) {
             ?>
         </div> -->
 
-          <!--<div class="limpar"></div -->
-          <br><br>
-          <button class="btn btn_green fl-left" style="font-size: 0.8em; margin-right: 1%;">
+        <!--<div class="limpar"></div -->
+        <br><br>
+        <button class="btn btn_green fl-left" style="font-size: 0.8em; margin-right: 1%;">
             <figure class="icon-pencil-square-o" style="margin-top: -4%;"></figure> Alterar
-          </button>
-        </div>
+        </button>
+    </div>
 
-        <div class="limpar"></div>
-        <br>
-        <input type="hidden" name="id" value="<?= $resultado['id']; ?>" />
-        <input type="hidden" name="acao" value="editar_orientador" />
-        <span class="carregando2 ds-none"><img src="<?= HOME; ?>imagens_fixas/carregando2.gif" /></span>
+    <div class="limpar"></div>
+    <br>
+    <input type="hidden" name="id" value="<?= $resultado['id']; ?>" />
+    <input type="hidden" name="acao" value="editar_orientador" />
+    <span class="carregando2 ds-none"><img src="<?= HOME; ?>imagens_fixas/carregando2.gif" /></span>
 
-        <div class="limpar"></div>
-      </form>
-    <?php
+    <div class="limpar"></div>
+</form>
+<?php
       break;
     case 'editar_orientador':
 
@@ -5372,6 +5403,25 @@ switch ($_POST['acao']) {
         endif;
       endif;
       break;
+    case 'del_projeto':
+      $c['id'] = $_POST['del'];
+      if (in_array('', $c)) :
+        echo '3';
+      else :
+
+        $Dados = [
+          'status' => '3',
+        ];
+
+        $updade = new Update;
+        $updade->ExeUpdate('orientador', $Dados, "WHERE id = :id", "id=" . $c['id'] . "");
+        if ($updade->getResult()) :
+          echo '1';
+        else :
+          echo '2';
+        endif;
+      endif;
+      break;
     case 'id_aluno_alt':
       $c['id'] = $_POST['id'];
 
@@ -5379,321 +5429,136 @@ switch ($_POST['acao']) {
       $ultimo->ExeRead('aluno', "WHERE id = :id", 'id=' . $c['id'] . '');
       foreach ($ultimo->getResult() as $resultado);
     ?>
-      <script>
-        $("#mascara_cpf").mask("999.999.999-99");
-        $("select").select2();
-      </script>
-      <form class="form_linha" method="post" name="editar_aluno" enctype="multipart/form-data">
-        <h1 class="topo_modal">Alterar informações do aluno</h1>
+<script>
+    $("#mascara_cpf").mask("999.999.999-99");
+    $("select").select2();
+
+</script>
+<form class="form_linha" method="post" name="editar_aluno" enctype="multipart/form-data">
+    <h1 class="topo_modal">Alterar informações do Projeto</h1>
+    <div class="box box100">
         <div class="box box100">
-          <div class="box box100">
             <div class="box box33">
-              <p class="texto_form">Nome completo do estudante (obrigatório)</p>
-              <input name="nome" type="text" required placeholder="Nome completo" value="<?= $resultado['nome']; ?>" style=" width: 100%;" />
+                <p class="texto_form">Projeto</p>
+                <input name="nome" type="text" required placeholder="Nome do Projeto" value="<?= $resultado['nome']; ?>" style=" width: 100%;" />
             </div>
             <div class="box box33">
-              <p class="texto_form">Curso (obrigatório)</p>
-              <input name="curso" type="text" required placeholder="Curso" value="<?= $resultado['curso']; ?>" style=" width: 100%;" />
+                <p class="texto_form">Responsável</p>
+                <input name="curso" type="text" required placeholder="Responsável" value="<?= $resultado['curso']; ?>" style=" width: 100%;" />
             </div>
             <div class="box box33 no-margim">
-              <p class="texto_form">Instituição de ensino (obrigatório)</p>
-              <input name="faculdade" type="text" required placeholder="Instituição de ensino" value="<?= $resultado['faculdade']; ?>" style=" width: 100%;" />
+                <p class="texto_form">Expertise</p>
+                <input name="faculdade" type="text" required placeholder="Expertise" value="<?= $resultado['faculdade']; ?>" style=" width: 100%;" />
             </div>
             <div class="limpar"></div>
 
             <div class="box box33">
-              <p class="texto_form">CPF (obrigatório)</p>
-              <input name="cpf" type="text" placeholder="CPF" autocomplete="off" value="<?= $resultado['cpf']; ?>" style=" width: 100%;" id="mascara_cpf" />
+                <p class="texto_form">Matricula</p>
+                <input name="cpf" type="text" placeholder="Matricula" autocomplete="off" value="<?= $resultado['cpf']; ?>" style=" width: 100%;" />
             </div>
             <div class="box box33">
-              <p class="texto_form">Coeficiente de Rendimento(CR)</p>
-              <input name="cr" type="text" placeholder="Coeficiente de Rendimento(CR)" value="<?= $resultado['cr']; ?>" id="" style=" width: 100%;" />
+                <p class="texto_form">Andamento</p>
+                <input name="cr" type="text" placeholder="Andamento" value="<?= $resultado['cr']; ?>" id="" style=" width: 100%;" />
             </div>
             <div class="box box33 no-margim">
-              <p class="texto_form">Tipo</p>
-              <select class="" name="tipo" style=" width: 100%;">
-                <option <?= ($resultado['tipo'] == "1" ? "selected" : ""); ?> value="1">Aluno Novo</option>
-                <option <?= ($resultado['tipo'] == "2" ? "selected" : ""); ?> value="2">Renovação</option>
-              </select>
+                <p class="texto_form">Tipo</p>
+                <select class="" name="tipo" style=" width: 100%;">
+                    <option <?= ($resultado['tipo'] == "1" ? "selected" : ""); ?>>Inovação</option>
+                    <option <?= ($resultado['tipo'] == "2" ? "selected" : ""); ?>>Melhoria</option>
+                </select>
             </div>
             <div class="limpar"></div>
             <?php
             if ($resultado['tipo'] == '2') :
             ?>
-              <div class="forms_exta" style=" width: 100%; padding: 2%; background: #f1f1f1; border: 0.9% solid #333; margin-bottom: 3%">
+            <div class="forms_exta" style=" width: 100%; padding: 2%; background: #f1f1f1; border: 0.9% solid #333; margin-bottom: 3%">
 
                 <h1 style=" text-align: left; font-size: 1.4em; margin-bottom: 2%">Informações extras para renovação </h1>
 
                 <div class="box box100">
-                  <p class="texto_form">Avaliação do orientador(no caso de renovação assinatura), assinada (obrigatório)</p>
-                  <!-- <label class="label_file" for='selecao-arquivo2'>Selecionar um arquivo</label> -->
-                  <input id='' type="file" name="arq_ori4" class="" style=" display: block; width: 100%; border: 1px solid #b1b1b1; padding: 1%" />
-                  <div class="limpar"></div>
-                  <?php if ($resultado["arq_ori4"] == "") : ?>
+                    <p class="texto_form">Avaliação do orientador(no caso de renovação assinatura), assinada (obrigatório)</p>
+                    <!-- <label class="label_file" for='selecao-arquivo2'>Selecionar um arquivo</label> -->
+                    <input id='' type="file" name="arq_ori4" class="" style=" display: block; width: 100%; border: 1px solid #b1b1b1; padding: 1%" />
+                    <div class="limpar"></div>
+                    <?php if ($resultado["arq_ori4"] == "") : ?>
                     <p class="texto_form" style=" color: red">Arquivo não enviado!</p>
-                  <?php else : ?>
+                    <?php else : ?>
                     <a href="<?= CORDENADOR; ?>imagens_site/<?= $resultado["arq_ori4"]; ?>" style=" color: red" target="_blank">Verificar arquivo!</a>
-                  <?php endif; ?>
+                    <?php endif; ?>
                 </div>
 
                 <div class="limpar"></div>
-              </div>
+            </div>
             <?php
             else :
             ?>
-              <div class="forms_exta ds-none" style=" width: 100%; padding: 2%; background: #f1f1f1; border: 0.9% solid #333;">
+            <div class="forms_exta ds-none" style=" width: 100%; padding: 2%; background: #f1f1f1; border: 0.9% solid #333;">
 
-              </div>
+            </div>
             <?php
             endif;
             ?>
             <!--cordenador-->
             <div class="box box50">
-              <h1 class="topo_modal">Informações do orientado</h1>
-              <div class="box box100">
-                <p class="texto_form">Resumo do projeto do orientador (obrigatório)</p>
-                <!-- <label class="label_file" for='selecao-arquivo2'>Selecionar um arquivo</label> -->
-                <input id='' type="file" name="user_thumb" class="" style=" display: block; width: 100%; border: 1px solid #b1b1b1; padding: 1%" />
-                <?php if ($resultado["arq_ori5"] == "") : ?>
-                  <p class="texto_form" style=" color: red">Arquivo não enviado!</p>
-                <?php else : ?>
-                  <a href="<?= CORDENADOR; ?>imagens_site/<?= $resultado["arq_ori5"]; ?>" style=" color: red" target="_blank">Verificar arquivo!</a>
-                <?php endif; ?>
-              </div>
+                <h1 class="topo_modal">Arquivo Anéxado</h1>
+                <div class="box box100">
+                    <p class="texto_form">Anéxo</p>
+                    <!-- <label class="label_file" for='selecao-arquivo2'>Selecionar um arquivo</label> -->
+                    <input id='' type="file" name="user_thumb" class="" style=" display: block; width: 100%; border: 1px solid #b1b1b1; padding: 1%" />
+                    <?php if ($resultado["arq_ori5"] == "") : ?>
+                    <p class="texto_form" style=" color: red">Arquivo não enviado!</p>
+                    <?php else : ?>
+                    <a href="<?= CORDENADOR; ?>imagens_site/<?= $resultado["arq_ori5"]; ?>" style=" color: red" target="_blank">Verificar arquivo!</a>
+                    <?php endif; ?>
+                </div>
 
-              <div class="box box100">
-                <p class="texto_form">Parecer/protocolo do comitê de ética (obrigatório)</p>
-                <!-- <label class="label_file" for='selecao-arquivo2'>Selecionar um arquivo</label> -->
-                <input id='' type="file" name="user_thumb2" class="" style=" display: block; width: 100%; border: 1px solid #b1b1b1; padding: 1%" />
-                <?php if ($resultado["arq_ori6"] == "") : ?>
-                  <p class="texto_form" style=" color: red">Arquivo não enviado!</p>
-                <?php else : ?>
-                  <a href="<?= CORDENADOR; ?>imagens_site/<?= $resultado["arq_ori6"]; ?>" style=" color: red" target="_blank">Verificar arquivo!</a>
-                <?php endif; ?>
-              </div>
-
-              <div class="box box100">
-                <p class="texto_form">Comprovante de patrimônio Gen. e de conhecimento tradicional(SISGEN) (obrigatório)</p>
-                <!-- <label class="label_file" for='selecao-arquivo2'>Selecionar um arquivo</label> -->
-                <input id='' type="file" name="user_thumb3" class="" style=" display: block; width: 100%; border: 1px solid #b1b1b1; padding: 1%" />
+                <!--
+                <div class="box box100">
+                    <p class="texto_form">Parecer/protocolo do comitê de ética (obrigatório)</p>
+                    <!-- <label class="label_file" for='selecao-arquivo2'>Selecionar um arquivo</label> -->
+                <!--
+                    <input id='' type="file" name="user_thumb2" class="" style=" display: block; width: 100%; border: 1px solid #b1b1b1; padding: 1%" />
+                    <?php if ($resultado["arq_ori6"] == "") : ?>
+                    <p class="texto_form" style=" color: red">Arquivo não enviado!</p>
+                    <?php else : ?>
+                    <a href="<?= CORDENADOR; ?>imagens_site/<?= $resultado["arq_ori6"]; ?>" style=" color: red" target="_blank">Verificar arquivo!</a>
+                    <?php endif; ?>
+                </div>
+-->
+                <!--
+                <div class="box box100">
+                    <p class="texto_form">Comprovante de patrimônio Gen. e de conhecimento tradicional(SISGEN) (obrigatório)</p>
+                    <!-- <label class="label_file" for='selecao-arquivo2'>Selecionar um arquivo</label> -->
+                <!--<input id='' type="file" name="user_thumb3" class="" style=" display: block; width: 100%; border: 1px solid #b1b1b1; padding: 1%" />
                 <?php if ($resultado["arq_ori7"] == "") : ?>
-                  <p class="texto_form" style=" color: red">Arquivo não enviado!</p>
+                <p class="texto_form" style=" color: red">Arquivo não enviado!</p>
                 <?php else : ?>
-                  <a href="<?= CORDENADOR; ?>imagens_site/<?= $resultado["arq_ori7"]; ?>" style=" color: red" target="_blank">Verificar arquivo!</a>
+                <a href="<?= CORDENADOR; ?>imagens_site/<?= $resultado["arq_ori7"]; ?>" style=" color: red" target="_blank">Verificar arquivo!</a>
                 <?php endif; ?>
-              </div>
-
-              <div class="box box100">
+            </div>-->
+                <!--
+            <div class="box box100">
                 <p class="texto_form">Autorização pelo sisbio de coleta de material biológico (obrigatório)</p>
                 <!-- <label class="label_file" for='selecao-arquivo2'>Selecionar um arquivo</label> -->
+                <!--
                 <input id='' type="file" name="user_thumb4" class="" style=" display: block; width: 100%; border: 1px solid #b1b1b1; padding: 1%" />
                 <?php if ($resultado["arq_ori8"] == "") : ?>
-                  <p class="texto_form" style=" color: red">Arquivo não enviado!</p>
+                <p class="texto_form" style=" color: red">Arquivo não enviado!</p>
                 <?php else : ?>
-                  <a href="<?= CORDENADOR; ?>imagens_site/<?= $resultado["arq_ori8"]; ?>" style=" color: red" target="_blank">Verificar arquivo!</a>
+                <a href="<?= CORDENADOR; ?>imagens_site/<?= $resultado["arq_ori8"]; ?>" style=" color: red" target="_blank">Verificar arquivo!</a>
                 <?php endif; ?>
-              </div>
+            </div>
+-->
 
-              <div class="box box100">
-                <p class="texto_form">Currículo na plataforma Lattes do CNPq (obrigatório)</p>
-                <!-- <label class="label_file" for='selecao-arquivo2'>Selecionar um arquivo</label> -->
-                <input id='' type="file" name="user_thumb5" class="" style=" display: block; width: 100%; border: 1px solid #b1b1b1; padding: 1%" />
-                <?php if ($resultado["arq_ori9"] == "") : ?>
-                  <p class="texto_form" style=" color: red">Arquivo não enviado!</p>
-                <?php else : ?>
-                  <a href="<?= CORDENADOR; ?>imagens_site/<?= $resultado["arq_ori9"]; ?>" style=" color: red" target="_blank">Verificar arquivo!</a>
-                <?php endif; ?>
-              </div>
 
-              <div class="box box100">
-                <p class="texto_form">Cadastro autorizados do orientador no banco da FAPEAM (obrigatório)</p>
-                <!-- <label class="label_file" for='selecao-arquivo2'>Selecionar um arquivo</label> -->
-                <input id='' type="file" name="user_thumb6" class="" style=" display: block; width: 100%; border: 1px solid #b1b1b1; padding: 1%" />
-                <?php if ($resultado["arq_ori10"] == "") : ?>
-                  <p class="texto_form" style=" color: red">Arquivo não enviado!</p>
-                <?php else : ?>
-                  <a href="<?= CORDENADOR; ?>imagens_site/<?= $resultado["arq_ori10"]; ?>" style=" color: red" target="_blank">Verificar arquivo!</a>
-                <?php endif; ?>
-              </div>
-
-              <div class="box box100">
-                <p class="texto_form">Cadastro do orientador em grupo de pesquisa do ILMD (obrigatório)</p>
-                <!-- <label class="label_file" for='selecao-arquivo2'>Selecionar um arquivo</label> -->
-                <input id='' type="file" name="user_thumb7" class="" style=" display: block; width: 100%; border: 1px solid #b1b1b1; padding: 1%" />
-                <?php if ($resultado["arq_ori11"] == "") : ?>
-                  <p class="texto_form" style=" color: red">Arquivo não enviado!</p>
-                <?php else : ?>
-                  <a href="<?= CORDENADOR; ?>imagens_site/<?= $resultado["arq_ori11"]; ?>" style=" color: red" target="_blank">Verificar arquivo!</a>
-                <?php endif; ?>
-              </div>
-
-              <div class="box box100">
-                <p class="texto_form">Declaração de participação na orientação (obrigatório)</p>
-                <!-- <label class="label_file" for='selecao-arquivo2'>Selecionar um arquivo</label> -->
-                <input id='' type="file" name="user_thumb8" class="" style=" display: block; width: 100%; border: 1px solid #b1b1b1; padding: 1%" />
-                <?php if ($resultado["arq_ori12"] == "") : ?>
-                  <p class="texto_form" style=" color: red">Arquivo não enviado!</p>
-                <?php else : ?>
-                  <a href="<?= CORDENADOR; ?>imagens_site/<?= $resultado["arq_ori12"]; ?>" style=" color: red" target="_blank">Verificar arquivo!</a>
-                <?php endif; ?>
-              </div>
-              <div class="limpar"></div>
+                <div class="limpar"></div>
             </div>
             <!-- aluno -->
-            <div class="box box50 no-margim">
-              <h1 class="topo_modal">Informações do aluno</h1>
-              <div class="box box100">
-                <p class="texto_form">Projeto de aluno detalhado em .DOC ou DOCX</p>
-                <!-- <label class="label_file" for='selecao-arquivo2'>Selecionar um arquivo</label> -->
-                <input id='' type="file" name="user_thumb20" class="" style=" display: block; width: 100%; border: 1px solid #b1b1b1; padding: 1%" />
-                <?php if ($resultado["arq_co3"] == "") : ?>
-                  <p class="texto_form" style=" color: red">Arquivo não enviado!</p>
-                <?php else : ?>
-                  <a href="<?= CORDENADOR; ?>imagens_site/<?= $resultado["arq_co3"]; ?>" style=" color: red" target="_blank">Verificar arquivo!</a>
-                <?php endif; ?>
-              </div>
-              <div class="box box100">
-                <p class="texto_form">Declaração de responsabilidade na orientação do aluno. (obrigatório)</p>
-                <!-- <label class="label_file" for='selecao-arquivo2'>Selecionar um arquivo</label> -->
-                <input id='' type="file" name="user_thumb10" class="" style=" display: block; width: 100%; border: 1px solid #b1b1b1; padding: 1%" />
-                <?php if ($resultado["arq_2"] == "") : ?>
-                  <p class="texto_form" style=" color: red">Arquivo não enviado!</p>
-                <?php else : ?>
-                  <a href="<?= CORDENADOR; ?>imagens_site/<?= $resultado["arq_2"]; ?>" style=" color: red" target="_blank">Verificar arquivo!</a>
-                <?php endif; ?>
-              </div>
 
-              <div class="box box100">
-                <p class="texto_form">Currículo na plataforma Lattes do CNPQ(obrigatório)</p>
-                <!-- <label class="label_file" for='selecao-arquivo2'>Selecionar um arquivo</label> -->
-                <input id='' type="file" name="envio_02" class="" style=" display: block; width: 100%; border: 1px solid #b1b1b1; padding: 1%" />
-                <?php if ($resultado["arq_co4"] == "") : ?>
-                  <p class="texto_form" style=" color: red">Arquivo não enviado!</p>
-                <?php else : ?>
-                  <a href="<?= CORDENADOR; ?>imagens_site/<?= $resultado["arq_co4"]; ?>" style=" color: red" target="_blank">Verificar arquivo!</a>
-                <?php endif; ?>
-              </div>
-              <div class="box box100">
-                <p class="texto_form">Cadastro atualizado do candidato no banco de pesquisa da FAPEAM (obrigatório)</p>
-                <!-- <label class="label_file" for='selecao-arquivo2'>Selecionar um arquivo</label> -->
-                <input id='' type="file" name="user_thumb11" class="" style=" display: block; width: 100%; border: 1px solid #b1b1b1; padding: 1%" />
-                <?php if ($resultado["arq_3"] == "") : ?>
-                  <p class="texto_form" style=" color: red">Arquivo não enviado!</p>
-                <?php else : ?>
-                  <a href="<?= CORDENADOR; ?>imagens_site/<?= $resultado["arq_3"]; ?>" style=" color: red" target="_blank">Verificar arquivo!</a>
-                <?php endif; ?>
-              </div>
-
-              <div class="box box100">
-                <p class="texto_form">Histórico escolar de graduação atualizado <font color=red>*</font>
-                </p>
-                <input id='' type="file" name="user_thumb12" class="" style=" display: block; width: 100%; border: 1px solid #b1b1b1; padding: 1%" />
-                <?php if ($resultado["arq_4"] == "") : ?>
-                  <p class="texto_form" style=" color: red">Arquivo não enviado!</p>
-                <?php else : ?>
-                  <a href="<?= HOME; ?>imagens_site/<?= $resultado["arq_4"]; ?>" style=" color: red" target="_blank">Verificar arquivo!</a>
-                <?php endif; ?>
-              </div>
-
-              <div class="box box100">
-                <p class="texto_form">Comprovante de matrícula atualizado (obrigatório)</p>
-                <!-- <label class="label_file" for='selecao-arquivo2'>Selecionar um arquivo</label> -->
-                <input id='' type="file" name="user_thumb13" class="" style=" display: block; width: 100%; border: 1px solid #b1b1b1; padding: 1%" />
-                <?php if ($resultado["arq_5"] == "") : ?>
-                  <p class="texto_form" style=" color: red">Arquivo não enviado!</p>
-                <?php else : ?>
-                  <a href="<?= CORDENADOR; ?>imagens_site/<?= $resultado["arq_5"]; ?>" style=" color: red" target="_blank">Verificar arquivo!</a>
-                <?php endif; ?>
-              </div>
-
-              <div class="box box100">
-                <p class="texto_form">Cópia do CPF e carteira de identidade do candidato (obrigatório)</p>
-                <!-- <label class="label_file" for='selecao-arquivo2'>Selecionar um arquivo</label> -->
-                <input id='' type="file" name="user_thumb14" class="" style=" display: block; width: 100%; border: 1px solid #b1b1b1; padding: 1%" />
-                <?php if ($resultado["arq_6"] == "") : ?>
-                  <p class="texto_form" style=" color: red">Arquivo não enviado!</p>
-                <?php else : ?>
-                  <a href="<?= CORDENADOR; ?>imagens_site/<?= $resultado["arq_6"]; ?>" style=" color: red" target="_blank">Verificar arquivo!</a>
-                <?php endif; ?>
-              </div>
-
-              <!--<div class="box box100">
-                <p class="texto_form">Cópia da carteira de indentidade do candidato (obrigatório)</p>
-                 <label class="label_file" for='selecao-arquivo2'>Selecionar um arquivo</label> 
-                <input id='' type="file" name="user_thumb15" class="" style=" display: block; width: 100%; border: 1px solid #b1b1b1; padding: 1%" />
-                <?php //if ($resultado["arq_7"] == "") : 
-                ?>
-                  <p class="texto_form" style=" color: red">Arquivo não enviado!</p>
-                <?php //else : 
-                ?>
-                  <a href="<? //= CORDENADOR; 
-                            ?>imagens_site/<? //= $resultado["arq_7"]; 
-                                                            ?>" style=" color: red" target="_blank">Verificar arquivo!</a>
-                <?php //endif; 
-                ?>
-              </div> -->
-
-              <div class="box box100">
-                <p class="texto_form">Cópia do comprovante de residencia do candidato (obrigatório)</p>
-                <!-- <label class="label_file" for='selecao-arquivo2'>Selecionar um arquivo</label> -->
-                <input id='' type="file" name="user_thumb16" class="" style=" display: block; width: 100%; border: 1px solid #b1b1b1; padding: 1%" />
-                <?php if ($resultado["arq_8"] == "") : ?>
-                  <p class="texto_form" style=" color: red">Arquivo não enviado!</p>
-                <?php else : ?>
-                  <a href="<?= CORDENADOR; ?>imagens_site/<?= $resultado["arq_8"]; ?>" style=" color: red" target="_blank">Verificar arquivo!</a>
-                <?php endif; ?>
-              </div>
-              <div class="box box100">
-                <p class="texto_form">Declaração negativa de vinculo empregaticio (obrigatório)</p>
-                <!-- <label class="label_file" for='selecao-arquivo2'>Selecionar um arquivo</label> -->
-                <input id='' type="file" name="user_thumb17" class="" style=" display: block; width: 100%; border: 1px solid #b1b1b1; padding: 1%" />
-                <?php if ($resultado["arq_9"] == "") : ?>
-                  <p class="texto_form" style=" color: red">Arquivo não enviado!</p>
-                <?php else : ?>
-                  <a href="<?= CORDENADOR; ?>imagens_site/<?= $resultado["arq_9"]; ?>" style=" color: red" target="_blank">Verificar arquivo!</a>
-                <?php endif; ?>
-              </div>
-            </div>
             <div class="limpar"></div>
             <br>
             <!--Co-orientado-->
-            <div class="box box50">
-              <h1 class="topo_modal">Informações Co-orientadores</h1>
-              <?php
-              if ($resultado["nome_coorientado"] == "") {
-                echo "<p>O projeto não possui coorientador</p>";
-              } else {
-              ?>
-                <div class="box box100">
-                  <p class="texto_form">Nome completo (obrigatório)</p>
-                  <input name="nomecoo" type="text" placeholder="Nome completo" value="<?= $resultado["nome_coorientado"]; ?>" style=" width: 100%;" />
-                </div>
 
-                <div class="box box100">
-                  <p class="texto_form">Declaração de partipação na coautoria (obrigatório)</p>
-                  <!-- <label class="label_file" for='selecao-arquivo2'>Selecionar um arquivo</label> -->
-                  <input id='' type="file" name="user_thumb18" class="" style=" display: block; width: 100%; border: 1px solid #b1b1b1; padding: 1%" />
-                  <?php if ($resultado["arq_co"] == "") : ?>
-                    <p class="texto_form" style=" color: red">Arquivo não enviado!</p>
-                  <?php else : ?>
-                    <a href="<?= CORDENADOR; ?>imagens_site/<?= $resultado["arq_co"]; ?>" style=" color: red" target="_blank">Verificar arquivo!</a>
-                  <?php endif; ?>
-                </div>
-
-                <div class="box box100">
-                  <p class="texto_form">Currículo lattes do co-autor (obrigatório)</p>
-                  <!-- <label class="label_file" for='selecao-arquivo2'>Selecionar um arquivo</label> -->
-                  <input id='' type="file" name="enviando" class="" style=" display: block; width: 100%; border: 1px solid #b1b1b1; padding: 1%" />
-                  <?php if ($resultado["arq_co2"] == "") : ?>
-                    <p class="texto_form" style=" color: red">Arquivo não enviado!</p>
-                  <?php else : ?>
-                    <a href="<?= CORDENADOR; ?>imagens_site/<?= $resultado["arq_co2"]; ?>" style=" color: red" target="_blank">Verificar arquivo!</a>
-                  <?php endif; ?>
-                </div>
-              <?php
-              }
-              ?>
-            </div>
             <br>
             <div class="limpar"></div>
             <br>
@@ -5701,12 +5566,13 @@ switch ($_POST['acao']) {
             <input type="hidden" name="acao" value="editar_aluno" />
             <span class="carregando2 ds-none"><img src="<?= HOME; ?>imagens_fixas/carregando2.gif" /></span>
             <button class="btn btn_green fl-left" style="font-size: 0.8em; margin-right: 1%; width: 9%;">
-              <figure class="icon-pencil-square-o" style="margin-top: -4%;"></figure> Alterar
+                <figure class="icon-pencil-square-o" style="margin-top: -4%;"></figure> Alterar
             </button>
             <div class="limpar"></div>
-          </div>
-      </form>
-    <?php
+        </div>
+    </div>
+</form>
+<?php
       break;
     case 'editar_aluno':
       $c['nome'] = $_POST['nome'];
@@ -6159,51 +6025,51 @@ switch ($_POST['acao']) {
       $ultimo->ExeRead('co_orientador', "WHERE id = :id", 'id=' . $c['id'] . '');
       foreach ($ultimo->getResult() as $resultado);
     ?>
-      <form class="form_linha" method="post" name="editar_coorientador" enctype="multipart/form-data">
-        <h1 class="topo_modal">Alterar informações do Co-cordenador</h1>
+<form class="form_linha" method="post" name="editar_coorientador" enctype="multipart/form-data">
+    <h1 class="topo_modal">Alterar informações do Co-cordenador</h1>
+    <div class="box box100">
         <div class="box box100">
-          <div class="box box100">
             <div class="box box100">
-              <p class="texto_form">Nome completo (obrigatório)</p>
-              <input name="nome" type="text" required placeholder="Nome completo" value="<?= $resultado['nome']; ?>" style=" width: 100%;" />
+                <p class="texto_form">Nome completo (obrigatório)</p>
+                <input name="nome" type="text" required placeholder="Nome completo" value="<?= $resultado['nome']; ?>" style=" width: 100%;" />
             </div>
             <div class="limpar"></div>
             <div class="box box50">
-              <p class="texto_form">Declaração de partipação na coautoria (obrigatório)</p>
-              <!-- <label class="label_file" for='selecao-arquivo2'>Selecionar um arquivo</label> -->
-              <input id='' type="file" name="user_thumb" class="" style=" display: block; width: 100%; border: 1px solid #b1b1b1; padding: 1%" />
-              <div class="limpar"></div>
-              <?php if ($resultado["arq_1"] == "") : ?>
+                <p class="texto_form">Declaração de partipação na coautoria (obrigatório)</p>
+                <!-- <label class="label_file" for='selecao-arquivo2'>Selecionar um arquivo</label> -->
+                <input id='' type="file" name="user_thumb" class="" style=" display: block; width: 100%; border: 1px solid #b1b1b1; padding: 1%" />
+                <div class="limpar"></div>
+                <?php if ($resultado["arq_1"] == "") : ?>
                 <p class="texto_form" style=" color: red">Arquivo não enviado!</p>
-              <?php else : ?>
+                <?php else : ?>
                 <a href="<?= CORDENADOR; ?>imagens_site/<?= $resultado["arq_1"]; ?>" style=" color: red" target="_blank">Verificar arquivo!</a>
-              <?php endif; ?>
+                <?php endif; ?>
             </div>
             <div class="box box50 no-margim">
-              <p class="texto_form">Currículo lattes do co-autor (obrigatório)</p>
-              <!-- <label class="label_file" for='selecao-arquivo2'>Selecionar um arquivo</label> -->
-              <input id='' type="file" name="user_thumb2" class="" style=" display: block; width: 100%; border: 1px solid #b1b1b1; padding: 1%" />
-              <div class="limpar"></div>
-              <?php if ($resultado["arq_2"] == "") : ?>
+                <p class="texto_form">Currículo lattes do co-autor (obrigatório)</p>
+                <!-- <label class="label_file" for='selecao-arquivo2'>Selecionar um arquivo</label> -->
+                <input id='' type="file" name="user_thumb2" class="" style=" display: block; width: 100%; border: 1px solid #b1b1b1; padding: 1%" />
+                <div class="limpar"></div>
+                <?php if ($resultado["arq_2"] == "") : ?>
                 <p class="texto_form" style=" color: red">Arquivo não enviado!</p>
-              <?php else : ?>
+                <?php else : ?>
                 <a href="<?= CORDENADOR; ?>imagens_site/<?= $resultado["arq_2"]; ?>" style=" color: red" target="_blank">Verificar arquivo!</a>
-              <?php endif; ?>
+                <?php endif; ?>
             </div>
             <div class="limpar"></div>
-          </div>
+        </div>
 
-          <div class="limpar"></div>
-          <br>
-          <input type="hidden" name="id" value="<?= $resultado['id']; ?>" />
-          <input type="hidden" name="acao" value="editar_coorientador" />
-          <span class="carregando2 ds-none"><img src="<?= HOME; ?>imagens_fixas/carregando2.gif" /></span>
-          <button class="btn btn_green fl-left" style="font-size: 0.8em; margin-right: 1%; width: 9%;">
+        <div class="limpar"></div>
+        <br>
+        <input type="hidden" name="id" value="<?= $resultado['id']; ?>" />
+        <input type="hidden" name="acao" value="editar_coorientador" />
+        <span class="carregando2 ds-none"><img src="<?= HOME; ?>imagens_fixas/carregando2.gif" /></span>
+        <button class="btn btn_green fl-left" style="font-size: 0.8em; margin-right: 1%; width: 9%;">
             <figure class="icon-pencil-square-o" style="margin-top: -4%;"></figure> Alterar
-          </button>
-          <div class="limpar"></div>
-      </form>
-  <?php
+        </button>
+        <div class="limpar"></div>
+</form>
+<?php
       break;
     case 'editar_coorientador':
       $c['nome'] = $_POST['nome'];

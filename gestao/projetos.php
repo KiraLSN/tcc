@@ -1,7 +1,7 @@
 <?php
 $titulo_cadastro = 'Cadastrar Supervisor';
 $titulo_listagem = 'Lista de Supervisores';
-$titulo_botao_de_acesso = 'Cadastrar novo Supervisor';
+$titulo_botao_de_acesso = 'Cadastrar novo Técncio';
 $titulo_foto = 'Avatar';
 $titulo_alterar = 'Alterar cadastro de Supervisor';
 ?>
@@ -57,7 +57,7 @@ $titulo_alterar = 'Alterar cadastro de Supervisor';
             <!--LISTA DE CADASTRADOS-->
             <?php
          $listagem = new Read;
-         $listagem->ExeRead('orientador', 'where status <> 3 order by id desc');
+         $listagem->ExeRead('aluno', 'where id_orientador = 46 order by id desc');
          if ($listagem->getRowCount() >= 1):
             ?>
             <p class="texto_form" style=" margin-top: 0;">Você pode ordenar a lista clicando nos titulos da lista abaixo.</p>
@@ -65,11 +65,11 @@ $titulo_alterar = 'Alterar cadastro de Supervisor';
                 <!--<caption></caption>-->
                 <tr style=" width: 100%; border-bottom: 1px solid #000; background-color: #000000; color: #FFF; font-size: 0.9em;">
                     <!--<th width="9%" style=" text-align: center; padding: 1%;">Logo</th> -->
-                    <th width="20%" style=" text-align: center; padding: 1%;">Nome</th>
-                    <th width="15%" style=" text-align: center; padding: 1%;">E-mail</th>
+                    <th width="20%" style=" text-align: center; padding: 1%;">Projeto</th>
+                    <th width="15%" style=" text-align: center; padding: 1%;">Resposável</th>
                     <th width="10%" style=" text-align: center; padding: 1%;">Matricula</th>
-                    <th width="15%" style=" text-align: center; padding: 1%;">Cargo</th>
-                    <th width="10%" style=" text-align: center; padding: 1%;">Senha de acesso</th>
+                    <th width="15%" style=" text-align: center; padding: 1%;">Expertise</th>
+                    <th width="10%" style=" text-align: center; padding: 1%;">Andamento</th>
                     <th width="8%" style=" text-align: center; padding: 1%;">Status</th>
                     <!-- <th width="8%" style="text-align: center; padding: 1%;">Tipo</th> -->
                     <th width="1%" style="padding: 0%"></th>
@@ -89,26 +89,40 @@ $titulo_alterar = 'Alterar cadastro de Supervisor';
                 <tr class="lista_tabela">
                     <!--<td width="9%"><?//= $avatar; ?></td> -->
                     <td width="20%" data-balloon-length="large" data-balloon="<?= $listagem_['nome']; ?>" data-balloon-pos="up"><?= Check::limitcaracter($listagem_['nome'], 36); ?></td>
-                    <td width="15%"><?= $listagem_['email']; ?></td>
+                    <td width="15%"><?= $listagem_['curso']; ?></td>
                     <td width="10%"><?= $listagem_['cpf']; ?></td>
-                    <td width="15%"><?= $listagem_['ilmd']; ?></td>
-                    <td width="10%"><?= $listagem_['senha']; ?></td>
+                    <td width="15%"><?= $listagem_['faculdade']; ?></td>
+                    <td width="10%"><?= $listagem_['cr']; ?>%</td>
                     <td width="8%">
                         <?php
-                        if ($listagem_['status'] == '1'):
-                           ?>
+                        if ($listagem_['status'] == '1'){
+                        
+                    
+                    ?>
                         <p style=" color: green">Ativo</p>
                         <?php
-                        else:
-                           ?>
-                        <p style=" color: red">Inativo</p>
+                    }
+        if(($listagem_['status'] == '0')){
+            
+                    ?>
+                        <p style=" color: orange">Parado</p>
                         <?php
-                        endif;
+        }
+        if(($listagem_['status'] == '4')){
+                    ?>
+                        <p style=" color: blue">Entregue</p>
+                        <?php
+        }
+        if(($listagem_['status'] == '3')){
+            ?>
+                        <p style=" color: red">Cancelado</p>
+                        <?php
+        }
                         ?>
                     </td>
                     <td width="2%">
-                        <div class="btn modal_alunos" id="<?= $listagem_['id']; ?>" style="" data-balloon-length="small" data-balloon="Projetos Cadastrados" data-balloon-pos="up">
-                            <figure class="icon-user-circle" style="font-size: 1.3em;"></figure>
+                        <div class="btn id_aluno_alt btn_green" id="<?= $listagem_['id']; ?>" style="" data-balloon-length="small" data-balloon="Projetos Cadastrados" data-balloon-pos="up">
+                            <figure class="icon-edit-3" style="font-size: 1.3em;"></figure>
                         </div>
                     </td>
                     <!-- <td width="2%"> 
@@ -122,7 +136,7 @@ $titulo_alterar = 'Alterar cadastro de Supervisor';
                         </div>
                      </td-->
                     <td width="2%">
-                        <div class="btn btn_red excluir_modal" data-sms="" data-excluir="del_orientador" id="<?= $listagem_['id']; ?>" style="" data-balloon-length="small" data-balloon="Excluir" data-balloon-pos="up">
+                        <div class="btn btn_red excluir_modal" data-sms="" data-excluir="del_projeto" id="<?= $listagem_['id']; ?>" style="" data-balloon-length="small" data-balloon="Excluir" data-balloon-pos="up">
                             <figure class="icon-close2" style="font-size: 1.3em;"></figure>
                         </div>
                     </td>
@@ -138,6 +152,7 @@ $titulo_alterar = 'Alterar cadastro de Supervisor';
             </table>
             <br>
         </div>
+
         <div class="limpar"></div>
     </article>
     <div class="limpar"></div>
@@ -153,7 +168,7 @@ $titulo_alterar = 'Alterar cadastro de Supervisor';
     </a>
     <div class="cadastrar_total_contetudo" style=" background: #fff; padding: 3%">
         <div class="cadastro_cliente_cv">
-            <h1 class="topo_modal">Cadastro de orientador</h1>
+            <h1 class="topo_modal">Cadastro de Técnico</h1>
             <form class="form_linha" method="post" name="cad_orientador">
                 <!-- cad_clientes -->
                 <div class="box box100">
@@ -166,8 +181,8 @@ $titulo_alterar = 'Alterar cadastro de Supervisor';
                         <input name="email" type="email" placeholder="E-mail válido" style=" width: 100%;" />
                     </div>
                     <div class="box box33 no-margim">
-                        <p class="texto_form">CPF</p>
-                        <input name="cpf" type="text" required placeholder="CPF válido" id="mascara_cpf" style=" width: 100%;" />
+                        <p class="texto_form">Matricula</p>
+                        <input name="cpf" type="text" required placeholder="Matrícula do Técnico" style=" width: 100%;" />
                     </div>
                 </div>
 

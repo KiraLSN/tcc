@@ -62,7 +62,7 @@ $titulo_alterar = 'Alterar cadastro do usuário';
             <table class="lista_base_tabela sortable">
                 <!--<caption></caption>-->
                <tr style=" width: 100%; border-bottom: 1px solid #000; background-color: #000000; color: #FFF; font-size: 0.9em;">
-                  <th width="9%" style=" text-align: center; padding: 1%;">Imagem</th>
+                  <th width="9%" style=" text-align: center; padding: 1%;">Foto</th>
                   <th width="30%" style=" text-align: center; padding: 1%;">Nome</th>
                   <th width="30%" style=" text-align: center; padding: 1%;">E-mail</th>
                   <th width="15%" style=" text-align: center; padding: 1%;">Celular</th>

@@ -41,6 +41,7 @@ define("EMAILDENUNCIA", "contato@casadossites.com");
 // ESTÁBELECENDO O SISTEMA //////////////////////////
 
 define("dashboard", "ON");
+define("projetos", "ON");
 define("depoimentos", "OFF");
 define("arquivos", "OFF");
 define("newsletter", "OFF");
@@ -59,7 +60,7 @@ define("orientador", "ON");
 // URL AMIGAVEL  ############################################################
 $atual = (isset($_GET['pg'])) ? $_GET['pg'] : 'home';
 $permissao = array(
-    'home', '404','agenda','sac','blog','crm','orientador','zeropape','dashboard','noticia','newsletter','modais','depoimentos','sair','perfil','cadastrar_usuario','cliente','cliente_usuario','cadastro_programa','cadastro_periodicos',
+    'home', '404','agenda','sac','blog','crm','orientador','zeropape','dashboard','projetos','noticia','newsletter','modais','depoimentos','sair','perfil','cadastrar_usuario','cliente','cliente_usuario','cadastro_programa','cadastro_periodicos',
 );
 $pasta = '';
 if (substr_count($atual, '/') > 0) {
