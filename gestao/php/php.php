@@ -5583,7 +5583,7 @@ switch ($_POST['acao']) {
       $c['tipo'] = $_POST['tipo'];
       $c['id'] = $_POST['id'];
 
-      $nomecoo = $_POST['nomecoo'];
+      //$nomecoo = $_POST['nomecoo'];
 
       if (isset($_POST['cooo'])) :
         $cooo = $_POST['cooo'];
