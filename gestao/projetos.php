@@ -1,6 +1,6 @@
 <?php
 $titulo_cadastro = 'Cadastrar Supervisor';
-$titulo_listagem = 'Lista de Supervisores';
+$titulo_listagem = 'Lista de Projetos';
 $titulo_botao_de_acesso = 'Cadastrar novo Técncio';
 $titulo_foto = 'Avatar';
 $titulo_alterar = 'Alterar cadastro de Supervisor';
@@ -56,8 +56,20 @@ $titulo_alterar = 'Alterar cadastro de Supervisor';
         <div class="box_conteudo_ lista_atual">
             <!--LISTA DE CADASTRADOS-->
             <?php
+            //echo $usuario_['nome'];
+            $listagem2 = new Read;
+            $listagem2->ExeRead('orientador', "where nome ='". $usuario_['nome'] ."' ");
+                foreach($listagem2->getResult() as $listagem2_);
+            //echo $listagem2_['id'];
+            //echo $_SESSION['usuario'];
          $listagem = new Read;
-         $listagem->ExeRead('aluno', 'where id_orientador = 46 order by id desc');
+            try{
+                $listagem->ExeRead('aluno', "where id_orientador = '".$listagem2_['id']."' AND status != 3 order by status asc");
+            }catch(Exception $e){
+                echo "Supervisor sem projetos cadastrados";
+            }    
+            
+         $listagem->ExeRead('aluno', "where id_orientador = '".$listagem2_['id']."' AND status != 3 order by status asc");
          if ($listagem->getRowCount() >= 1):
             ?>
             <p class="texto_form" style=" margin-top: 0;">Você pode ordenar a lista clicando nos titulos da lista abaixo.</p>
