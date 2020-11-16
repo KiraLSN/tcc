@@ -4360,7 +4360,7 @@ $(function () {
                         timer: 4000
                     });
                     setTimeout(function () {
-                        location.href = "" + urlbase + "orientador";
+                        location.href = "" + urlbase + "projetos";
                     }, 2000);
                 } else if (resposta == 2) {
                     carregandoOut();
@@ -4381,7 +4381,7 @@ $(function () {
                 } else if (resposta == 4) {
                     carregandoOut();
                     triggerNotify({
-                        title: "Cliente já cadastrado!",
+                        title: "Tecnico já cadastrado!",
                         icon: "icon-notifications_active",
                         color: "blue",
                         timer: 4000
@@ -4390,7 +4390,7 @@ $(function () {
                     carregandoOut2();
                     $('.moldura2').fadeIn();
                     $('.carregando2').fadeOut();
-                    alerta('Livro já cadastrado, verifique o e-mail ou nome que já consta em nosso banco de dados!');
+                    alerta('email ja cadastrado');
                 } else if (resposta == 7) {
                     carregandoOut2();
                     $('.moldura2').fadeIn();
@@ -5000,7 +5000,7 @@ $(function () {
                         timer: 4000
                     });
                     setTimeout(function () {
-                        location.href = "" + urlbase + "dashboard";
+                        location.href = "" + urlbase + "projetos";
                     }, 2000);
                 } else if (resposta == 2) {
                     carregandoOut2();

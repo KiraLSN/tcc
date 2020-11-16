@@ -4941,7 +4941,7 @@ switch ($_POST['acao']) {
       $c['nome'] = $_POST['nome'];
       $c['email'] = $_POST['email'];
       $c['cp'] = $_POST['cpf'];
-      $senha = Check::NewPass('5', false, true, false);
+      //$senha = Check::NewPass('5', false, true, false);
       //VERICIAR CAMPOS VAZIOS
       if (in_array('', $c)) :
         echo '3';
@@ -4949,42 +4949,36 @@ switch ($_POST['acao']) {
 
         //VERIFICANDO SE JÁ ESTA CADASTRADO
         $igual = new Read;
-        $igual->ExeRead('orientador', 'WHERE email = :id and nome = :id2', "id=" . $c['email'] . "&id2=" . $c['nome'] . "");
+        $igual->ExeRead('tecnico', 'WHERE email = :id and nome = :id2', "id=" . $c['email'] . "&id2=" . $c['nome'] . "");
         if (!$igual->getRowCount() >= 1) :
 
 
-          //VERIFICAR SE FOTO VOU ENVIADA E SALVANDO NO SERVIDOR(REDIMENSIONANDO E NOMINANDO)
-          if (isset($_FILES['user_thumb'])) :
-
-            $upload = new Upload('../imagens_site/');
-            //-----------------imagem, nome, tamanho, pasta----------------//
-            $upload->Image($_FILES['user_thumb'], md5($c['email']), '500', 'clientes', '500');
-            $foto = $upload->getResult();
-          else :
-            $foto = '';
-          endif;
 
           $dados = array(
             "nome" => $c['nome'],
-            "ilmd" => '',
-            "cpf" => $c['cp'],
+            //"ilmd" => '',
+            "matricula" => $c['cp'],
             "email" => $c['email'],
-            "senha" => $c['cp'],
-            "arq_1" => '',
-            "arq_2" => '',
-            "arq_3" => '',
-            "arq_4" => '',
-            "arq_5" => '',
-            "arq_6" => '',
-            "arq_7" => '',
-            "arq_8" => '',
-            "arq_9" => '',
-            "data" => $dataStamp2,
-            "hora" => $hora,
+              "expertise" => '',
+              "rendimento" => '',
+              "mediaproj" => 10,
+              
+            //"senha" => $c['cp'],
+            //"arq_1" => '',
+            //"arq_2" => '',
+            //"arq_3" => '',
+            //"arq_4" => '',
+            //"arq_5" => '',
+            //"arq_6" => '',
+            //"arq_7" => '',
+            //"arq_8" => '',
+            //"arq_9" => '',
+            //"data" => $dataStamp2,
+            //"hora" => $hora,
             "status" => '1',
           );
           $Cadastra = new Create;
-          $Cadastra->ExeCreate('orientador', $dados);
+          $Cadastra->ExeCreate('tecnico', $dados);
           if ($Cadastra->getResult()) :
             echo '1';
           else :
@@ -5591,7 +5585,7 @@ switch ($_POST['acao']) {
         $cooo = "";
       endif;
 
-      $opcao = $_POST['opcao'];
+      //$opcao = $_POST['opcao'];
       //$c['email'] = $_POST['email'];
       //VERICIAR CAMPOS VAZIOS
 
@@ -6000,7 +5994,7 @@ switch ($_POST['acao']) {
           "arq_ori10" => $foto6,
           "arq_ori11" => $foto7,
           "arq_ori12" => $foto8,
-          "nome_coorientado" => $nomecoo,
+          //"nome_coorientado" => $nomecoo,
           "arq_co" => $foto18,
           "arq_co2" => $foto19,
           "arq_co3" => $foto20,

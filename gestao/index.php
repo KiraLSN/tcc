@@ -65,6 +65,7 @@ $sessao = new Session;
     </script>
     <?php
          else:
+    
             $usuario = new Read;
             $usuario->ExeRead('perfil', 'WHERE id=:url', "url=" . $_SESSION['usuario'] . "");
             if ($usuario->getRowCount() >= 1):
@@ -252,7 +253,9 @@ $sessao = new Session;
                     </a>
 
                     <a href="<?= HOME; ?>perfil" data-balloon="Meu perfil" data-balloon-pos="down" class="fl-right" style="color: #fff; margin-right: 4.3%; margin-top: 1.5%; margin-left: 2%; font-size: 0.9em"><?= Check::Limitador($usuario_['nome'], 3); ?></a>
+
                     <?php
+                    
                      if ($usuario_['avatar'] == ''):
                         echo Check::Imagem('imagens_fixas/sem_imagem.jpg', 'Sem imagem', '400', '400', 'radius-circulo fl-right');
                      else:
