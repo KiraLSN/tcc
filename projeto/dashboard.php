@@ -181,25 +181,42 @@
                 <div class="box box33">
                     <p class="texto_form">Responsavel <font color=red>*</font>
                     </p>
+                    <?php include 'conexao.php';
+                    $pdo_verifica = $conexao_pdo->prepare("select nome, matricula from tecnico order by nome DESC");
+                     $pdo_verifica->execute();
+                    $i=0;
+                    $nome = array();
+                    $matricula = array();
+            while($fetch = $pdo_verifica->fetch()){
+                $i=$i+1;
+                    $nome[$i] = $fetch['nome'];
+            }
+                    
+                    
+                    
+                    ?>
                     <select class="seletipo" name="curso" style=" width: 100%;">
-                        <option>Luciano Soares</option>
-                        <option>Oziel Cavalcante</option>
-                        <option>Rafaela Rocha</option>
+                        <?php
+                        foreach($nome as $value){
+                            echo "<option>".$value."</option>";
+                        }
+                        ?>
+
                     </select>
 
                     <!--<input name="curso" type="text" required placeholder="Técnico Responsavel" style=" width: 100%;" />-->
                 </div>
-                <div class="box box33 no-margim">
+                <div class="box box33 no-margim" hidden>
                     <p class="texto_form">Expertise <font color=red>*</font>
                     </p>
-                    <input name="faculdade" type="text" required placeholder="Expertise" style=" width: 100%;" />
+                    <input name="faculdade" type="text" placeholder="Expertise" style=" width: 100%;" />
                 </div>
                 <div class="limpar"></div>
 
-                <div class="box box33">
+                <div class="box box33" hidden>
                     <p class="texto_form">Matricula <font color=red>*</font>
                     </p>
-                    <input name="cpf" type="text" placeholder="Matricula" autocomplete="off" style=" width: 100%;" id="mascara_cpf" />
+                    <input name="cpf" type="text" placeholder="Matricula" autocomplete="off" style=" width: 100%;" />
                 </div>
 
                 <div class="box box33">

@@ -5543,9 +5543,16 @@ switch ($_POST['acao']) {
 
     case 'cad_alunos':
       $c['nome'] = $_POST['nome'];
-      $c['curso'] = $_POST['curso'];
-      $c['faculdade'] = $_POST['faculdade'];
-      $c['cpf'] = $_POST['cpf'];
+      $c['curso'] = $_POST['curso']; //Nome do tecnico
+        include "conexao.php";
+        $pdo_verifica = $conexao_pdo->prepare("select matricula, expertise from tecnico WHERE nome = '".$_POST['curso']."' ");
+                     $pdo_verifica->execute();
+            while($fetch = $pdo_verifica->fetch()){
+                $c['cpf']= $fetch['matricula'];
+                $c['faculdade']= $fetch['expertise'];
+            }
+      //$c['faculdade'] = $_POST['faculdade']; // Expertise
+      //$c['cpf'] = $_POST['cpf']; //Matricula
       $c['cr'] = $_POST['cr'];
       $c['tipo'] = $_POST['tipo'];
       $c['id'] = $_POST['id'];
