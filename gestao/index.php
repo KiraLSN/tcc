@@ -91,7 +91,7 @@ $sessao = new Session;
     <section class="corpo">
 
         <article class="menu" style=" z-index: 997000;">
-            <img class="logo_menu s" src="<?= HOME; ?>imagens_site/logo_branca.png" title="<?= SITENOME; ?>" />
+            <img class="logo_menu s" src="<?= HOME; ?>imagens_site/INNOVATION.gif" title="<?= SITENOME; ?>" />
             <br><br>
             <h1 class="barra_menu link_controle">Controle geral</h1>
             <div class="controle_menu ds-none">
@@ -125,7 +125,7 @@ $sessao = new Session;
                      echo ((in_array('11', $arr_permisao)) ? '<a href="' . HOME . 'agenda"><figure class="icon-calendar4" style="margin-right: 4%; margin-top: -1.5%; font-size: 1.3em;"></figure> Agenda</a>' : '' );
                   endif;
                   if (orientador == 'ON'):
-                     echo ((in_array('12', $arr_permisao)) ? '<a href="' . HOME . 'orientador"><figure class="icon-users5" style="margin-right: 4%; margin-top: -1.5%; font-size: 1.3em;"></figure> Orientador</a>' : '' );
+                     //echo ((in_array('12', $arr_permisao)) ? '<a href="' . HOME . 'orientador"><figure class="icon-users5" style="margin-right: 4%; margin-top: -1.5%; font-size: 1.3em;"></figure> Orientador</a>' : '' );
                   endif;
                   ?>
                 <?//= ((in_array('9', $arr_permisao)) ? '<a href="' . HOME . 'depoimentos"><i class="far fa-comments icone_full" ></i> SAC</a>' : '' ); ?>

@@ -5556,6 +5556,7 @@ switch ($_POST['acao']) {
       $c['cr'] = $_POST['cr'];
       $c['tipo'] = $_POST['tipo'];
       $c['id'] = $_POST['id'];
+        $c['entrega'] = $_POST['entrega'];
 
       $nomecoo = $_POST['nomecoo'];
 
@@ -5951,6 +5952,7 @@ switch ($_POST['acao']) {
             "cpf" => $c['cpf'],
             "cr" => $c['cr'],
             "tipo" => $c['tipo'],
+              "entrega" => $c['entrega'],
             "arq_1" => $foto9,
             "arq_2" => $foto10,
             "arq_3" => $foto11,
@@ -6281,6 +6283,7 @@ switch ($_POST['acao']) {
             <?php
             if ($resultado['tipo'] == '2') :
             ?>
+
             <div class="forms_exta ds-none" style=" width: 100%; padding: 2%; background: #f1f1f1; border: 0.9% solid #333;">
 
                 <h1 style=" text-align: left; font-size: 1.4em; margin-bottom: 2%">Informações extras para renovação </h1>
@@ -6294,7 +6297,10 @@ switch ($_POST['acao']) {
                     <?php endif; ?>
                 </div>
 
+
                 <div class="limpar"></div>
+
+
             </div>
             <?php
             else :
@@ -6304,7 +6310,13 @@ switch ($_POST['acao']) {
             </div>
             <?php
             endif;
+        $dataentrega = new DateTime($resultado['entrega']);
         ?>
+            <div class="box box33 no-margim seleciomne">
+                <p class="texto_form">Entrega</p>
+                <?= $dataentrega->format('d/m/Y'); ?>
+            </div>
+
             <div class="limpar"></div>
             <!--cordenador-->
             <div class="box box50">

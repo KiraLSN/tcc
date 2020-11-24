@@ -5434,21 +5434,21 @@ switch ($_POST['acao']) {
         <div class="box box100">
             <div class="box box33">
                 <p class="texto_form">Projeto</p>
-                <input name="nome" type="text" required placeholder="Nome do Projeto" value="<?= $resultado['nome']; ?>" style=" width: 100%;" />
+                <input name="nome" type="text" required placeholder="Nome do Projeto" readonly value="<?= $resultado['nome']; ?>" style=" width: 100%;" />
             </div>
             <div class="box box33">
                 <p class="texto_form">Responsável</p>
-                <input name="curso" type="text" required placeholder="Responsável" value="<?= $resultado['curso']; ?>" style=" width: 100%;" />
+                <input name="curso" type="text" required readonly placeholder="Responsável" value="<?= $resultado['curso']; ?>" style=" width: 100%;" />
             </div>
             <div class="box box33 no-margim">
                 <p class="texto_form">Expertise</p>
-                <input name="faculdade" type="text" required placeholder="Expertise" value="<?= $resultado['faculdade']; ?>" style=" width: 100%;" />
+                <input name="faculdade" type="text" required readonly placeholder="Expertise" value="<?= $resultado['faculdade']; ?>" style=" width: 100%;" />
             </div>
             <div class="limpar"></div>
 
             <div class="box box33">
                 <p class="texto_form">Matricula</p>
-                <input name="cpf" type="text" placeholder="Matricula" autocomplete="off" value="<?= $resultado['cpf']; ?>" style=" width: 100%;" />
+                <input name="cpf" type="text" placeholder="Matricula" readonly autocomplete="off" value="<?= $resultado['cpf']; ?>" style=" width: 100%;" />
             </div>
             <div class="box box33">
                 <p class="texto_form">Andamento</p>
@@ -5461,6 +5461,55 @@ switch ($_POST['acao']) {
                     <option <?= ($resultado['tipo'] == "2" ? "selected" : ""); ?>>Melhoria</option>
                 </select>
             </div>
+            <div class="limpar"></div>
+            <div class="box box33 ">
+                <p class="texto_form">Status</p>
+                <select class="" name="status" style=" width: 100%;">
+                    <option <?= ($resultado['status'] == "0" ? "selected" : ""); ?>>Parado</option>
+                    <option <?= ($resultado['status'] == "1" ? "selected" : ""); ?>>Ativo</option>
+                    <option <?= ($resultado['status'] == "2" ? "selected" : ""); ?>>Parado</option>
+                    <option <?= ($resultado['status'] == "3" ? "selected" : ""); ?>>Cancelado</option>
+                    <option <?= ($resultado['status'] == "4" ? "selected" : ""); ?>>Entregue</option>
+                </select>
+            </div>
+
+            <div class="box box33">
+                <p class=" texto_form">Entrega</p>
+                <input type="date" value="<?= $resultado['entrega']; ?>" name="entrega" style="width: 100%;">
+            </div>
+
+            <div class="box box33">
+                <p class=" texto_form">Avaliação</p>
+                <input type="text" value="<?= $resultado['nota']; ?>" name="nota" style="width: 100%;" min="0" max="10">
+            </div>
+
+            <script>
+                var notas = document.getElementsByName("nota");
+
+                var onNotaInput = function(event) {
+                    var regexp = new RegExp("[^0-9]", "g");
+                    var value = event.target.value.replace(regexp, "");
+                    value = parseInt(value) / 10;
+                    if (value >= event.target.min && value <= event.target.max) {
+                        event.target.dataset.value = value;
+                    } else {
+                        value = parseFloat(event.target.dataset.value);
+                    }
+                    if (isNaN(value)) {
+                        value = 0;
+                    }
+
+                    event.target.value = value.toLocaleString(undefined, {
+                        minimumFractionDigits: 1
+                    });
+                };
+
+                [].forEach.call(notas, function(nota) {
+                    nota.addEventListener("input", onNotaInput);
+                });
+
+            </script>
+
             <div class="limpar"></div>
             <?php
             if ($resultado['tipo'] == '2') :
@@ -5569,6 +5618,7 @@ switch ($_POST['acao']) {
 <?php
       break;
     case 'editar_aluno':
+        $temp;
       $c['nome'] = $_POST['nome'];
       $c['curso'] = $_POST['curso'];
       $c['faculdade'] = $_POST['faculdade'];
@@ -5576,6 +5626,22 @@ switch ($_POST['acao']) {
       $c['cr'] = $_POST['cr'];
       $c['tipo'] = $_POST['tipo'];
       $c['id'] = $_POST['id'];
+        $c['nota'] = $_POST['nota'];
+        
+        if($_POST['status'] == "Ativo"){
+            $temp = "1";
+        }
+        if($_POST['status'] == "Parado"){
+            $temp = "0";
+        }
+        if($_POST['status'] == "Entregue"){
+            $temp = "4";
+        }
+        if($_POST['status'] == "Cancelado"){
+            $temp = "3";
+        }
+        $c['status'] = $temp;
+        $c['entrega'] = $_POST['entrega'];
 
       //$nomecoo = $_POST['nomecoo'];
 
@@ -5980,7 +6046,9 @@ switch ($_POST['acao']) {
           "arq_9" => $foto17,
           "data" => $dataStamp2,
           "hora" => $hora,
-          //"status" => '1',
+          "status" => $c['status'],
+            "entrega" => $c['entrega'],
+            "nota" => $c['nota'],
           //"block" => '1',
           "arq_ori1" => $fotoo10,
           "arq_ori2" => $fotoo11,

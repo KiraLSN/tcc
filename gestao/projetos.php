@@ -107,6 +107,7 @@ $titulo_alterar = 'Alterar cadastro de Supervisor';
                     <td width="10%"><?= $listagem_['cr']; ?>%</td>
                     <td width="8%">
                         <?php
+                        //echo $listagem_['status'];
                         if ($listagem_['status'] == '1'){
                         
                     

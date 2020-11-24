@@ -211,7 +211,7 @@
                     </p>
                     <input name="faculdade" type="text" placeholder="Expertise" style=" width: 100%;" />
                 </div>
-                <div class="limpar"></div>
+
 
                 <div class="box box33" hidden>
                     <p class="texto_form">Matricula <font color=red>*</font>
@@ -232,6 +232,12 @@
                         <option>Melhoria</option>
                     </select>
                 </div>
+                <div class="box box33">
+                    <p class=" texto_form">Entrega<font color=red>*</font>
+                    </p>
+                    <input type="date" name="entrega" style="width: 100%;" required>
+                </div>
+
                 <div class="limpar"></div>
 
                 <div class="forms_exta ds-none" style=" width: 100%; padding: 2%; background: #f1f1f1; border: 0.9% solid #333;"></div>
@@ -480,9 +486,10 @@
                     <p class="texto_form">E-mail (obrigatório)</p>
                     <input name="email" type="email" required placeholder="E-mail" value="<?= $usuario_["email"]; ?>" style=" width: 100%;" />
                 </div>
+                <div class="limpar"></div>
                 <div class="box box20">
                     <p class="texto_form">Matricula</p>
-                    <input name="cpf" type="text" placeholder="CPF" autocomplete="off" value="<?= $usuario_["cpf"]; ?>" style=" width: 100%;" id="mascara_cpf2" />
+                    <input name="cpf" type="text" placeholder="CPF" autocomplete="off" value="<?= $usuario_["cpf"]; ?>" style=" width: 100%;" />
                 </div>
                 <div class="box box20 no-margim">
                     <p class="texto_form">Alterar senha</p>
