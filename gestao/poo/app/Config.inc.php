@@ -11,7 +11,7 @@ define("CORDENADOR", "http://localhost/tcc/projeto/");
 
 define("PEGASUS", HOME . "pegasus/");
 define("PAGINAS", HOME . "paginas");
-define("SITENOME", "Sistema de Controle de Projetos e Melhorias de Processo - BPSIS");
+define("SITENOME", "Sistema de Controle de Projetos e Melhorias de Processo - BPSYS");
 define("DESCRICAO", "");
 
 define("NOMECLIENTE", "");
@@ -42,6 +42,7 @@ define("EMAILDENUNCIA", "contato@casadossites.com");
 
 define("dashboard", "ON");
 define("projetos", "ON");
+define("tecnicos", "ON");
 define("depoimentos", "OFF");
 define("arquivos", "OFF");
 define("newsletter", "OFF");
@@ -60,7 +61,7 @@ define("orientador", "ON");
 // URL AMIGAVEL  ############################################################
 $atual = (isset($_GET['pg'])) ? $_GET['pg'] : 'home';
 $permissao = array(
-    'home', '404','agenda','sac','blog','crm','orientador','zeropape','dashboard','projetos','noticia','newsletter','modais','depoimentos','sair','perfil','cadastrar_usuario','cliente','cliente_usuario','cadastro_programa','cadastro_periodicos',
+    'home', '404','agenda','sac','blog','crm','orientador','zeropape','dashboard','projetos','tecnicos','noticia','newsletter','modais','depoimentos','sair','perfil','cadastrar_usuario','cliente','cliente_usuario','cadastro_programa','cadastro_periodicos',
 );
 $pasta = '';
 if (substr_count($atual, '/') > 0) {

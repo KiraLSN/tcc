@@ -760,6 +760,8 @@ switch ($_POST['acao']) {
       endif;
     endif;
     break;
+        
+        
   case 'slide_status':
     $c['id'] = $_POST['id'];
     if (in_array('', $c)) :
@@ -789,6 +791,8 @@ switch ($_POST['acao']) {
       endif;
     endif;
     break;
+        
+        
   case 'ex_slide':
     $c['id'] = $_POST['del'];
 
@@ -4802,117 +4806,1041 @@ switch ($_POST['acao']) {
       break;
       //===============================================================================================================================
       // SISTEMA DE ARQUIVOS
-      //===============================================================================================================================       
-    case 'cad_arquivo':
-
+      //=============================================================================================================================== 
+        
+        case 'cad_alunoz':
       $c['nome'] = $_POST['nome'];
-      $obs = $_POST['obs'];
-      $c['id'] = $_POST['usuario'];
-      $empresa = $_POST['id_cliente_vinculo'];
+      $c['curso'] = $_POST['curso']; //Nome do tecnico
+        include "conexao.php";
+        $pdo_verifica = $conexao_pdo->prepare("select matricula, expertise from tecnico WHERE nome = '".$_POST['curso']."' ");
+                     $pdo_verifica->execute();
+            while($fetch = $pdo_verifica->fetch()){
+                $c['cpf']= $fetch['matricula'];
+                $c['faculdade']= $fetch['expertise'];
+            }
+      //$c['faculdade'] = $_POST['faculdade']; // Expertise
+      //$c['cpf'] = $_POST['cpf']; //Matricula
+      $c['cr'] = $_POST['cr'];
+      $c['tipo'] = $_POST['tipo'];
+      $c['id'] = $_POST['id'];
+        $c['entrega'] = $_POST['entrega'];
 
-      if ($empresa == 'bb') :
-        $empresa = '';
+      $nomecoo = $_POST['nomecoo'];
+
+      if (isset($_POST['cooo'])) :
+        $cooo = $_POST['cooo'];
+      else :
+        $cooo = "";
       endif;
 
+      $opcao = $_POST['opcao'];
+      //$c['email'] = $_POST['email'];
+      //VERICIAR CAMPOS VAZIOS
       if (in_array('', $c)) :
         echo '3';
-        exit();
       else :
-        //print_r($_FILES['documento']);
-        $type = explode(".", $_FILES['documento']['name']);
-        $tipo = end($type);
 
-        if (isset($_FILES['documento'])) :
-          $upload = new Upload('../imagens_site/');
-          $upload->File($_FILES['documento'], md5($c['nome'] . $hora . $tipo . $c['id']), 'zeropape');
-          $foto = $upload->getResult();
+        $upload = new Upload('../imagens_site/');
+
+        //VERIFICANDO SE JÁ ESTA CADASTRADO
+        // $igual = new Read;
+        // $igual->ExeRead('aluno', 'WHERE cpf = :id and nome = :id2 and status = 1', "id=" . $c['cpf'] . "&id2=" . $c['nome'] . "");
+        // if (!$igual->getRowCount() >= 1) :
+
+          if (isset($_FILES['user_thumb'])) :
+            $upload = new Upload('../imagens_site/');
+            $upload->File($_FILES['user_thumb'], md5($dataHora . 'user_thumb'), 'arquivos');
+            $foto = $upload->getResult();
+          else :
+            $foto = "";
+          endif;
+
+
+        //print_r($_FILES['envio_01']);
+
+        if (isset($_FILES['enviando'])) :
+
+          //print_r($_FILES['enviando']);
+
+            if ($_FILES['enviando']['type'] == 'application/pdf') :
+            else :
+              echo '11';
+              exit();
+              break;
+            endif;
+            //$upload = new Upload('../imagens_site/');
+            $upload->File($_FILES['enviando'], md5($dataHora . 'enviando'), 'arquivos');
+            $foto19 = $upload->getResult();
+          else :
+            $foto19 = "";
+          endif;
+
+//print_r($_FILES['envio_02']);
+
+        if (isset($_FILES['envio_02'])) :
+          //print_r($_FILES['envio_02']);
+          if ($_FILES['envio_02']['type'] == 'application/pdf') :
+          else :
+            echo '11';
+            exit();
+            break;
+          endif;
+          //$upload = new Upload('../imagens_site/');
+          $upload->File($_FILES['envio_02'], md5($dataHora . 'envio_02'), 'arquivos');
+          $foto21 = $upload->getResult();
         else :
-          $foto = '';
+          $foto21 = "";
         endif;
-        $Dados = [
-          'id_cliente_vinculo' => $empresa,
-          'nome' => $c['nome'],
-          'tamanho' => $_FILES['documento']['size'],
-          'tipo' => $tipo,
-          'data' => $dataStamp2,
-          'hora' => $hora,
-          'token' => md5($c['nome'] . $hora . $tipo . $c['id']),
-          'obs' => $obs,
-          'id_usuario' => $c['id'],
-          'arquivo' => $foto,
-        ];
-        $Cadastra = new Create;
-        $Cadastra->ExeCreate('arquivos', $Dados);
-        if ($Cadastra->getResult()) :
-          echo '1';
-        else :
-          echo '2';
-        endif;
+
+
+          if (isset($_FILES['user_thumb2'])) :
+
+            if ($_FILES['user_thumb2']['type'] == 'application/pdf') :
+            else :
+              echo '11';
+              exit();
+              break;
+            endif;
+
+            //$upload = new Upload('../imagens_site/');
+            $upload->File($_FILES['user_thumb2'], md5($dataHora . 'user_thumb2'), 'arquivos');
+            $foto2 = $upload->getResult();
+          else :
+            $foto2 = "";
+          endif;
+
+          if (isset($_FILES['user_thumb3'])) :
+
+            if ($_FILES['user_thumb3']['type'] == 'application/pdf') :
+            else :
+              echo '11';
+              exit();
+              break;
+            endif;
+
+            //$upload = new Upload('../imagens_site/');
+            $upload->File($_FILES['user_thumb3'], md5($dataHora . 'user_thumb3'), 'arquivos');
+            $foto3 = $upload->getResult();
+          else :
+            $foto3 = "";
+          endif;
+
+          if (isset($_FILES['user_thumb4'])) :
+
+            if ($_FILES['user_thumb4']['type'] == 'application/pdf') :
+            else :
+              echo '11';
+              exit();
+              break;
+            endif;
+
+            //$upload = new Upload('../imagens_site/');
+            $upload->File($_FILES['user_thumb4'], md5($dataHora . 'user_thumb4'), 'arquivos');
+            $foto4 = $upload->getResult();
+          else :
+            $foto4 = "";
+          endif;
+
+          if (isset($_FILES['user_thumb5'])) :
+
+            if ($_FILES['user_thumb5']['type'] == 'application/pdf') :
+            else :
+              echo '11';
+              exit();
+              break;
+            endif;
+
+            //$upload = new Upload('../imagens_site/');
+            $upload->File($_FILES['user_thumb5'], md5($dataHora . 'user_thumb5'), 'arquivos');
+            $foto5 = $upload->getResult();
+          else :
+            $foto5 = "";
+          endif;
+
+          if (isset($_FILES['user_thumb6'])) :
+
+            if ($_FILES['user_thumb6']['type'] == 'application/pdf') :
+            else :
+              echo '11';
+              exit();
+              break;
+            endif;
+
+            //$upload = new Upload('../imagens_site/');
+            $upload->File($_FILES['user_thumb6'], md5($dataHora . 'user_thumb6'), 'arquivos');
+            $foto6 = $upload->getResult();
+          else :
+            $foto6 = "";
+          endif;
+
+          if (isset($_FILES['user_thumb7'])) :
+
+            if ($_FILES['user_thumb7']['type'] == 'application/pdf') :
+            else :
+              echo '11';
+              exit();
+              break;
+            endif;
+
+            //$upload = new Upload('../imagens_site/');
+            $upload->File($_FILES['user_thumb7'], md5($dataHora . 'user_thumb7'), 'arquivos');
+            $foto7 = $upload->getResult();
+          else :
+            $foto7 = "";
+          endif;
+
+          if (isset($_FILES['user_thumb8'])) :
+
+            if ($_FILES['user_thumb8']['type'] == 'application/pdf') :
+            else :
+              echo '11';
+              exit();
+              break;
+            endif;
+
+            //$upload = new Upload('../imagens_site/');
+            $upload->File($_FILES['user_thumb8'], md5($dataHora . 'user_thumb8'), 'arquivos');
+            $foto8 = $upload->getResult();
+          else :
+            $foto8 = "";
+          endif;
+
+          if (isset($_FILES['user_thumb9'])) :
+
+            //if ($_FILES['user_thumb9']['type'] == 'application/pdf') :
+            //else :
+            //  echo '11';
+            //  exit();
+            //  break;
+            // endif;
+            //$upload = new Upload('../imagens_site/');
+            $upload->File($_FILES['user_thumb9'], md5($dataHora . 'user_thumb9'), 'arquivos');
+            $foto9 = $upload->getResult();
+          else :
+            $foto9 = "";
+          endif;
+
+
+          if (isset($_FILES['user_thumb10'])) :
+
+            if ($_FILES['user_thumb10']['type'] == 'application/pdf') :
+            else :
+              echo '11';
+              exit();
+              break;
+            endif;
+            //$upload = new Upload('../imagens_site/');
+            $upload->File($_FILES['user_thumb10'], md5($dataHora . 'user_thumb10'), 'arquivos');
+            $foto10 = $upload->getResult();
+          else :
+            $foto10 = "";
+          endif;
+
+          if (isset($_FILES['user_thumb11'])) :
+
+            if ($_FILES['user_thumb11']['type'] == 'application/pdf') :
+            else :
+              echo '11';
+              exit();
+              break;
+            endif;
+            //$upload = new Upload('../imagens_site/');
+            $upload->File($_FILES['user_thumb11'], md5($dataHora . 'user_thumb11'), 'arquivos');
+            $foto11 = $upload->getResult();
+          else :
+            $foto11 = "";
+          endif;
+
+          if (isset($_FILES['user_thumb12'])) :
+
+            if ($_FILES['user_thumb12']['type'] == 'application/pdf') :
+            else :
+              echo '11';
+              exit();
+              break;
+            endif;
+            //$upload = new Upload('../imagens_site/');
+            $upload->File($_FILES['user_thumb12'], md5($dataHora . 'user_thumb12'), 'arquivos');
+            $foto12 = $upload->getResult();
+          else :
+            $foto12 = "";
+          endif;
+
+          if (isset($_FILES['user_thumb13'])) :
+
+            if ($_FILES['user_thumb13']['type'] == 'application/pdf') :
+            else :
+              echo '11';
+              exit();
+              break;
+            endif;
+           // $upload = new Upload('../imagens_site/');
+            $upload->File($_FILES['user_thumb13'], md5($dataHora . 'user_thumb13'), 'arquivos');
+            $foto13 = $upload->getResult();
+          else :
+            $foto13 = "";
+          endif;
+
+
+          if (isset($_FILES['user_thumb14'])) :
+
+            if ($_FILES['user_thumb14']['type'] == 'application/pdf') :
+            else :
+              echo '11';
+              exit();
+              break;
+            endif;
+            //$upload = new Upload('../imagens_site/');
+            $upload->File($_FILES['user_thumb14'], md5($dataHora . 'user_thumb14'), 'arquivos');
+            $foto14 = $upload->getResult();
+          else :
+            $foto14 = "";
+          endif;
+
+          if (isset($_FILES['user_thumb15'])) :
+
+            if ($_FILES['user_thumb15']['type'] == 'application/pdf') :
+            else :
+              echo '11';
+              exit();
+              break;
+            endif;
+            //$upload = new Upload('../imagens_site/');
+            $upload->File($_FILES['user_thumb15'], md5($dataHora . 'user_thumb15'), 'arquivos');
+            $foto15 = $upload->getResult();
+          else :
+            $foto15 = "";
+          endif;
+
+
+          if (isset($_FILES['user_thumb16'])) :
+
+            if ($_FILES['user_thumb16']['type'] == 'application/pdf') :
+            else :
+              echo '11';
+              exit();
+              break;
+            endif;
+            //$upload = new Upload('../imagens_site/');
+            $upload->File($_FILES['user_thumb16'], md5($dataHora . 'user_thumb16'), 'arquivos');
+            $foto16 = $upload->getResult();
+          else :
+            $foto16 = "";
+          endif;
+
+
+          if (isset($_FILES['user_thumb17'])) :
+
+            if ($_FILES['user_thumb17']['type'] == 'application/pdf') :
+            else :
+              echo '11';
+              exit();
+              break;
+            endif;
+           // $upload = new Upload('../imagens_site/');
+            $upload->File($_FILES['user_thumb17'], md5($dataHora . 'user_thumb17'), 'arquivos');
+            $foto17 = $upload->getResult();
+          else :
+            $foto17 = "";
+          endif;
+
+          if (isset($_FILES['user_thumb18'])) :
+
+            if ($_FILES['user_thumb18']['type'] == 'application/pdf') :
+            else :
+              echo '11';
+              exit();
+              break;
+            endif;
+           // $upload = new Upload('../imagens_site/');
+            $upload->File($_FILES['user_thumb18'], md5($dataHora . 'user_thumb18'), 'arquivos');
+            $foto18 = $upload->getResult();
+          else :
+            $foto18 = "";
+          endif;
+
+        
+          if (isset($_FILES['user_thumb20'])) :
+
+            //if ($_FILES['user_thumb20']['type'] == 'application/pdf') :
+            //else :
+            //  echo '11';
+            //  exit();
+            //  break;
+            //endif;
+            //$upload = new Upload('../imagens_site/');
+            $upload->File($_FILES['user_thumb20'], md5($dataHora . 'user_thumb20'), 'arquivos');
+            $foto20 = $upload->getResult();
+          else :
+            $foto20 = "";
+          endif;
+
+          
+
+          if (isset($_FILES['arq_ori1'])) :
+            //$upload = new Upload('../imagens_site/');
+            $upload->File($_FILES['arq_ori1'], md5($dataHora . 'arq_ori1'), 'arquivos');
+            $fotoo10 = $upload->getResult();
+          else :
+            $fotoo10 = "";
+          endif;
+
+          if (isset($_FILES['arq_ori2'])) :
+            //$upload = new Upload('../imagens_site/');
+            $upload->File($_FILES['arq_ori2'], md5($dataHora . 'arq_ori2'), 'arquivos');
+            $fotoo11 = $upload->getResult();
+          else :
+            $fotoo11 = "";
+          endif;
+
+          if (isset($_FILES['arq_ori3'])) :
+            //$upload = new Upload('../imagens_site/');
+            $upload->File($_FILES['arq_ori3'], md5($dataHora . 'arq_ori3'), 'arquivos');
+            $fotoo12 = $upload->getResult();
+          else :
+            $fotoo12 = "";
+          endif;
+
+          if (isset($_FILES['arq_ori4'])) :
+            //$upload = new Upload('../imagens_site/');
+            $upload->File($_FILES['arq_ori4'], md5($dataHora . 'arq_ori4'), 'arquivos');
+            $fotoo13 = $upload->getResult();
+          else :
+            $fotoo13 = "";
+          endif;
+
+
+          $dados = array(
+            "id_orientador" => $c['id'],
+            "id_co_orientador" => "",
+            "nome" => $c['nome'],
+            "curso" => $c['curso'],
+            "faculdade" => $c['faculdade'],
+            "cpf" => $c['cpf'],
+            "cr" => $c['cr'],
+            "tipo" => $c['tipo'],
+              "entrega" => $c['entrega'],
+            "arq_1" => $foto9,
+            "arq_2" => $foto10,
+            "arq_3" => $foto11,
+            "arq_4" => $foto12,
+            "arq_5" => $foto13,
+            "arq_6" => $foto14,
+            "arq_7" => $foto15,
+            "arq_8" => $foto16,
+            "arq_9" => $foto17,
+            "data" => $dataStamp2,
+            "hora" => $hora,
+            "status" => '1',
+            "block" => '1',
+            "arq_ori1" => $fotoo10,
+            "arq_ori2" => $fotoo11,
+            "arq_ori3" => $fotoo12,
+            "arq_ori4" => $fotoo13,
+            "arq_ori5" => $foto,
+            "arq_ori6" => $foto2,
+            "arq_ori7" => $foto3,
+            "arq_ori8" => $foto4,
+            "arq_ori9" => $foto5,
+            "arq_ori10" => $foto6,
+            "arq_ori11" => $foto7,
+            "arq_ori12" => $foto8,
+            "nome_coorientado" => $nomecoo,
+            "arq_co" => $foto18,
+            "arq_co2" => $foto19,
+            "arq_co3" => $foto20,
+            "arq_co4" => $foto21,
+          );
+          $Cadastra = new Create;
+          $Cadastra->ExeCreate('aluno', $dados);
+          if ($Cadastra->getResult()) :
+            echo '1';
+          else :
+            echo '2';
+          endif;
+        //else :
+         // echo '4';
+      //  endif;
       endif;
       break;
+        
+        
+    case 'cad_tecnico':
+
+      $c['nome'] = $_POST['nome'];
+        $c['matricula'] = $_POST['cpf'];
+        $c['email'] = $_POST['email'];
+        $c['expertise'] = $_POST['expertise'];
+      
+        include "conexao.php";
+        
+
+      $opcao = $_POST['opcao'];
+      //$c['email'] = $_POST['email'];
+      //VERICIAR CAMPOS VAZIOS
+      
+        
+        
+
+          $dados = array(
+            "nome" => $c['nome'],
+              "matricula" => $c['matricula'],
+              "email" => $c['email'],
+              "expertise" => $c['expertise'],
+              "rendimento" => "",
+              "mediaproj" => "10",
+              "status" => "1",
+          );
+          $Cadastra = new Create;
+          $Cadastra->ExeCreate('tecnico', $dados);
+          if ($Cadastra->getResult()) :
+            echo '1';
+          else :
+            echo '2';
+          endif;
+        //else :
+         // echo '4';
+      //  endif;
+      endif;
+      break;    
+        
+    case 'cad_orientador':
+
+      $c['nome'] = $_POST['nome'];
+      $c['curso'] = $_POST['curso']; //Nome do tecnico
+        include "conexao.php";
+        $pdo_verifica = $conexao_pdo->prepare("select matricula, expertise from tecnico WHERE nome = '".$_POST['curso']."' ");
+                     $pdo_verifica->execute();
+            while($fetch = $pdo_verifica->fetch()){
+                $c['cpf']= $fetch['matricula'];
+                $c['faculdade']= $fetch['expertise'];
+            }
+      //$c['faculdade'] = $_POST['faculdade']; // Expertise
+      //$c['cpf'] = $_POST['cpf']; //Matricula
+      $c['cr'] = $_POST['cr'];
+      $c['tipo'] = $_POST['tipo'];
+      $c['id'] = $_POST['id'];
+        $c['entrega'] = $_POST['entrega'];
+
+      $nomecoo = $_POST['nomecoo'];
+
+      if (isset($_POST['cooo'])) :
+        $cooo = $_POST['cooo'];
+      else :
+        $cooo = "";
+      endif;
+
+      $opcao = $_POST['opcao'];
+      //$c['email'] = $_POST['email'];
+      //VERICIAR CAMPOS VAZIOS
+      if (in_array('', $c)) :
+        echo '3';
+      else :
+
+        $upload = new Upload('../imagens_site/');
+
+        //VERIFICANDO SE JÁ ESTA CADASTRADO
+        // $igual = new Read;
+        // $igual->ExeRead('aluno', 'WHERE cpf = :id and nome = :id2 and status = 1', "id=" . $c['cpf'] . "&id2=" . $c['nome'] . "");
+        // if (!$igual->getRowCount() >= 1) :
+
+          if (isset($_FILES['user_thumb'])) :
+            $upload = new Upload('../imagens_site/');
+            $upload->File($_FILES['user_thumb'], md5($dataHora . 'user_thumb'), 'arquivos');
+            $foto = $upload->getResult();
+          else :
+            $foto = "";
+          endif;
+
+
+        //print_r($_FILES['envio_01']);
+
+        if (isset($_FILES['enviando'])) :
+
+          //print_r($_FILES['enviando']);
+
+            if ($_FILES['enviando']['type'] == 'application/pdf') :
+            else :
+              echo '11';
+              exit();
+              break;
+            endif;
+            //$upload = new Upload('../imagens_site/');
+            $upload->File($_FILES['enviando'], md5($dataHora . 'enviando'), 'arquivos');
+            $foto19 = $upload->getResult();
+          else :
+            $foto19 = "";
+          endif;
+
+//print_r($_FILES['envio_02']);
+
+        if (isset($_FILES['envio_02'])) :
+          //print_r($_FILES['envio_02']);
+          if ($_FILES['envio_02']['type'] == 'application/pdf') :
+          else :
+            echo '11';
+            exit();
+            break;
+          endif;
+          //$upload = new Upload('../imagens_site/');
+          $upload->File($_FILES['envio_02'], md5($dataHora . 'envio_02'), 'arquivos');
+          $foto21 = $upload->getResult();
+        else :
+          $foto21 = "";
+        endif;
+
+
+          if (isset($_FILES['user_thumb2'])) :
+
+            if ($_FILES['user_thumb2']['type'] == 'application/pdf') :
+            else :
+              echo '11';
+              exit();
+              break;
+            endif;
+
+            //$upload = new Upload('../imagens_site/');
+            $upload->File($_FILES['user_thumb2'], md5($dataHora . 'user_thumb2'), 'arquivos');
+            $foto2 = $upload->getResult();
+          else :
+            $foto2 = "";
+          endif;
+
+          if (isset($_FILES['user_thumb3'])) :
+
+            if ($_FILES['user_thumb3']['type'] == 'application/pdf') :
+            else :
+              echo '11';
+              exit();
+              break;
+            endif;
+
+            //$upload = new Upload('../imagens_site/');
+            $upload->File($_FILES['user_thumb3'], md5($dataHora . 'user_thumb3'), 'arquivos');
+            $foto3 = $upload->getResult();
+          else :
+            $foto3 = "";
+          endif;
+
+          if (isset($_FILES['user_thumb4'])) :
+
+            if ($_FILES['user_thumb4']['type'] == 'application/pdf') :
+            else :
+              echo '11';
+              exit();
+              break;
+            endif;
+
+            //$upload = new Upload('../imagens_site/');
+            $upload->File($_FILES['user_thumb4'], md5($dataHora . 'user_thumb4'), 'arquivos');
+            $foto4 = $upload->getResult();
+          else :
+            $foto4 = "";
+          endif;
+
+          if (isset($_FILES['user_thumb5'])) :
+
+            if ($_FILES['user_thumb5']['type'] == 'application/pdf') :
+            else :
+              echo '11';
+              exit();
+              break;
+            endif;
+
+            //$upload = new Upload('../imagens_site/');
+            $upload->File($_FILES['user_thumb5'], md5($dataHora . 'user_thumb5'), 'arquivos');
+            $foto5 = $upload->getResult();
+          else :
+            $foto5 = "";
+          endif;
+
+          if (isset($_FILES['user_thumb6'])) :
+
+            if ($_FILES['user_thumb6']['type'] == 'application/pdf') :
+            else :
+              echo '11';
+              exit();
+              break;
+            endif;
+
+            //$upload = new Upload('../imagens_site/');
+            $upload->File($_FILES['user_thumb6'], md5($dataHora . 'user_thumb6'), 'arquivos');
+            $foto6 = $upload->getResult();
+          else :
+            $foto6 = "";
+          endif;
+
+          if (isset($_FILES['user_thumb7'])) :
+
+            if ($_FILES['user_thumb7']['type'] == 'application/pdf') :
+            else :
+              echo '11';
+              exit();
+              break;
+            endif;
+
+            //$upload = new Upload('../imagens_site/');
+            $upload->File($_FILES['user_thumb7'], md5($dataHora . 'user_thumb7'), 'arquivos');
+            $foto7 = $upload->getResult();
+          else :
+            $foto7 = "";
+          endif;
+
+          if (isset($_FILES['user_thumb8'])) :
+
+            if ($_FILES['user_thumb8']['type'] == 'application/pdf') :
+            else :
+              echo '11';
+              exit();
+              break;
+            endif;
+
+            //$upload = new Upload('../imagens_site/');
+            $upload->File($_FILES['user_thumb8'], md5($dataHora . 'user_thumb8'), 'arquivos');
+            $foto8 = $upload->getResult();
+          else :
+            $foto8 = "";
+          endif;
+
+          if (isset($_FILES['user_thumb9'])) :
+
+            //if ($_FILES['user_thumb9']['type'] == 'application/pdf') :
+            //else :
+            //  echo '11';
+            //  exit();
+            //  break;
+            // endif;
+            //$upload = new Upload('../imagens_site/');
+            $upload->File($_FILES['user_thumb9'], md5($dataHora . 'user_thumb9'), 'arquivos');
+            $foto9 = $upload->getResult();
+          else :
+            $foto9 = "";
+          endif;
+
+
+          if (isset($_FILES['user_thumb10'])) :
+
+            if ($_FILES['user_thumb10']['type'] == 'application/pdf') :
+            else :
+              echo '11';
+              exit();
+              break;
+            endif;
+            //$upload = new Upload('../imagens_site/');
+            $upload->File($_FILES['user_thumb10'], md5($dataHora . 'user_thumb10'), 'arquivos');
+            $foto10 = $upload->getResult();
+          else :
+            $foto10 = "";
+          endif;
+
+          if (isset($_FILES['user_thumb11'])) :
+
+            if ($_FILES['user_thumb11']['type'] == 'application/pdf') :
+            else :
+              echo '11';
+              exit();
+              break;
+            endif;
+            //$upload = new Upload('../imagens_site/');
+            $upload->File($_FILES['user_thumb11'], md5($dataHora . 'user_thumb11'), 'arquivos');
+            $foto11 = $upload->getResult();
+          else :
+            $foto11 = "";
+          endif;
+
+          if (isset($_FILES['user_thumb12'])) :
+
+            if ($_FILES['user_thumb12']['type'] == 'application/pdf') :
+            else :
+              echo '11';
+              exit();
+              break;
+            endif;
+            //$upload = new Upload('../imagens_site/');
+            $upload->File($_FILES['user_thumb12'], md5($dataHora . 'user_thumb12'), 'arquivos');
+            $foto12 = $upload->getResult();
+          else :
+            $foto12 = "";
+          endif;
+
+          if (isset($_FILES['user_thumb13'])) :
+
+            if ($_FILES['user_thumb13']['type'] == 'application/pdf') :
+            else :
+              echo '11';
+              exit();
+              break;
+            endif;
+           // $upload = new Upload('../imagens_site/');
+            $upload->File($_FILES['user_thumb13'], md5($dataHora . 'user_thumb13'), 'arquivos');
+            $foto13 = $upload->getResult();
+          else :
+            $foto13 = "";
+          endif;
+
+
+          if (isset($_FILES['user_thumb14'])) :
+
+            if ($_FILES['user_thumb14']['type'] == 'application/pdf') :
+            else :
+              echo '11';
+              exit();
+              break;
+            endif;
+            //$upload = new Upload('../imagens_site/');
+            $upload->File($_FILES['user_thumb14'], md5($dataHora . 'user_thumb14'), 'arquivos');
+            $foto14 = $upload->getResult();
+          else :
+            $foto14 = "";
+          endif;
+
+          if (isset($_FILES['user_thumb15'])) :
+
+            if ($_FILES['user_thumb15']['type'] == 'application/pdf') :
+            else :
+              echo '11';
+              exit();
+              break;
+            endif;
+            //$upload = new Upload('../imagens_site/');
+            $upload->File($_FILES['user_thumb15'], md5($dataHora . 'user_thumb15'), 'arquivos');
+            $foto15 = $upload->getResult();
+          else :
+            $foto15 = "";
+          endif;
+
+
+          if (isset($_FILES['user_thumb16'])) :
+
+            if ($_FILES['user_thumb16']['type'] == 'application/pdf') :
+            else :
+              echo '11';
+              exit();
+              break;
+            endif;
+            //$upload = new Upload('../imagens_site/');
+            $upload->File($_FILES['user_thumb16'], md5($dataHora . 'user_thumb16'), 'arquivos');
+            $foto16 = $upload->getResult();
+          else :
+            $foto16 = "";
+          endif;
+
+
+          if (isset($_FILES['user_thumb17'])) :
+
+            if ($_FILES['user_thumb17']['type'] == 'application/pdf') :
+            else :
+              echo '11';
+              exit();
+              break;
+            endif;
+           // $upload = new Upload('../imagens_site/');
+            $upload->File($_FILES['user_thumb17'], md5($dataHora . 'user_thumb17'), 'arquivos');
+            $foto17 = $upload->getResult();
+          else :
+            $foto17 = "";
+          endif;
+
+          if (isset($_FILES['user_thumb18'])) :
+
+            if ($_FILES['user_thumb18']['type'] == 'application/pdf') :
+            else :
+              echo '11';
+              exit();
+              break;
+            endif;
+           // $upload = new Upload('../imagens_site/');
+            $upload->File($_FILES['user_thumb18'], md5($dataHora . 'user_thumb18'), 'arquivos');
+            $foto18 = $upload->getResult();
+          else :
+            $foto18 = "";
+          endif;
+
+        
+          if (isset($_FILES['user_thumb20'])) :
+
+            //if ($_FILES['user_thumb20']['type'] == 'application/pdf') :
+            //else :
+            //  echo '11';
+            //  exit();
+            //  break;
+            //endif;
+            //$upload = new Upload('../imagens_site/');
+            $upload->File($_FILES['user_thumb20'], md5($dataHora . 'user_thumb20'), 'arquivos');
+            $foto20 = $upload->getResult();
+          else :
+            $foto20 = "";
+          endif;
+
+          
+
+          if (isset($_FILES['arq_ori1'])) :
+            //$upload = new Upload('../imagens_site/');
+            $upload->File($_FILES['arq_ori1'], md5($dataHora . 'arq_ori1'), 'arquivos');
+            $fotoo10 = $upload->getResult();
+          else :
+            $fotoo10 = "";
+          endif;
+
+          if (isset($_FILES['arq_ori2'])) :
+            //$upload = new Upload('../imagens_site/');
+            $upload->File($_FILES['arq_ori2'], md5($dataHora . 'arq_ori2'), 'arquivos');
+            $fotoo11 = $upload->getResult();
+          else :
+            $fotoo11 = "";
+          endif;
+
+          if (isset($_FILES['arq_ori3'])) :
+            //$upload = new Upload('../imagens_site/');
+            $upload->File($_FILES['arq_ori3'], md5($dataHora . 'arq_ori3'), 'arquivos');
+            $fotoo12 = $upload->getResult();
+          else :
+            $fotoo12 = "";
+          endif;
+
+          if (isset($_FILES['arq_ori4'])) :
+            //$upload = new Upload('../imagens_site/');
+            $upload->File($_FILES['arq_ori4'], md5($dataHora . 'arq_ori4'), 'arquivos');
+            $fotoo13 = $upload->getResult();
+          else :
+            $fotoo13 = "";
+          endif;
+include 'conexao.php';
+                    $pdo_verifica = $conexao_pdo->prepare("select nome from perfil WHERE id = '".$c['id']."'");
+                     $pdo_verifica->execute();
+                    $i=0;
+            while($fetch = $pdo_verifica->fetch()){
+                $i=$i+1;
+                    $nome = $fetch['nome'];
+            }
+        
+        $pdo_verifica = $conexao_pdo->prepare("select id from orientador WHERE nome = '".$nome."'");
+                     $pdo_verifica->execute();
+                    $i=0;
+            while($fetch = $pdo_verifica->fetch()){
+                $i=$i+1;
+                    $id_ori = $fetch['id'];
+            }
+        
+        
+
+          $dados = array(
+              
+              
+            "id_orientador" => $id_ori,
+            "id_co_orientador" => "",
+            "nome" => $c['nome'],
+            "curso" => $c['curso'],
+            "faculdade" => $c['faculdade'],
+            "cpf" => $c['cpf'],
+            "cr" => $c['cr'],
+            "tipo" => $c['tipo'],
+              "entrega" => $c['entrega'],
+              "nota" => '10',
+            "arq_1" => $foto9,
+            "arq_2" => $foto10,
+            "arq_3" => $foto11,
+            "arq_4" => $foto12,
+            "arq_5" => $foto13,
+            "arq_6" => $foto14,
+            "arq_7" => $foto15,
+            "arq_8" => $foto16,
+            "arq_9" => $foto17,
+            "data" => $dataStamp2,
+            "hora" => $hora,
+            "status" => '1',
+            "block" => '1',
+            "arq_ori1" => $fotoo10,
+            "arq_ori2" => $fotoo11,
+            "arq_ori3" => $fotoo12,
+            "arq_ori4" => $fotoo13,
+            "arq_ori5" => $foto,
+            "arq_ori6" => $foto2,
+            "arq_ori7" => $foto3,
+            "arq_ori8" => $foto4,
+            "arq_ori9" => $foto5,
+            "arq_ori10" => $foto6,
+            "arq_ori11" => $foto7,
+            "arq_ori12" => $foto8,
+            "nome_coorientado" => $nomecoo,
+            "arq_co" => $foto18,
+            "arq_co2" => $foto19,
+            "arq_co3" => $foto20,
+            "arq_co4" => $foto21,
+          );
+          $Cadastra = new Create;
+          $Cadastra->ExeCreate('aluno', $dados);
+          if ($Cadastra->getResult()) :
+            echo '1';
+          else :
+            echo '2';
+          endif;
+        //else :
+         // echo '4';
+      //  endif;
+      endif;
+      break;
+        
+    //EDITAR TECNINCO    
     case 'id_arquivo_alt':
       $c['id'] = $_POST['id'];
 
       $ultimo = new Read;
-      $ultimo->ExeRead('arquivos', "WHERE id = :id", 'id=' . $c['id'] . '');
+      $ultimo->ExeRead('tecnico', "WHERE id = :id", 'id=' . $c['id'] . '');
       foreach ($ultimo->getResult() as $resultado);
       ?>
 <script>
     $("select").select2();
 
 </script>
-<form class="form_linha" method="post" name="Alt_arquivo" enctype="multipart/form-data">
-    <h1 class="topo_modal">Alterar arquivo</h1>
-    <div class="box box100" style=" width: 100%">
-        <div class="box box50">
-            <p class="texto_form">Nome</p>
-            <input name="nome" type="text" required placeholder="Nome" value="<?= $resultado['nome']; ?>" style=" width: 100%;" />
-        </div>
-        <div class="box box50 no-margim">
-            <p class="texto_form">Empresa</p>
-            <select name="id_cliente_vinculo" required class="select " style=" width: 100%;">
-                <option <?= ($resultado['id_cliente_vinculo'] == '' ? "selected" : ""); ?> value="bb">Arquivo não vinculado há empresa ou cliente.</option>
-                <?php
-              $corretor = new Read;
-              $corretor->ExeRead('cliente', 'WHERE status = "1"');
-              if ($corretor->getRowCount() >= 1) :
-                foreach ($corretor->getResult() as $examinado) :
-                  echo ' <option ' . ($resultado['id_cliente_vinculo'] == $examinado['id'] ? "selected" : "") . ' value="' . $examinado['id'] . '">' . $examinado['nome'] . '</option> ';
-                endforeach;
-              else :
-                echo ' <option value="">Não há empresa cadastrada!</option> ';
-              endif;
-              ?>
-            </select>
-        </div>
-        <div class="limpar"></div>
-        <p class="texto_form">Observações</p>
-        <textarea name="obs" rows="5" placeholder="Observações" style=" width: 100%; height: 100px"><?= $resultado['obs']; ?></textarea>
-        <div class="limpar"></div>
-        <br>
-        <p class="texto_form">Selecione um arquivo, Maximo de 100mb</p>
-        <div class="box box25">
-            <div class="limpar"></div>
-            <label class="label_file" for='selecao-arquivo4'>Selecionar um arquivo</label>
-            <input id='selecao-arquivo4' required type="file" name="documento" multiple class="" />
-            <div class="limpar"></div>
-        </div>
-        <div class="box box30" style=" margin-left: 5%;">
-            <a style=" font-size: 1.2em;" href="<?= HOME; ?>imagens_site/<?= $resultado['arquivo']; ?>" target="_blank">Arquivo Atual</a>
 
-        </div>
+
+<div class="cadastrar_total_contet" style=" background: #fff; padding: 3%">
+    <div class="cadastro_cliente_cv">
+        <h1 class="topo_modal">Editar Informações</h1>
+        <form class="form_linha" method="post" name="cad_orientador">
+            <!-- cad_clientes -->
+            <div class="box box100">
+                <div class="box box33">
+                    <p class="texto_form">Nome completo(Obrigatório)</p>
+                    <input name="nome" type="text" required placeholder="Nome completo" value="<?= $resultado['nome']; ?>" style=" width: 100%;" />
+                </div>
+                <div class="box box33">
+                    <p class="texto_form">E-mail válido</p>
+                    <input name="email" type="email" placeholder="E-mail válido" value="<?= $resultado['email']; ?>" style=" width: 100%;" />
+                </div>
+                <div class="box box33 no-margim">
+                    <p class="texto_form">Matricula</p>
+                    <input name="cpf" type="text" required placeholder="Matrícula do Técnico" value="<?= $resultado['matricula']; ?>" style=" width: 100%;" />
+                </div>
+            </div>
+
+
+            <div class="box box20 no-margim">
+                <button class="btn btn_green fl-left" style="font-size: 0.8em; margin-right: 1%">
+                    <figure class="icon-save2" style="margin-top: -6%;"></figure> Cadastrar
+                </button>
+            </div>
+
+            <!--
+            <div class="limpar"></div>
+            <br>
+            <input type="hidden" name="id" value="<?= $usuario_['id']; ?>" />
+            <span class="carregando2 ds-none"><img src="<?= HOME; ?>imagens_fixas/carregando2.gif" /></span>
+
+            <div class="limpar"></div>
+-->
+        </form>
     </div>
 
-    <div class="limpar"></div>
-    <br>
-    <span class="carregando2 ds-none"><img src="<?= HOME; ?>imagens_fixas/carregando2.gif" /></span>
-    <button class="btn btn_green fl-left" style="font-size: 0.8em; margin-right: 1%;">
-        <figure class="icon-pencil-square-o" style="margin-top: -4%;"></figure> Alterar
-    </button>
-</form>
-<div class="limpar"></div>
+
+</div>
+
+
+
 <?php
       break;
+        
     case 'ex_arquivo':
       $c['id'] = $_POST['del'];
 
@@ -4928,7 +5856,9 @@ switch ($_POST['acao']) {
         echo '2';
       endif;
       break;
-
+//ENVIAR DADOS DO FORMMULARIO
+        
+        
     case 'ver_agenda':
       echo $c['id'] = $_POST['id'];
 
@@ -4937,7 +5867,7 @@ switch ($_POST['acao']) {
       //===============================================================================================================================
       // ORIENTADOR
       //===============================================================================================================================         
-    case 'cad_orientador':
+    case 'cad_orientador2':
       $c['nome'] = $_POST['nome'];
       $c['email'] = $_POST['email'];
       $c['cp'] = $_POST['cpf'];
@@ -4989,6 +5919,7 @@ switch ($_POST['acao']) {
         endif;
       endif;
       break;
+        
     case 'modal_alunos':
       $c['id'] = $_POST['id'];
     ?>
@@ -5091,6 +6022,8 @@ switch ($_POST['acao']) {
 </div>
 <?php
       break;
+        
+        
     case 'modal_coorientador':
       $c['id'] = $_POST['id'];
     ?>
@@ -5416,13 +6349,34 @@ switch ($_POST['acao']) {
         endif;
       endif;
       break;
-    case 'id_aluno_alt':
+        
+        
+        
+        
+        case 'id_tecnico_alt':
+        
+        echo "Teste";
       $c['id'] = $_POST['id'];
 
       $ultimo = new Read;
-      $ultimo->ExeRead('aluno', "WHERE id = :id", 'id=' . $c['id'] . '');
+      $ultimo->ExeRead('tecnico', "WHERE id = :id", 'id=' . $c['id'] . '');
       foreach ($ultimo->getResult() as $resultado);
-    ?>
+        
+        
+    
+      break;
+
+
+
+case 'id_aluno_alt':
+$c['id'] = $_POST['id'];
+
+$ultimo = new Read;
+$ultimo->ExeRead('aluno', "WHERE id = :id", 'id=' . $c['id'] . '');
+foreach ($ultimo->getResult() as $resultado);
+
+
+?>
 <script>
     $("#mascara_cpf").mask("999.999.999-99");
     $("select").select2();
@@ -5617,6 +6571,8 @@ switch ($_POST['acao']) {
 </form>
 <?php
       break;
+        
+        
     case 'editar_aluno':
         $temp;
       $c['nome'] = $_POST['nome'];
@@ -6133,6 +7089,8 @@ switch ($_POST['acao']) {
 </form>
 <?php
       break;
+        
+        //EDITAR TECNICO
     case 'editar_coorientador':
       $c['nome'] = $_POST['nome'];
       $c['id'] = $_POST['id'];

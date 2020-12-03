@@ -1,10 +1,23 @@
 <?php
 include('conexao.php');
+
+$pdo_verifica = $conexao_pdo->prepare("select id from orientador WHERE nome = '".$usuario_['nome']."'");
+                     $pdo_verifica->execute();
+            while($fetch = $pdo_verifica->fetch()){
+                $myid = $fetch['id'];
+            }
+echo $usuario_['nome'];
+
 $cont = 0;
 $cont2 = 0;
 $cont3 = 0;
 $cont4 = 0;
-$pdo_verifica = $conexao_pdo->prepare("select status from aluno WHERE id_orientador = 46");
+$i = 0;
+$projeto = array();
+$andamento = array();
+
+
+$pdo_verifica = $conexao_pdo->prepare("select status from aluno WHERE id_orientador = ".$myid."");
                      $pdo_verifica->execute();
             while($fetch = $pdo_verifica->fetch()){
                 $status = $fetch['status'];
@@ -22,6 +35,16 @@ $pdo_verifica = $conexao_pdo->prepare("select status from aluno WHERE id_orienta
                     $cont4 = $cont4+1;
                 }
                 
+            }
+
+
+$pdo_verifica = $conexao_pdo->prepare("select * from aluno WHERE id_orientador = ".$myid." AND status = 1 ");
+                     $pdo_verifica->execute();
+            while($fetch = $pdo_verifica->fetch()){
+                $projeto[$i] = $fetch['nome'];
+                $andamento[$i] = $fetch['cr'];
+                echo $projeto[$i];
+                $i = $i +1;
             }
 
 ?>
@@ -45,6 +68,72 @@ $pdo_verifica = $conexao_pdo->prepare("select status from aluno WHERE id_orienta
                         datasets: [{
                             label: 'quantidade',
                             data: [<?= $cont; ?>, <?= $cont2;?>, <?= $cont3;?>, <?= $cont4;?>],
+                            backgroundColor: [
+                                'rgba(75, 192, 192, 0.2)',
+                                'rgba(255, 206, 86, 0.2)',
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(54, 162, 235, 0.2)'
+                            ],
+                            borderColor: [
+                                'rgba(75, 192, 192, 1)',
+                                'rgba(255, 206, 86, 1)',
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(54, 162, 235, 1)'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }]
+                        }
+                    }
+                });
+
+            </script>
+
+            <p>Nome: <?= $usuario_['nome']; ?></p>
+            <p>IP: <?= $_SERVER['REMOTE_ADDR']; ?></p>
+            <?php
+      $Browser = $_SESSION['useronline']['online_agent'];
+      if (strpos($Browser, 'Chrome')) :
+        $Browser = 'Chrome';
+      elseif (strpos($Browser, 'Firefox')) :
+        $Browser = 'Firefox';
+      elseif (strpos($Browser, 'MSIE') || strpos($Browser, 'Trident/')) :
+        $Browser = 'IE';
+      else :
+        $Browser = 'Outros';
+      endif;
+      ?>
+            <p>Navegador: <?= $Browser ?></p>
+        </div>
+    </article>
+
+
+
+
+    <article class="box box50" style="background: #fff;">
+        <div class="box_div_h1">
+            <h1 class="box_h1">Projetos em Andamento</h1>
+        </div>
+        <div class="box_conteudo_">
+
+            <canvas id="myChart2" width="400" height="200"></canvas>
+            <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+            <script>
+                var ctx = document.getElementById('myChart2').getContext('2d');
+                var myChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: [$projeto[0], $projeto[1], $projeto[2]],
+                        datasets: [{
+                            label: 'quantidade',
+                            data: [<?= $andamento[0]; ?>, <?= $andamento[1];?>, <?= $andamento[2];?>, <?= $cont4;?>],
                             backgroundColor: [
                                 'rgba(75, 192, 192, 0.2)',
                                 'rgba(255, 206, 86, 0.2)',
