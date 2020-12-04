@@ -1959,11 +1959,14 @@ $(function () {
                 } else {
                     carregandoOut();
                     triggerNotify({
-                        title: "Erro ao enviar, consultem um administrador",
+                        title: "Erro ao enviar, consultem um administrador Lulu2" + String(resposta),
                         icon: "icon-thumbs-down2",
                         color: "red",
                         timer: 4000
                     });
+                    setTimeout(function () {
+                        location.href = "" + urlbase + "dashboard";
+                    }, 2000);
                 }
             },
             complete: function () {
@@ -2109,7 +2112,7 @@ $(function () {
                     alerta('Este arquivo não é um arquivo .jpg ou .png');
                 } else {
                     triggerNotify({
-                        title: "Erro ao enviar, consultem um administrador",
+                        title: "Erro ao enviar, consultem um administrador Lulu3",
                         icon: "icon-thumbs-down2",
                         color: "red",
                         timer: 4000
@@ -4890,7 +4893,7 @@ $(function () {
                     $('.carregando_sistem').fadeOut();
                     $('.carregando2').fadeOut();
                     triggerNotify({
-                        title: "Erro ao enviar, consultem um administrador",
+                        title: "Erro ao enviar, consultem um administrador Lulu1",
                         icon: "icon-thumbs-down2",
                         color: "red",
                         timer: 4000
