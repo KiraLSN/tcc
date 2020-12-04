@@ -67,7 +67,7 @@ switch ($_POST['acao']) {
         echo '3';
       } else {
         $read = new Read;
-        $read->ExeRead('orientador', 'WHERE email = :email AND senha = :senha', "email=" . $c['login'] . "&senha=" . $c['senha'] . "");
+        $read->ExeRead('perfil', 'WHERE email = :email AND senha = :senha', "email=" . $c['login'] . "&senha=" . $c['senha'] . "");
         if ($read->getRowCount() >= 1) :
           foreach ($read->getResult() as $resultado);
           if ($resultado['status'] == '3' || $resultado['status'] == '2') :
@@ -102,7 +102,7 @@ switch ($_POST['acao']) {
       echo '3';
     } else {
       $read = new Read;
-      $read->ExeRead('orientador', 'WHERE email = :email', "email=" . $c['email'] . "");
+      $read->ExeRead('perfil', 'WHERE email = :email', "email=" . $c['email'] . "");
       if ($read->getRowCount() >= 1) :
         foreach ($read->getResult() as $resultado);
 
@@ -760,6 +760,8 @@ switch ($_POST['acao']) {
       endif;
     endif;
     break;
+        
+        
   case 'slide_status':
     $c['id'] = $_POST['id'];
     if (in_array('', $c)) :
@@ -789,6 +791,8 @@ switch ($_POST['acao']) {
       endif;
     endif;
     break;
+        
+        
   case 'ex_slide':
     $c['id'] = $_POST['del'];
 
@@ -1802,6 +1806,7 @@ switch ($_POST['acao']) {
             $("#mascara_celular22").mask("(99)99999-9999");
             $("#mascara_telefone22").mask("(99)99999-9999");
             $("#mascara_telefone23").mask("(99)99999-9999");
+
             tinymce.init({
                 selector: "textarea#elm4",
                 theme: "modern",
@@ -2220,6 +2225,7 @@ switch ($_POST['acao']) {
         $("#mascara_celular22").mask("(99)99999-9999");
         $("#mascara_telefone22").mask("(99)99999-9999");
         $("#mascara_telefone23").mask("(99)99999-9999");
+
         tinymce.init({
             selector: "textarea#elm8",
             theme: "modern",
@@ -3563,6 +3569,8 @@ switch ($_POST['acao']) {
             "filemanager": "<?= HOME; ?>poo/app/Library/tinymce/js/filemanager/plugin.min.js"
         }
     });
+
+
     $("#telefone_crm4").mask("(99)99999999");
     $("#telefone_crm5").mask("(99)99999999");
     $("#telefone_crm6").mask("(99)99999999");
@@ -4798,750 +4806,9 @@ switch ($_POST['acao']) {
       break;
       //===============================================================================================================================
       // SISTEMA DE ARQUIVOS
-      //===============================================================================================================================       
-    case 'cad_arquivo':
-
-      $c['nome'] = $_POST['nome'];
-      $obs = $_POST['obs'];
-      $c['id'] = $_POST['usuario'];
-      $empresa = $_POST['id_cliente_vinculo'];
-
-      if ($empresa == 'bb') :
-        $empresa = '';
-      endif;
-
-      if (in_array('', $c)) :
-        echo '3';
-        exit();
-      else :
-        //print_r($_FILES['documento']);
-        $type = explode(".", $_FILES['documento']['name']);
-        $tipo = end($type);
-
-        if (isset($_FILES['documento'])) :
-          $upload = new Upload('../imagens_site/');
-          $upload->File($_FILES['documento'], md5($c['nome'] . $hora . $tipo . $c['id']), 'zeropape');
-          $foto = $upload->getResult();
-        else :
-          $foto = '';
-        endif;
-        $Dados = [
-          'id_cliente_vinculo' => $empresa,
-          'nome' => $c['nome'],
-          'tamanho' => $_FILES['documento']['size'],
-          'tipo' => $tipo,
-          'data' => $dataStamp2,
-          'hora' => $hora,
-          'token' => md5($c['nome'] . $hora . $tipo . $c['id']),
-          'obs' => $obs,
-          'id_usuario' => $c['id'],
-          'arquivo' => $foto,
-        ];
-        $Cadastra = new Create;
-        $Cadastra->ExeCreate('arquivos', $Dados);
-        if ($Cadastra->getResult()) :
-          echo '1';
-        else :
-          echo '2';
-        endif;
-      endif;
-      break;
-    case 'id_arquivo_alt':
-      $c['id'] = $_POST['id'];
-
-      $ultimo = new Read;
-      $ultimo->ExeRead('arquivos', "WHERE id = :id", 'id=' . $c['id'] . '');
-      foreach ($ultimo->getResult() as $resultado);
-      ?>
-<script>
-    $("select").select2();
-
-</script>
-<form class="form_linha" method="post" name="Alt_arquivo" enctype="multipart/form-data">
-    <h1 class="topo_modal">Alterar arquivo</h1>
-    <div class="box box100" style=" width: 100%">
-        <div class="box box50">
-            <p class="texto_form">Nome</p>
-            <input name="nome" type="text" required placeholder="Nome" value="<?= $resultado['nome']; ?>" style=" width: 100%;" />
-        </div>
-        <div class="box box50 no-margim">
-            <p class="texto_form">Empresa</p>
-            <select name="id_cliente_vinculo" required class="select " style=" width: 100%;">
-                <option <?= ($resultado['id_cliente_vinculo'] == '' ? "selected" : ""); ?> value="bb">Arquivo não vinculado há empresa ou cliente.</option>
-                <?php
-              $corretor = new Read;
-              $corretor->ExeRead('cliente', 'WHERE status = "1"');
-              if ($corretor->getRowCount() >= 1) :
-                foreach ($corretor->getResult() as $examinado) :
-                  echo ' <option ' . ($resultado['id_cliente_vinculo'] == $examinado['id'] ? "selected" : "") . ' value="' . $examinado['id'] . '">' . $examinado['nome'] . '</option> ';
-                endforeach;
-              else :
-                echo ' <option value="">Não há empresa cadastrada!</option> ';
-              endif;
-              ?>
-            </select>
-        </div>
-        <div class="limpar"></div>
-        <p class="texto_form">Observações</p>
-        <textarea name="obs" rows="5" placeholder="Observações" style=" width: 100%; height: 100px"><?= $resultado['obs']; ?></textarea>
-        <div class="limpar"></div>
-        <br>
-        <p class="texto_form">Selecione um arquivo, Maximo de 100mb</p>
-        <div class="box box25">
-            <div class="limpar"></div>
-            <label class="label_file" for='selecao-arquivo4'>Selecionar um arquivo</label>
-            <input id='selecao-arquivo4' required type="file" name="documento" multiple class="" />
-            <div class="limpar"></div>
-        </div>
-        <div class="box box30" style=" margin-left: 5%;">
-            <a style=" font-size: 1.2em;" href="<?= HOME; ?>imagens_site/<?= $resultado['arquivo']; ?>" target="_blank">Arquivo Atual</a>
-
-        </div>
-    </div>
-
-    <div class="limpar"></div>
-    <br>
-    <span class="carregando2 ds-none"><img src="<?= HOME; ?>imagens_fixas/carregando2.gif" /></span>
-    <button class="btn btn_green fl-left" style="font-size: 0.8em; margin-right: 1%;">
-        <figure class="icon-pencil-square-o" style="margin-top: -4%;"></figure> Alterar
-    </button>
-</form>
-<div class="limpar"></div>
-<?php
-      break;
-    case 'ex_arquivo':
-      $c['id'] = $_POST['del'];
-
-      $ultimo = new Read;
-      $ultimo->ExeRead('arquivos', "WHERE id = :id", 'id=' . $c['id'] . '');
-      foreach ($ultimo->getResult() as $resultado);
-      unlink("../imagens_site/" . $resultado['arquivo']);
-      $delete = new Delete;
-      $delete->ExeDelete('arquivos', "WHERE id = :id", 'id=' . $c['id'] . '');
-      if ($delete->getResult()) :
-        echo '1';
-      else :
-        echo '2';
-      endif;
-      break;
-
-    case 'ver_agenda':
-      echo $c['id'] = $_POST['id'];
-
-
-      break;
-      //===============================================================================================================================
-      // ORIENTADOR
-      //===============================================================================================================================         
-    case 'cad_orientador':
-      $c['nome'] = $_POST['nome'];
-      $c['email'] = $_POST['email'];
-      $senha = Check::NewPass('5', false, true, false);
-      //VERICIAR CAMPOS VAZIOS
-      if (in_array('', $c)) :
-        echo '3';
-      else :
-
-        //VERIFICANDO SE JÁ ESTA CADASTRADO
-        $igual = new Read;
-        $igual->ExeRead('orientador', 'WHERE email = :id and nome = :id2', "id=" . $c['email'] . "&id2=" . $c['nome'] . "");
-        if (!$igual->getRowCount() >= 1) :
-
-
-          //VERIFICAR SE FOTO VOU ENVIADA E SALVANDO NO SERVIDOR(REDIMENSIONANDO E NOMINANDO)
-          if (isset($_FILES['user_thumb'])) :
-
-            $upload = new Upload('../imagens_site/');
-            //-----------------imagem, nome, tamanho, pasta----------------//
-            $upload->Image($_FILES['user_thumb'], md5($c['email']), '500', 'clientes', '500');
-            $foto = $upload->getResult();
-          else :
-            $foto = '';
-          endif;
-
-          $dados = array(
-            "nome" => $c['nome'],
-            "ilmd" => '',
-            "cpf" => '',
-            "email" => $c['email'],
-            "senha" => $senha,
-            "arq_1" => '',
-            "arq_2" => '',
-            "arq_3" => '',
-            "arq_4" => '',
-            "arq_5" => '',
-            "arq_6" => '',
-            "arq_7" => '',
-            "arq_8" => '',
-            "arq_9" => '',
-            "data" => $dataStamp2,
-            "hora" => $hora,
-            "status" => '1',
-          );
-          $Cadastra = new Create;
-          $Cadastra->ExeCreate('orientador', $dados);
-          if ($Cadastra->getResult()) :
-            echo '1';
-          else :
-            echo '2';
-          endif;
-        else :
-          echo '4';
-        endif;
-      endif;
-      break;
-    case 'modal_alunos':
-      $c['id'] = $_POST['id'];
-    ?>
-<div class="" style=" background: #fff; padding: 3%">
-    <h1 class="topo_modal">Lista de alunos cadastrados</h1>
-    <div class="box_conteudo_ lista_atual_modal">
-        <!--LISTA DE CADASTRADOS-->
-        <?php
-          $listagem = new Read;
-          $listagem->ExeRead('aluno', 'where id_orientador = ' . $c['id'] . ' and status <> 3');
-          if ($listagem->getRowCount() >= 1) :
-          ?>
-        <p class="texto_form" style=" margin-top: 0;">Você pode ordenar a lista clicando nos titulos da lista abaixo.</p>
-        <script type="text/javascript" src="<?= HOME; ?>js/sorttable.js"></script>
-        <table class="lista_base_tabela sortable">
-            <!--<caption></caption>-->
-            <tr style=" width: 100%; border-bottom: 1px solid #000; background-color: #000000; color: #FFF; font-size: 0.9em;">
-                <th width="30%" style=" text-align: center; padding: 1%;">Nome</th>
-                <th width="15%" style=" text-align: center; padding: 1%;">Curso</th>
-                <th width="15%" style=" text-align: center; padding: 1%;">CPF</th>
-                <th width="10%" style=" text-align: center; padding: 1%;">Instituição</th>
-                <th width="10%" style=" text-align: center; padding: 1%;">Coeficiente</th>
-                <th width="10%" style=" text-align: center; padding: 1%;">Status</th>
-                <th width="1%" style="padding: 0%;"></th>
-                <th width="1%" style="padding: 0%"></th>
-            </tr>
-            <div class="limpar"></div>
-            <?php
-              foreach ($listagem->getResult() as $listagem_) :
-              ?>
-            <tr class="lista_tabela">
-                <td width="30%" data-balloon-length="large" data-balloon="<?= $listagem_['nome']; ?>" data-balloon-pos="up"><?= Check::limitcaracter($listagem_['nome'], 36); ?></td>
-                <td width="15%"><?= $listagem_['curso']; ?></td>
-                <td width="15%"><?= $listagem_['cpf']; ?></td>
-                <td width="10%"><?= $listagem_['faculdade']; ?></td>
-                <td width="10%"><?= $listagem_['cr']; ?></td>
-                <td width="10%">
-                    <?php
-                    if ($listagem_['status'] == '1') :
-                    ?>
-                    <p style=" color: green">Ativo</p>
-                    <?php
-                    else :
-                    ?>
-                    <p style=" color: red">Inativo</p>
-                    <?php
-                    endif;
-                    ?>
-                </td>
-                <!-- <td width="1%">
-                   <div class="btn btn_red excluir_modal" data-excluir="ex_usuario" id="<? //= $listagem_['id']; 
-                                                                                        ?>" style="" data-balloon-length="small" data-balloon="Alterar status" data-balloon-pos="up">
-                      <i class="fa fa-times icone-funcao"></i>
-                   </div>
-               </td> 
-                <td width="2%"> 
-                   <div class="btn btn_blue" id="<? //= $listagem_['id']; 
-                                                  ?>" style=" " data-balloon-length="small" data-balloon="Alterar status" data-balloon-pos="up">
-                      <i class="fas fa-exchange-alt"></i>
-                   </div>
-                </td>-->
-                <td width="2%">
-                    <div class="id_usuario_alt btn btn_green" style="" id="<?= $listagem_['id']; ?>" data-balloon-length="small" data-balloon="Informações" data-balloon-pos="up">
-                        <figure class="icon-edit-3" style="font-size: 1.3em;"></figure>
-                    </div>
-                </td>
-                <div class="limpar"></div>
-            </tr>
-            <?php
-              endforeach;
-            else :
-              echo '<div class="list" style="color: #000; font-size: 1.1em;"><center>Não há alunos cadastrados!</center></div>';
-            endif;
-            ?>
-            <div class="limpar"></div>
-        </table>
-        <br>
-    </div>
-    <div class="limpar"></div>
-</div>
-<?php
-      break;
-    case 'modal_coorientador':
-      $c['id'] = $_POST['id'];
-    ?>
-<div class="" style=" background: #fff; padding: 3%">
-    <h1 class="topo_modal">Lista de Co-Orientadores</h1>
-    <div class="box_conteudo_ lista_atual_modal">
-        <!--LISTA DE CADASTRADOS-->
-        <?php
-          $listagem = new Read;
-          $listagem->ExeRead('co_orientador', 'where id_orientador = ' . $c['id'] . ' and status <> 3');
-          if ($listagem->getRowCount() >= 1) :
-          ?>
-        <p class="texto_form" style=" margin-top: 0;">Você pode ordenar a lista clicando nos titulos da lista abaixo.</p>
-        <script type="text/javascript" src="<?= HOME; ?>js/sorttable.js"></script>
-        <table class="lista_base_tabela sortable">
-            <!--<caption></caption>-->
-            <tr style=" width: 100%; border-bottom: 1px solid #000; background-color: #000000; color: #FFF; font-size: 0.9em;">
-                <th width="40%" style=" text-align: center; padding: 1%;">Declaração de Participação na Coautoria</th>
-                <th width="40%" style=" text-align: center; padding: 1%;">Currículo Lattes do Co-autor</th>
-            </tr>
-            <div class="limpar"></div>
-            <?php
-              foreach ($listagem->getResult() as $listagem_) :
-              ?>
-            <tr class="lista_tabela">
-                <td width="40%">Ver arquivo</td>
-                <td width="40%">Ver arquivo</td>
-                <div class="limpar"></div>
-            </tr>
-            <?php
-              endforeach;
-            else :
-              echo '<div class="list" style="color: #000; font-size: 1.1em;"><center>Não há Co-Orientadores cadastrados!</center></div>';
-            endif;
-            ?>
-            <div class="limpar"></div>
-        </table>
-        <br>
-    </div>
-    <div class="limpar"></div>
-</div>
-<?php
-      break;
-    case 'cordenadores_alt':
-      $c['id'] = $_POST['id'];
-
-      $ultimo = new Read;
-      $ultimo->ExeRead('orientador', "WHERE id = :id", 'id=' . $c['id'] . '');
-      foreach ($ultimo->getResult() as $resultado);
-    ?>
-<script>
-    jQuery(function($) {
-        $("#mascara_celular22").mask("(99)999999999");
-        $("#mascara_telefone22").mask("(99)999999999");
-        $("#mascara_telefone222").mask("(99)999999999");
-        $('#datacompleta2').datepicker({
-            language: 'pt-BR',
-            todayButton: new Date() // Now can select only dates, which goes after today
-        });
-    });
-    $("select").select2();
-
-</script>
-
-<form class="form_linha" method="post" name="editar_orientador" enctype="multipart/form-data">
-    <h1 class="topo_modal">Alterar orientador</h1>
-    <div class="box box100">
-        <div class="box box50">
-            <p class="texto_form">Nome completo(Obrigatório)</p>
-            <input name="nome" type="text" required placeholder="Nome completo" value="<?= $resultado['nome']; ?>" style=" width: 100%;" />
-        </div>
-        <div class="box box50 no-margim">
-            <p class="texto_form">E-mail válido</p>
-            <input name="email" type="email" placeholder="E-mail válido" value="<?= $resultado['email']; ?>" style=" width: 100%;" />
-        </div>
-        <div class="limpar"></div>
-        <div class="box box33">
-            <p class="texto_form">CPF(Obrigatório)</p>
-            <input name="cpf" type="text" required placeholder="CPF ou CNPJ" style=" width: 100%;" value="<?= $resultado['cpf']; ?>" onkeypress='mascaraMutuario(this, cpfCnpj)' onblur='clearTimeout()' />
-        </div>
-        <div class="box box33">
-            <p class="texto_form">Vínculo com o ILMD(Obrigatório)</p>
-            <input name="ilmd" type="text" required placeholder="Vínculo com o ILMD" value="<?= $resultado['ilmd']; ?>" style=" width: 100%;" />
-        </div>
-        <div class="box box33">
-            <p class="texto_form">Senha(Obrigatório)</p>
-            <input name="senha" type="password" required placeholder="Senha" value="<?= $resultado['senha']; ?>" style=" width: 100%;" />
-        </div>
-        <div class="limpar"></div>
-        <div class="box box50">
-            <p class="texto_form">Resumo do projeto do orientador(Obrigatório)</p>
-            <?php
-            if ($resultado['arq_1'] <> '') :
-            ?>
-            <a href="<?= HOME; ?>imagens_site/<?= $resultado['arq_1']; ?>" target="_blank">Ver arquivo</a>
-            <?php
-            else :
-              echo 'Arquivo não enviado';
-            endif;
-            ?>
-        </div>
-        <div class="box box50">
-            <p class="texto_form">Parecer/protocolo do comitê de ética(Obrigatório)</p>
-            <?php
-            if ($resultado['arq_2'] <> '') :
-            ?>
-            <a href="<?= HOME; ?>imagens_site/<?= $resultado['arq_2']; ?>" target="_blank">Ver arquivo</a>
-            <?php
-            else :
-              echo 'Arquivo não enviado';
-            endif;
-            ?>
-        </div>
-        <div class="limpar"></div>
-        <div class="box box50">
-            <p class="texto_form">Comprovante de patrimônio gen.e de conhecimento tradicional(SISGEN)</p>
-            <?php
-            if ($resultado['arq_3'] <> '') :
-            ?>
-            <a href="<?= HOME; ?>imagens_site/<?= $resultado['arq_3']; ?>" target="_blank">Ver arquivo</a>
-            <?php
-            else :
-              echo 'Arquivo não enviado';
-            endif;
-            ?>
-        </div>
-        <div class="box box50">
-            <p class="texto_form">Autorização pelo sisbio de coleta de material biológico(Obrigatório)</p>
-            <?php
-            if ($resultado['arq_4'] <> '') :
-            ?>
-            <a href="<?= HOME; ?>imagens_site/<?= $resultado['arq_4']; ?>" target="_blank">Ver arquivo</a>
-            <?php
-            else :
-              echo 'Arquivo não enviado';
-            endif;
-            ?>
-        </div>
-        <div class="limpar"></div>
-        <div class="box box50">
-            <p class="texto_form">Currículo na plataforma Lattes do CNPq(Obrigatório)</p>
-            <?php
-            if ($resultado['arq_5'] <> '') :
-            ?>
-            <a href="<?= HOME; ?>imagens_site/<?= $resultado['arq_5']; ?>" target="_blank">Ver arquivo</a>
-            <?php
-            else :
-              echo 'Arquivo não enviado';
-            endif;
-            ?>
-        </div>
-        <div class="box box50">
-            <p class="texto_form">Cadastros atualizados do orientador no banco da FAPEAM(Obrigatório)</p>
-            <?php
-            if ($resultado['arq_6'] <> '') :
-            ?>
-            <a href="<?= HOME; ?>imagens_site/<?= $resultado['arq_6']; ?>" target="_blank">Ver arquivo</a>
-            <?php
-            else :
-              echo 'Arquivo não enviado';
-            endif;
-            ?>
-        </div>
-        <div class="limpar"></div>
-        <div class="box box50">
-            <p class="texto_form">Cadastro do orientador em grupo de pesquisa ILMD(Obrigatório)</p>
-            <?php
-            if ($resultado['arq_7'] <> '') :
-            ?>
-            <a href="<?= HOME; ?>imagens_site/<?= $resultado['arq_7']; ?>" target="_blank">Ver arquivo</a>
-            <?php
-            else :
-              echo 'Arquivo não enviado';
-            endif;
-            ?>
-        </div>
-        <div class="box box50">
-            <p class="texto_form">Declaração de participação na orientação(Obrigatório)</p>
-            <?php
-            if ($resultado['arq_8'] <> '') :
-            ?>
-            <a href="<?= HOME; ?>imagens_site/<?= $resultado['arq_8']; ?>" target="_blank">Ver arquivo</a>
-            <?php
-            else :
-              echo 'Arquivo não enviado';
-            endif;
-            ?>
-        </div>
-        <div class="limpar"></div>
-        <div class="box box50">
-            <p class="texto_form">Avaliação do orientador(no caso de renovação assinada), assinada(Obrigatório)</p>
-            <?php
-            if ($resultado['arq_9'] <> '') :
-            ?>
-            <a href="<?= HOME; ?>imagens_site/<?= $resultado['arq_9']; ?>" target="_blank">Ver arquivo</a>
-            <?php
-            else :
-              echo 'Arquivo não enviado';
-            endif;
-            ?>
-        </div>
-
-        <div class="limpar"></div>
-        <br><br>
-        <button class="btn btn_green fl-left" style="font-size: 0.8em; margin-right: 1%;">
-            <figure class="icon-pencil-square-o" style="margin-top: -4%;"></figure> Alterar
-        </button>
-    </div>
-
-    <div class="limpar"></div>
-    <br>
-    <input type="hidden" name="id" value="<?= $resultado['id']; ?>" />
-    <input type="hidden" name="acao" value="editar_orientador" />
-    <span class="carregando2 ds-none"><img src="<?= HOME; ?>imagens_fixas/carregando2.gif" /></span>
-
-    <div class="limpar"></div>
-</form>
-<?php
-      break;
-    case 'editar_orientador':
-
-      $c['nome'] = $_POST['nome'];
-      $email = $_POST['email'];
-      $c['cpf'] = $_POST['cpf'];
-      $c['ilmd'] = $_POST['ilmd'];
-      $c['senha'] = $_POST['senha'];
-      $id = $_POST['id'];
-
-      //VERICIAR CAMPOS VAZIOS
-      if (in_array('', $c)) :
-        echo '3';
-      else :
-
-        //VERIFICANDO SE JÁ ESTA CADASTRADO
-        $igual = new Read;
-        $igual->ExeRead('orientador', 'WHERE id = :id', "id=" . $id . "");
-        foreach ($igual->getResult() as $resultado);
-
-        $dados = array(
-          "nome" => $c['nome'],
-          "ilmd" => $c['ilmd'],
-          "cpf" => $c['cpf'],
-          "email" => $email,
-          "senha" => $c['senha'],
-        );
-        $updade = new Update;
-        $updade->ExeUpdate('orientador', $dados, "WHERE id = :id", "id=" . $id . "");
-        if ($updade->getResult()) :
-          echo '1';
-        else :
-          echo '2';
-        endif;
-      endif;
-      break;
-
-    case 'del_orientador':
-      $c['id'] = $_POST['del'];
-      if (in_array('', $c)) :
-        echo '3';
-      else :
-
-        $Dados = [
-          'status' => '3',
-        ];
-
-        $updade = new Update;
-        $updade->ExeUpdate('orientador', $Dados, "WHERE id = :id", "id=" . $c['id'] . "");
-        if ($updade->getResult()) :
-          echo '1';
-        else :
-          echo '2';
-        endif;
-      endif;
-      break;
-
-
-    case 'alterar_orientador':
-      $c['nome'] = $_POST['nome'];
-      $c['ilmd'] = $_POST['ilmd'];
-      $c['cpf'] = $_POST['cpf'];
-      $c['id'] = $_POST['id'];
-      $c['email'] = $_POST['email'];
-      $c['senha'] = $_POST['senha'];
-
-      $ultimo = new Read;
-      $ultimo->ExeRead('orientador', "WHERE id = :id", 'id=' . $c['id'] . '');
-      foreach ($ultimo->getResult() as $resultado);
-
-      if (isset($_FILES['user_thumb'])) :
-        if ($_FILES['user_thumb']['type'] == 'application/pdf') :
-        else :
-          echo '11';
-          exit();
-          break;
-        endif;
-
-        $upload = new Upload('../imagens_site/');
-        $upload->File($_FILES['user_thumb'], md5($dataHora . 'user_thumb'), 'arquivos');
-        $foto = $upload->getResult();
-      else :
-        $foto = $resultado["arq_1"];
-      endif;
-
-
-      if (isset($_FILES['user_thumb2'])) :
-
-        if ($_FILES['user_thumb2']['type'] == 'application/pdf') :
-        else :
-          echo '11';
-          exit();
-          break;
-        endif;
-
-        $upload = new Upload('../imagens_site/');
-        $upload->File($_FILES['user_thumb2'], md5($dataHora . 'user_thumb2'), 'arquivos');
-        $foto2 = $upload->getResult();
-      else :
-        $foto2 = $resultado["arq_2"];
-      endif;
-
-      if (isset($_FILES['user_thumb3'])) :
-
-        if ($_FILES['user_thumb3']['type'] == 'application/pdf') :
-        else :
-          echo '11';
-          exit();
-          break;
-        endif;
-
-        $upload = new Upload('../imagens_site/');
-        $upload->File($_FILES['user_thumb3'], md5($dataHora . 'user_thumb3'), 'arquivos');
-        $foto3 = $upload->getResult();
-      else :
-        $foto3 = $resultado["arq_3"];
-      endif;
-
-      if (isset($_FILES['user_thumb4'])) :
-
-        if ($_FILES['user_thumb4']['type'] == 'application/pdf') :
-        else :
-          echo '11';
-          exit();
-          break;
-        endif;
-
-        $upload = new Upload('../imagens_site/');
-        $upload->File($_FILES['user_thumb4'], md5($dataHora . 'user_thumb4'), 'arquivos');
-        $foto4 = $upload->getResult();
-      else :
-        $foto4 = $resultado["arq_4"];
-      endif;
-
-      if (isset($_FILES['user_thumb5'])) :
-
-        if ($_FILES['user_thumb5']['type'] == 'application/pdf') :
-        else :
-          echo '11';
-          exit();
-          break;
-        endif;
-
-        $upload = new Upload('../imagens_site/');
-        $upload->File($_FILES['user_thumb5'], md5($dataHora . 'user_thumb5'), 'arquivos');
-        $foto5 = $upload->getResult();
-      else :
-        $foto5 = $resultado["arq_5"];
-      endif;
-
-      if (isset($_FILES['user_thumb6'])) :
-
-        if ($_FILES['user_thumb6']['type'] == 'application/pdf') :
-        else :
-          echo '11';
-          exit();
-          break;
-        endif;
-
-        $upload = new Upload('../imagens_site/');
-        $upload->File($_FILES['user_thumb6'], md5($dataHora . 'user_thumb6'), 'arquivos');
-        $foto6 = $upload->getResult();
-      else :
-        $foto6 = $resultado["arq_6"];
-      endif;
-
-      if (isset($_FILES['user_thumb7'])) :
-
-        if ($_FILES['user_thumb7']['type'] == 'application/pdf') :
-        else :
-          echo '11';
-          exit();
-          break;
-        endif;
-
-        $upload = new Upload('../imagens_site/');
-        $upload->File($_FILES['user_thumb7'], md5($dataHora . 'user_thumb7'), 'arquivos');
-        $foto7 = $upload->getResult();
-      else :
-        $foto7 = $resultado["arq_7"];
-      endif;
-
-      if (isset($_FILES['user_thumb8'])) :
-
-        if ($_FILES['user_thumb8']['type'] == 'application/pdf') :
-        else :
-          echo '11';
-          exit();
-          break;
-        endif;
-
-        $upload = new Upload('../imagens_site/');
-        $upload->File($_FILES['user_thumb8'], md5($dataHora . 'user_thumb8'), 'arquivos');
-        $foto8 = $upload->getResult();
-      else :
-        $foto8 = $resultado["arq_8"];
-      endif;
-
-      // if (isset($_FILES['user_thumb9'])) :   
-      // $upload = new Upload('../imagens_site/');
-      // $upload->File($_FILES['user_thumb9'], md5($dataHora . 'user_thumb9'), 'arquivos');
-      //$foto9 = $upload->getResult();
-      // else :
-      // $foto9 = $resultado["arq_9"];
-      //endif;
-
-      $dados = array(
-        "nome" => $c['nome'],
-        "ilmd" => $c['ilmd'],
-        "cpf" => $c['cpf'],
-        "email" => $c['email'],
-        "senha" => $c['senha'],
-        "arq_1" => $foto,
-        "arq_2" => $foto2,
-        "arq_3" => $foto3,
-        "arq_4" => $foto4,
-        "arq_5" => $foto5,
-        "arq_6" => $foto6,
-        "arq_7" => $foto7,
-        "arq_8" => $foto8,
-        //"arq_9" => $foto9,
-      );
-      $updade = new Update;
-      $updade->ExeUpdate('orientador', $dados, "WHERE id = :id", "id=" . $c['id'] . "");
-      if ($updade->getResult()) :
-        echo '1';
-      else :
-        echo '2';
-      endif;
-
-      break;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    case 'cad_alunos':
+      //=============================================================================================================================== 
+        
+        case 'cad_alunoz':
       $c['nome'] = $_POST['nome'];
       $c['curso'] = $_POST['curso']; //Nome do tecnico
         include "conexao.php";
@@ -5996,779 +5263,132 @@ switch ($_POST['acao']) {
       //  endif;
       endif;
       break;
-    case 'ex_aluno':
-      $c['id'] = $_POST['del'];
+        
+        
+    case 'cad_tecnico':
 
-      if (in_array('', $c)) {
-        echo '3';
-      } else {
-        $Dados = [
-          'status' => '2',
-        ];
-
-        $updade = new Update;
-        $updade->ExeUpdate('aluno', $Dados, "WHERE id = :id", "id=" . $c['id'] . "");
-        if ($updade->getResult()) :
-          echo '1';
-        else :
-          echo '2';
-        endif;
-      }
-      break;
-    case 'id_aluno_alt':
-      $c['id'] = $_POST['id'];
-
-      $ultimo = new Read;
-      $ultimo->ExeRead('aluno', "WHERE id = :id", 'id=' . $c['id'] . '');
-      foreach ($ultimo->getResult() as $resultado);
-    ?>
-<script>
-    $("#mascara_cpf").mask("999.999.999-99");
-    $("select").select2();
-
-</script>
-<form class="form_linha" method="post" name="editar_aluno" enctype="multipart/form-data">
-    <h1 class="topo_modal">Alterar informações do aluno</h1>
-    <div class="box box100">
-        <div class="box box100">
-            <div class="box box33">
-                <p class="texto_form">Nome completo do estudante (obrigatório)</p>
-                <input name="nome" type="text" required placeholder="Nome completo" value="<?= $resultado['nome']; ?>" style=" width: 100%;" />
-            </div>
-            <div class="box box33">
-                <p class="texto_form">Curso (obrigatório)</p>
-                <input name="curso" type="text" required placeholder="Curso" value="<?= $resultado['curso']; ?>" style=" width: 100%;" />
-            </div>
-            <div class="box box33 no-margim">
-                <p class="texto_form">Instituição de ensino (obrigatório)</p>
-                <input name="faculdade" type="text" required placeholder="Instituição de ensino" value="<?= $resultado['faculdade']; ?>" style=" width: 100%;" />
-            </div>
-            <div class="limpar"></div>
-
-            <div class="box box33">
-                <p class="texto_form">CPF (obrigatório)</p>
-                <input name="cpf" type="text" placeholder="CPF" autocomplete="off" value="<?= $resultado['cpf']; ?>" style=" width: 100%;" id="mascara_cpf" />
-            </div>
-            <div class="box box33">
-                <p class="texto_form">Coeficiente de Rendimento(CR)</p>
-                <input name="cr" type="text" placeholder="Coeficiente de Rendimento(CR)" value="<?= $resultado['cr']; ?>" id="" style=" width: 100%;" />
-            </div>
-            <div class="box box33 no-margim seleciomne">
-                <p class="texto_form">Tipo</p>
-                <select class="seletipo2" name="tipo" style=" width: 100%;">
-                    <option <?= ($resultado['tipo'] == "1" ? "selected" : ""); ?> value="1">Aluno Novo</option>
-                    <option <?= ($resultado['tipo'] == "2" ? "selected" : ""); ?> value="2">Renovação</option>
-                </select>
-            </div>
-            <div class="limpar"></div>
-            <?php
-            if ($resultado['tipo'] == '2') :
-            ?>
-            <div class="forms_exta ds-none" style=" width: 100%; padding: 2%; background: #f1f1f1; border: 0.9% solid #333;">
-
-                <h1 style=" text-align: left; font-size: 1.4em; margin-bottom: 2%">Informações extras para renovação </h1>
-                <div class="box box50">
-                    <p class="texto_form">Comprovante de patrimônio genético e de conhecimento tradicional(SISGEN)</p>
-                    <input type="file" name="arq_ori1" class="" style="display: block; width: 100%; border: 1px solid #b1b1b1; padding: 1%" />
-                    <?php if ($resultado["arq_ori1"] == "") : ?>
-                    <p class="texto_form" style=" color: red">Arquivo não enviado</p>
-                    <?php else : ?>
-                    <a href="<?= HOME; ?>imagens_site/<?= $resultado["arq_ori1"]; ?>" style=" color: black" target="_blank">Verificar arquivo</a>
-                    <?php endif; ?>
-                </div>
-                <div class="box box50 no-margim">
-                    <p class="texto_form">Parecer/protocolo do comitê de ética(CEP)</p>
-                    <input type="file" name="arq_ori2" class="" style="display: block; width: 100%; border: 1px solid #b1b1b1; padding: 1%" />
-                    <?php if ($resultado["arq_ori2"] == "") : ?>
-                    <p class="texto_form" style=" color: red">Arquivo não enviado</p>
-                    <?php else : ?>
-                    <a href="<?= HOME; ?>imagens_site/<?= $resultado["arq_ori2"]; ?>" style=" color: black" target="_blank">Verificar arquivo</a>
-                    <?php endif; ?>
-                </div>
-            </div>
-            <div class="box box50">
-                <p class="texto_form">Autorização pelo SISBIO de coleta de material biolôgico</p>
-                <input type="file" name="arq_ori3" class="" style="display: block; width: 100%; border: 1px solid #b1b1b1; padding: 1%" />
-                <?php if ($resultado["arq_ori3"] == "") : ?>
-                <p class="texto_form" style=" color: red">Arquivo não enviado</p>
-                <?php else : ?>
-                <a href="<?= HOME; ?>imagens_site/<?= $resultado["arq_ori3"]; ?>" style=" color: black" target="_blank">Verificar arquivo</a>
-                <?php endif; ?>
-            </div>
-            <div class="box box50 no-margim">
-                <p class="texto_form">Avaliação do orientador(no caso de renovação), assinada (obrigatório)</p>
-                <!-- <label class="label_file" for='selecao-arquivo2'>Selecionar um arquivo</label> -->
-                <input id='' type="file" name="arq_ori4" class="" style=" display: block; width: 100%; border: 1px solid #b1b1b1; padding: 1%" />
-                <div class="limpar"></div>
-                <?php if ($usuario_["arq_ori4"] == "") : ?>
-                <p class="texto_form" style=" color: red">Arquivo não enviado</p>
-                <?php else : ?>
-                <a href="<?= HOME; ?>imagens_site/<?= $usuario_["arq_ori4"]; ?>" style=" color: black" target="_blank">Verificar arquivo</a>
-                <?php endif; ?>
-            </div>
-
-            <div class="limpar"></div>
-        </div>
-        <?php
-            else :
-        ?>
-        <div class="forms_exta ds-none" style=" width: 100%; padding: 2%; background: #f1f1f1; border: 0.9% solid #333;">
-
-        </div>
-        <?php
-            endif;
-        ?>
-        <div class="limpar"></div>
-        <div class="box box50">
-            <p class="texto_form">Projeto do aluno detalhado (obrigatório)</p>
-            <!-- <label class="label_file" for='selecao-arquivo2'>Selecionar um arquivo</label> -->
-            <input id='' type="file" name="user_thumb" class="" style=" display: block; width: 100%; border: 1px solid #b1b1b1; padding: 1%" />
-            <div class="limpar"></div>
-            <?php if ($resultado["arq_1"] == "") : ?>
-            <p class="texto_form" style=" color: red">Arquivo não enviado</p>
-            <?php else : ?>
-            <a href="<?= HOME; ?>imagens_site/<?= $resultado["arq_1"]; ?>" style=" color: black" target="_blank">Verificar arquivo</a>
-            <?php endif; ?>
-        </div>
-        <div class="box box50 no-margim">
-            <p class="texto_form">Currículo na plataforma Lattes do CNPq (obrigatório)</p>
-            <!-- <label class="label_file" for='selecao-arquivo2'>Selecionar um arquivo</label> -->
-            <input id='' type="file" name="user_thumb2" class="" style=" display: block; width: 100%; border: 1px solid #b1b1b1; padding: 1%" />
-            <div class="limpar"></div>
-            <?php if ($resultado["arq_2"] == "") : ?>
-            <p class="texto_form" style=" color: red">Arquivo não enviado</p>
-            <?php else : ?>
-            <a href="<?= HOME; ?>imagens_site/<?= $resultado["arq_2"]; ?>" style=" color: black" target="_blank">Verificar arquivo</a>
-            <?php endif; ?>
-        </div>
-        <div class="limpar"></div>
-
-        <div class="box box50">
-            <p class="texto_form">Cadastro atualizado do candidato no bando de pesquisa da FAPEAM (obrigatório)</p>
-            <!-- <label class="label_file" for='selecao-arquivo2'>Selecionar um arquivo</label> -->
-            <input id='' type="file" name="user_thumb3" class="" style=" display: block; width: 100%; border: 1px solid #b1b1b1; padding: 1%" />
-            <div class="limpar"></div>
-            <?php if ($resultado["arq_3"] == "") : ?>
-            <p class="texto_form" style=" color: red">Arquivo não enviado</p>
-            <?php else : ?>
-            <a href="<?= HOME; ?>imagens_site/<?= $resultado["arq_3"]; ?>" style=" color: black" target="_blank">Verificar arquivo</a>
-            <?php endif; ?>
-        </div>
-        <div class="box box50 no-margim">
-            <p class="texto_form">História escolar de graduação atualização (obrigatório)</p>
-            <!-- <label class="label_file" for='selecao-arquivo2'>Selecionar um arquivo</label> -->
-            <input id='' type="file" name="user_thumb4" class="" style=" display: block; width: 100%; border: 1px solid #b1b1b1; padding: 1%" />
-            <div class="limpar"></div>
-            <?php if ($resultado["arq_4"] == "") : ?>
-            <p class="texto_form" style=" color: red">Arquivo não enviado</p>
-            <?php else : ?>
-            <a href="<?= HOME; ?>imagens_site/<?= $resultado["arq_4"]; ?>" style=" color: black" target="_blank">Verificar arquivo</a>
-            <?php endif; ?>
-        </div>
-        <div class="limpar"></div>
-
-        <div class="box box50">
-            <p class="texto_form">Comprovante de matrícula atualizado (obrigatório)</p>
-            <!-- <label class="label_file" for='selecao-arquivo2'>Selecionar um arquivo</label> -->
-            <input id='' type="file" name="user_thumb5" class="" style=" display: block; width: 100%; border: 1px solid #b1b1b1; padding: 1%" />
-            <div class="limpar"></div>
-            <?php if ($resultado["arq_5"] == "") : ?>
-            <p class="texto_form" style=" color: red">Arquivo não enviado</p>
-            <?php else : ?>
-            <a href="<?= HOME; ?>imagens_site/<?= $resultado["arq_5"]; ?>" style=" color: black" target="_blank">Verificar arquivo</a>
-            <?php endif; ?>
-        </div>
-        <div class="box box50 no-margim">
-            <p class="texto_form">Cópia do CPF do candidato (obrigatório)</p>
-            <!-- <label class="label_file" for='selecao-arquivo2'>Selecionar um arquivo</label> -->
-            <input id='' type="file" name="user_thumb6" class="" style=" display: block; width: 100%; border: 1px solid #b1b1b1; padding: 1%" />
-            <div class="limpar"></div>
-            <?php if ($resultado["arq_6"] == "") : ?>
-            <p class="texto_form" style=" color: red">Arquivo não enviado</p>
-            <?php else : ?>
-            <a href="<?= HOME; ?>imagens_site/<?= $resultado["arq_6"]; ?>" style=" color: black" target="_blank">Verificar arquivo</a>
-            <?php endif; ?>
-        </div>
-        <div class="limpar"></div>
-
-        <div class="box box50">
-            <p class="texto_form">Cópia da carteira de indentidade do candidato (obrigatório)</p>
-            <!-- <label class="label_file" for='selecao-arquivo2'>Selecionar um arquivo</label> -->
-            <input id='' type="file" name="user_thumb7" class="" style=" display: block; width: 100%; border: 1px solid #b1b1b1; padding: 1%" />
-            <div class="limpar"></div>
-            <?php if ($resultado["arq_7"] == "") : ?>
-            <p class="texto_form" style=" color: red">Arquivo não enviado</p>
-            <?php else : ?>
-            <a href="<?= HOME; ?>imagens_site/<?= $resultado["arq_7"]; ?>" style=" color: black" target="_blank">Verificar arquivo</a>
-            <?php endif; ?>
-        </div>
-        <div class="box box50 no-margim">
-            <p class="texto_form">Cópia do comprovante de residencia do candidato (obrigatório)</p>
-            <!-- <label class="label_file" for='selecao-arquivo2'>Selecionar um arquivo</label> -->
-            <input id='' type="file" name="user_thumb8" class="" style=" display: block; width: 100%; border: 1px solid #b1b1b1; padding: 1%" />
-            <div class="limpar"></div>
-            <?php if ($resultado["arq_8"] == "") : ?>
-            <p class="texto_form" style=" color: red">Arquivo não enviado</p>
-            <?php else : ?>
-            <a href="<?= HOME; ?>imagens_site/<?= $resultado["arq_8"]; ?>" style=" color: black" target="_blank">Verificar arquivo</a>
-            <?php endif; ?>
-        </div>
-        <div class="box box50">
-            <p class="texto_form">Declaração negativa de vinculo empregaticio (obrigatório)</p>
-            <!-- <label class="label_file" for='selecao-arquivo2'>Selecionar um arquivo</label> -->
-            <input id='' type="file" name="user_thumb9" class="" style=" display: block; width: 100%; border: 1px solid #b1b1b1; padding: 1%" />
-            <div class="limpar"></div>
-            <?php if ($resultado["arq_9"] == "") : ?>
-            <p class="texto_form" style=" color: red">Arquivo não enviado</p>
-            <?php else : ?>
-            <a href="<?= HOME; ?>imagens_site/<?= $resultado["arq_9"]; ?>" style=" color: black" target="_blank">Verificar arquivo</a>
-            <?php endif; ?>
-        </div>
-        <div class="limpar"></div>
-    </div>
-
-    <div class="limpar"></div>
-    <br>
-    <input type="hidden" name="id" value="<?= $resultado['id']; ?>" />
-    <input type="hidden" name="acao" value="editar_aluno" />
-    <span class="carregando2 ds-none"><img src="<?= HOME; ?>imagens_fixas/carregando2.gif" /></span>
-    <button class="btn btn_green fl-left" style="font-size: 0.8em; margin-right: 1%; width: 9%;">
-        <figure class="icon-pencil-square-o" style="margin-top: -4%;"></figure> Alterar
-    </button>
-    <div class="limpar"></div>
-</form>
-<?php
-      break;
-
-    case 'ver_cadastro':
-      $c['id'] = $_POST['id'];
-
-      $ultimo = new Read;
-      $ultimo->ExeRead('aluno', "WHERE id = :id", 'id=' . $c['id'] . '');
-      foreach ($ultimo->getResult() as $resultado);
-    ?>
-
-<form class="form_linha" method="post" name="editar_aluno" enctype="multipart/form-data">
-    <h1 class="topo_modal">Informações do Projeto</h1>
-    <div class="box box100">
-        <div class="box box100">
-            <div class="box box33">
-                <p class="texto_form">Projeto</p>
-                <?= $resultado['nome']; ?>
-            </div>
-            <div class="box box33">
-                <p class="texto_form">Responsável</p>
-                <?= $resultado['curso']; ?>
-            </div>
-            <div class="box box33 no-margim">
-                <p class="texto_form">Expertise</p>
-                <?= $resultado['faculdade']; ?>
-            </div>
-            <div class="limpar"></div>
-
-            <div class="box box33">
-                <p class="texto_form">Matricula</p>
-                <?= $resultado['cpf']; ?>
-            </div>
-            <div class="box box33">
-                <p class="texto_form">Andamento</p>
-                <?= $resultado['cr']; ?>
-            </div>
-            <div class="box box33 no-margim seleciomne">
-                <p class="texto_form">Tipo</p>
-                <?= $resultado['tipo']; ?>
-            </div>
-            <div class="limpar"></div>
-            <br>
-            <?php
-            if ($resultado['tipo'] == '2') :
-            ?>
-
-            <div class="forms_exta ds-none" style=" width: 100%; padding: 2%; background: #f1f1f1; border: 0.9% solid #333;">
-
-                <h1 style=" text-align: left; font-size: 1.4em; margin-bottom: 2%">Informações extras para renovação </h1>
-                <div class="box box100">
-                    <p class="texto_form">Avaliação do orientador(no caso de renovação), assinada (obrigatório)</p>
-                    <div class="limpar"></div>
-                    <?php if ($resultado["arq_ori4"] == "") : ?>
-                    <p class="texto_form" style=" color: red">Arquivo não enviado!</p>
-                    <?php else : ?>
-                    <a href="<?= HOME; ?>imagens_site/<?= $resultado["arq_ori4"]; ?>" style=" color: red" target="_blank">Verificar arquivo!</a>
-                    <?php endif; ?>
-                </div>
-
-
-                <div class="limpar"></div>
-
-
-            </div>
-            <?php
-            else :
-        ?>
-            <div class="forms_exta ds-none" style=" width: 100%; padding: 2%; background: #f1f1f1; border: 0.9% solid #333;">
-
-            </div>
-            <?php
-            endif;
-        $dataentrega = new DateTime($resultado['entrega']);
-        ?>
-            <div class="box box33 no-margim seleciomne">
-                <p class="texto_form">Entrega</p>
-                <?= $dataentrega->format('d/m/Y'); ?>
-            </div>
-
-            <div class="limpar"></div>
-            <!--cordenador-->
-            <div class="box box50">
-                <h1 class="topo_modal" style=" background: #1753ea;">Anéxos</h1>
-                <div class="box box100">
-                    <p class="texto_form">Informação Anéxada <font color=red>*</font>
-                    </p>
-                    <?php if ($resultado["arq_ori5"] == "") : ?>
-                    <p class="texto_form" style=" color: red">Arquivo não enviado!</p>
-                    <?php else : ?>
-                    <a href="<?= HOME; ?>imagens_site/<?= $resultado["arq_ori5"]; ?>" style=" color: red" target="_blank">Verificar arquivo!</a>
-                    <?php endif; ?>
-                </div>
-
-                <div class="box box100" hidden>
-                    <p class="texto_form">Parecer/protocolo do Comitê de Ética (CEP) <font color=red>*</font>
-                    </p>
-                    <?php if ($resultado["arq_ori6"] == "") : ?>
-                    <p class="texto_form" style=" color: red">Arquivo não enviado!</p>
-                    <?php else : ?>
-                    <a href="<?= HOME; ?>imagens_site/<?= $resultado["arq_ori6"]; ?>" style=" color: red" target="_blank">Verificar arquivo!</a>
-                    <?php endif; ?>
-                </div>
-
-                <div class="box box100" hidden>
-                    <p class="texto_form">Comprovante de patrimônio Genético e de conhecimento tradicional (SISGEN) </p>
-                    <?php if ($resultado["arq_ori7"] == "") : ?>
-                    <p class="texto_form" style=" color: red">Arquivo não enviado!</p>
-                    <?php else : ?>
-                    <a href="<?= HOME; ?>imagens_site/<?= $resultado["arq_ori7"]; ?>" style=" color: red" target="_blank">Verificar arquivo!</a>
-                    <?php endif; ?>
-                </div>
-
-                <div class="box box100" hidden>
-                    <p class="texto_form">Autorização pelo SISBIO de coleta de material biológico <font color=red>*</font>
-                    </p>
-                    <?php if ($resultado["arq_ori8"] == "") : ?>
-                    <p class="texto_form" style=" color: red">Arquivo não enviado!</p>
-                    <?php else : ?>
-                    <a href="<?= HOME; ?>imagens_site/<?= $resultado["arq_ori8"]; ?>" style=" color: red" target="_blank">Verificar arquivo!</a>
-                    <?php endif; ?>
-                </div>
-
-                <div class="box box100" hidden>
-                    <p class="texto_form">Currículo na plataforma Lattes do CNPQ <font color=red>*</font>
-                    </p>
-                    <?php if ($resultado["arq_ori9"] == "") : ?>
-                    <p class="texto_form" style=" color: red">Arquivo não enviado!</p>
-                    <?php else : ?>
-                    <a href="<?= HOME; ?>imagens_site/<?= $resultado["arq_ori9"]; ?>" style=" color: red" target="_blank">Verificar arquivo!</a>
-                    <?php endif; ?>
-                </div>
-
-                <div class="box box100" hidden>
-                    <p class="texto_form">Cadastro atualizado no banco de pesquisa da FAPEAM <font color=red>*</font>
-                    </p>
-                    <?php if ($resultado["arq_ori10"] == "") : ?>
-                    <p class="texto_form" style=" color: red">Arquivo não enviado!</p>
-                    <?php else : ?>
-                    <a href="<?= HOME; ?>imagens_site/<?= $resultado["arq_ori10"]; ?>" style=" color: red" target="_blank">Verificar arquivo!</a>
-                    <?php endif; ?>
-                </div>
-
-                <div class="box box100" hidden>
-                    <p class="texto_form">Cadastro do orientador em grupo de pesquisa do ILMD <font color=red>*</font>
-                    </p>
-                    <?php if ($resultado["arq_ori11"] == "") : ?>
-                    <p class="texto_form" style=" color: red">Arquivo não enviado!</p>
-                    <?php else : ?>
-                    <a href="<?= HOME; ?>imagens_site/<?= $resultado["arq_ori11"]; ?>" style=" color: red" target="_blank">Verificar arquivo!</a>
-                    <?php endif; ?>
-                </div>
-
-                <div class="box box100" hidden>
-                    <p class="texto_form">Declaração de participação na orientação do aluno <font color=red>*</font>
-                    </p>
-                    <?php if ($resultado["arq_ori12"] == "") : ?>
-                    <p class="texto_form" style=" color: red">Arquivo não enviado!</p>
-                    <?php else : ?>
-                    <a href="<?= HOME; ?>imagens_site/<?= $resultado["arq_ori12"]; ?>" style=" color: red" target="_blank">Verificar arquivo!</a>
-                    <?php endif; ?>
-                </div>
-                <div class="limpar"></div>
-            </div>
-            <!-- aluno -->
-            <div class="box box50 no-margim" hidden>
-                <h1 class="topo_modal">Cadastro do Aluno</h1>
-                <div class="box box100">
-                    <p class="texto_form">Projeto de aluno detalhado em .DOC ou DOCX <font color=red>*</font>
-                    </p>
-                    <?php if ($resultado["arq_co3"] == "") : ?>
-                    <p class="texto_form" style=" color: red">Arquivo não enviado!</p>
-                    <?php else : ?>
-                    <a href="<?= HOME; ?>imagens_site/<?= $resultado["arq_co3"]; ?>" style=" color: red" target="_blank">Verificar arquivo!</a>
-                    <?php endif; ?>
-                </div>
-
-                <div class="box box100">
-                    <p class="texto_form">Declaração de responsabilidade na orientação do aluno. <font color=red>*</font>
-                    </p>
-                    <?php if ($resultado["arq_2"] == "") : ?>
-                    <p class="texto_form" style=" color: red">Arquivo não enviado!</p>
-                    <?php else : ?>
-                    <a href="<?= HOME; ?>imagens_site/<?= $resultado["arq_2"]; ?>" style=" color: red" target="_blank">Verificar arquivo!</a>
-                    <?php endif; ?>
-                </div>
-
-                <div class="box box100">
-                    <p class="texto_form">Currículo na plataforma Lattes do CNPQ <font color=red>*</font>
-                    </p>
-                    <?php if ($resultado["arq_co4"] == "") : ?>
-                    <p class="texto_form" style=" color: red">Arquivo não enviado!</p>
-                    <?php else : ?>
-                    <a href="<?= HOME; ?>imagens_site/<?= $resultado["arq_co4"]; ?>" style=" color: red" target="_blank">Verificar arquivo!</a>
-                    <?php endif; ?>
-                </div>
-
-                <div class="box box100">
-                    <p class="texto_form">Cadastro atualizado do candidato no banco de pesquisa da FAPEAM <font color=red>*</font>
-                    </p>
-                    <?php if ($resultado["arq_3"] == "") : ?>
-                    <p class="texto_form" style=" color: red">Arquivo não enviado!</p>
-                    <?php else : ?>
-                    <a href="<?= HOME; ?>imagens_site/<?= $resultado["arq_3"]; ?>" style=" color: red" target="_blank">Verificar arquivo!</a>
-                    <?php endif; ?>
-                </div>
-                <div class="box box100">
-                    <p class="texto_form">Histórico escolar de graduação atualizado <font color=red>*</font>
-                    </p>
-                    <?php if ($resultado["arq_4"] == "") : ?>
-                    <p class="texto_form" style=" color: red">Arquivo não enviado!</p>
-                    <?php else : ?>
-                    <a href="<?= HOME; ?>imagens_site/<?= $resultado["arq_4"]; ?>" style=" color: red" target="_blank">Verificar arquivo!</a>
-                    <?php endif; ?>
-                </div>
-
-                <div class="box box100">
-                    <p class="texto_form">Comprovante de matrícula atualizado <font color=red>*</font>
-                    </p>
-                    <?php if ($resultado["arq_5"] == "") : ?>
-                    <p class="texto_form" style=" color: red">Arquivo não enviado!</p>
-                    <?php else : ?>
-                    <a href="<?= HOME; ?>imagens_site/<?= $resultado["arq_5"]; ?>" style=" color: red" target="_blank">Verificar arquivo!</a>
-                    <?php endif; ?>
-                </div>
-                <div class="box box100">
-                    <p class="texto_form">Cópia do CPF e carteira de identidade do candidato <font color=red>*</font>
-                    </p>
-                    <?php if ($resultado["arq_6"] == "") : ?>
-                    <p class="texto_form" style=" color: red">Arquivo não enviado!</p>
-                    <?php else : ?>
-                    <a href="<?= HOME; ?>imagens_site/<?= $resultado["arq_6"]; ?>" style=" color: red" target="_blank">Verificar arquivo!</a>
-                    <?php endif; ?>
-                </div>
-
-                <!--<div class="box box100">
-            <p class="texto_form">Cópia da carteira de identidade do candidato <font color=red>*</font>
-            </p>
-            <?php //if ($resultado["arq_7"] == "") : ?>
-                  <p class="texto_form" style=" color: red">Arquivo não enviado!</p>
-                <?php //else : ?>
-                  <a href="<?//= HOME; ?>imagens_site/<?//= $resultado["arq_7"]; ?>" style=" color: red" target="_blank">Verificar arquivo!</a>
-                <?php //endif; ?>
-          </div> -->
-
-                <div class="box box100">
-                    <p class="texto_form">Cópia do comprovante de residência do candidato <font color=red>*</font>
-                    </p>
-                    <?php if ($resultado["arq_8"] == "") : ?>
-                    <p class="texto_form" style=" color: red">Arquivo não enviado!</p>
-                    <?php else : ?>
-                    <a href="<?= HOME; ?>imagens_site/<?= $resultado["arq_8"]; ?>" style=" color: red" target="_blank">Verificar arquivo!</a>
-                    <?php endif; ?>
-                </div>
-                <div class="box box100">
-                    <p class="texto_form">Declaração negativa de vínculo empregatício <font color=red>*</font>
-                    </p>
-                    <?php if ($resultado["arq_9"] == "") : ?>
-                    <p class="texto_form" style=" color: red">Arquivo não enviado!</p>
-                    <?php else : ?>
-                    <a href="<?= HOME; ?>imagens_site/<?= $resultado["arq_9"]; ?>" style=" color: red" target="_blank">Verificar arquivo!</a>
-                    <?php endif; ?>
-                </div>
-            </div>
-            <div class="limpar"></div>
-            <br>
-            <!--Co-orientado-->
-            <div class="box box100" hidden>
-                <h1 class="topo_modal" style=" background: #9915a3;">Informações do Co-orientador</h1>
-
-                <div class="box box100">
-                    <p class="texto_form">Nome completo <font color=red>*</font>
-                    </p>
-                    <?php if ($resultado["nome_coorientado"] == "") : ?>
-                    <p class="texto_form" style=" color: red">Não enviado!</p>
-                    <?php else : ?>
-                    <?=$resultado["nome_coorientado"];?>
-                    <?php endif; ?>
-                </div>
-
-                <div class="box box100">
-                    <p class="texto_form">Declaração de partipação na coautoria <font color=red>*</font>
-                    </p>
-                    <?php if ($resultado["arq_co"] == "") : ?>
-                    <p class="texto_form" style=" color: red">Arquivo não enviado!</p>
-                    <?php else : ?>
-                    <a href="<?= HOME; ?>imagens_site/<?= $resultado["arq_co"]; ?>" style=" color: red" target="_blank">Verificar arquivo!</a>
-                    <?php endif; ?>
-                </div>
-
-                <div class="box box100">
-                    <p class="texto_form">Currículo lattes do coautor <font color=red>*</font>
-                    </p>
-                    <?php if ($resultado["arq_co2"] == "") : ?>
-                    <p class="texto_form" style=" color: red">Arquivo não enviado!</p>
-                    <?php else : ?>
-                    <a href="<?= HOME; ?>imagens_site/<?= $resultado["arq_co2"]; ?>" style=" color: red" target="_blank">Verificar arquivo!</a>
-                    <?php endif; ?>
-                </div>
-            </div>
-            <br>
-            <div class="limpar"></div>
-        </div>
-
-        <div class="limpar"></div>
-        <br>
-        <div class="limpar"></div>
-</form>
-<?php
-      break;
-
-
-    case 'editar_aluno':
       $c['nome'] = $_POST['nome'];
-      $c['curso'] = $_POST['curso'];
-      $c['faculdade'] = $_POST['faculdade'];
-      $c['cpf'] = $_POST['cpf'];
+        $c['matricula'] = $_POST['cpf'];
+        $c['email'] = $_POST['email'];
+        $c['expertise'] = $_POST['expertise'];
+      
+      
+        include "conexao.php";
+        
+
+      $opcao = $_POST['opcao'];
+      //$c['email'] = $_POST['email'];
+      //VERICIAR CAMPOS VAZIOS
+      
+        
+        
+
+          $dados = array(
+            "nome" => $c['nome'],
+              "matricula" => $c['matricula'],
+              "email" => $c['email'],
+              "expertise" => $c['expertise'],
+              "rendimento" => "",
+              "mediaproj" => "10",
+              "status" => "1",
+          );
+          $Cadastra = new Create;
+          $Cadastra->ExeCreate('tecnico', $dados);
+          if ($Cadastra->getResult()) :
+            echo '1';
+          else :
+            echo '2';
+          endif;
+        //else :
+         // echo '4';
+      //  endif;
+      endif;
+      break;    
+        
+    case 'cad_orientador':
+
+      $c['nome'] = $_POST['nome'];
+      $c['curso'] = $_POST['curso']; //Nome do tecnico
+        include "conexao.php";
+        $pdo_verifica = $conexao_pdo->prepare("select matricula, expertise from tecnico WHERE nome = '".$_POST['curso']."' ");
+                     $pdo_verifica->execute();
+            while($fetch = $pdo_verifica->fetch()){
+                $c['cpf']= $fetch['matricula'];
+                $c['faculdade']= $fetch['expertise'];
+            }
+      //$c['faculdade'] = $_POST['faculdade']; // Expertise
+      //$c['cpf'] = $_POST['cpf']; //Matricula
       $c['cr'] = $_POST['cr'];
       $c['tipo'] = $_POST['tipo'];
       $c['id'] = $_POST['id'];
+        $c['entrega'] = $_POST['entrega'];
 
-      $ultimo = new Read;
-      $ultimo->ExeRead('aluno', "WHERE id = :id", 'id=' . $c['id'] . '');
-      foreach ($ultimo->getResult() as $resultado);
+      $nomecoo = $_POST['nomecoo'];
 
-      if (isset($_FILES['user_thumb'])) :
-        if ($_FILES['user_thumb']['type'] == 'application/pdf') :
-        else :
-          echo '11';
-          exit();
-          break;
-        endif;
-
-        $upload = new Upload('../imagens_site/');
-        $upload->File($_FILES['user_thumb'], md5($dataHora . 'user_thumb'), 'arquivos');
-        $foto = $upload->getResult();
+      if (isset($_POST['cooo'])) :
+        $cooo = $_POST['cooo'];
       else :
-        $foto = $resultado["arq_1"];
+        $cooo = "";
       endif;
 
-
-      if (isset($_FILES['user_thumb2'])) :
-
-        if ($_FILES['user_thumb2']['type'] == 'application/pdf') :
-        else :
-          echo '11';
-          exit();
-          break;
-        endif;
-
-        $upload = new Upload('../imagens_site/');
-        $upload->File($_FILES['user_thumb2'], md5($dataHora . 'user_thumb2'), 'arquivos');
-        $foto2 = $upload->getResult();
-      else :
-        $foto2 = $resultado["arq_2"];
-      endif;
-
-      if (isset($_FILES['user_thumb3'])) :
-
-        if ($_FILES['user_thumb3']['type'] == 'application/pdf') :
-        else :
-          echo '11';
-          exit();
-          break;
-        endif;
-
-        $upload = new Upload('../imagens_site/');
-        $upload->File($_FILES['user_thumb3'], md5($dataHora . 'user_thumb3'), 'arquivos');
-        $foto3 = $upload->getResult();
-      else :
-        $foto3 = $resultado["arq_3"];
-      endif;
-
-      if (isset($_FILES['user_thumb4'])) :
-
-        if ($_FILES['user_thumb4']['type'] == 'application/pdf') :
-        else :
-          echo '11';
-          exit();
-          break;
-        endif;
-
-        $upload = new Upload('../imagens_site/');
-        $upload->File($_FILES['user_thumb4'], md5($dataHora . 'user_thumb4'), 'arquivos');
-        $foto4 = $upload->getResult();
-      else :
-        $foto4 = $resultado["arq_4"];
-      endif;
-
-      if (isset($_FILES['user_thumb5'])) :
-
-        if ($_FILES['user_thumb5']['type'] == 'application/pdf') :
-        else :
-          echo '11';
-          exit();
-          break;
-        endif;
-
-        $upload = new Upload('../imagens_site/');
-        $upload->File($_FILES['user_thumb5'], md5($dataHora . 'user_thumb5'), 'arquivos');
-        $foto5 = $upload->getResult();
-      else :
-        $foto5 = $resultado["arq_5"];
-      endif;
-
-      if (isset($_FILES['user_thumb6'])) :
-
-        if ($_FILES['user_thumb6']['type'] == 'application/pdf') :
-        else :
-          echo '11';
-          exit();
-          break;
-        endif;
-
-        $upload = new Upload('../imagens_site/');
-        $upload->File($_FILES['user_thumb6'], md5($dataHora . 'user_thumb6'), 'arquivos');
-        $foto6 = $upload->getResult();
-      else :
-        $foto6 = $resultado["arq_6"];
-      endif;
-
-      if (isset($_FILES['user_thumb7'])) :
-
-        if ($_FILES['user_thumb7']['type'] == 'application/pdf') :
-        else :
-          echo '11';
-          exit();
-          break;
-        endif;
-
-        $upload = new Upload('../imagens_site/');
-        $upload->File($_FILES['user_thumb7'], md5($dataHora . 'user_thumb7'), 'arquivos');
-        $foto7 = $upload->getResult();
-      else :
-        $foto7 = $resultado["arq_7"];
-      endif;
-
-      if (isset($_FILES['user_thumb8'])) :
-
-        if ($_FILES['user_thumb8']['type'] == 'application/pdf') :
-        else :
-          echo '11';
-          exit();
-          break;
-        endif;
-
-        $upload = new Upload('../imagens_site/');
-        $upload->File($_FILES['user_thumb8'], md5($dataHora . 'user_thumb8'), 'arquivos');
-        $foto8 = $upload->getResult();
-      else :
-        $foto8 = $resultado["arq_8"];
-      endif;
-
-      if (isset($_FILES['user_thumb9'])) :
-
-        // if ($_FILES['user_thumb9']['type'] == 'application/pdf') :
-        // else :
-        //   echo '11';
-        //   exit();
-        //   break;
-        // endif;
-
-        $upload = new Upload('../imagens_site/');
-        $upload->File($_FILES['user_thumb9'], md5($dataHora . 'user_thumb9'), 'arquivos');
-        $foto9 = $upload->getResult();
-      else :
-        $foto9 = $resultado["arq_9"];
-      endif;
-
-      $dados = array(
-        // "id_orientador" => $c['id'],
-        // "id_co_orientador" => "",
-        "nome" => $c['nome'],
-        "curso" => $c['curso'],
-        "faculdade" => $c['faculdade'],
-        "cpf" => $c['cpf'],
-        "cr" => $c['cr'],
-        "tipo" => $c['tipo'],
-        "arq_1" => $foto,
-        "arq_2" => $foto2,
-        "arq_3" => $foto3,
-        "arq_4" => $foto4,
-        "arq_5" => $foto5,
-        "arq_6" => $foto6,
-        "arq_7" => $foto7,
-        "arq_8" => $foto8,
-        "arq_9" => $foto9,
-        //"data" => $dataStamp2,
-        //"hora" => $hora,
-        //"status" => '1',
-      );
-      $updade = new Update;
-      $updade->ExeUpdate('aluno', $dados, "WHERE id = :id", "id=" . $c['id'] . "");
-      if ($updade->getResult()) :
-        echo '1';
-      else :
-        echo '2';
-      endif;
-
-      break;
-
-
-    case 'cad_coorientador':
-      $nome = $_POST['nome'];
-      $c['id'] = $_POST['id'];
-      $cooo = $_POST['id'];
+      $opcao = $_POST['opcao'];
       //$c['email'] = $_POST['email'];
       //VERICIAR CAMPOS VAZIOS
       if (in_array('', $c)) :
         echo '3';
       else :
 
-        //VERIFICANDO SE JÁ ESTA CADASTRADO
-        $igual = new Read;
-        $igual->ExeRead('co_orientador', 'WHERE id_aluno = :id2 and status = 1', "id2=" . $c['id'] . "");
-        if (!$igual->getRowCount() >= 1) :
+        $upload = new Upload('../imagens_site/');
 
+        //VERIFICANDO SE JÁ ESTA CADASTRADO
+        // $igual = new Read;
+        // $igual->ExeRead('aluno', 'WHERE cpf = :id and nome = :id2 and status = 1', "id=" . $c['cpf'] . "&id2=" . $c['nome'] . "");
+        // if (!$igual->getRowCount() >= 1) :
 
           if (isset($_FILES['user_thumb'])) :
-            if ($_FILES['user_thumb']['type'] == 'application/pdf') :
-            else :
-              echo '11';
-              exit();
-              break;
-            endif;
-
             $upload = new Upload('../imagens_site/');
             $upload->File($_FILES['user_thumb'], md5($dataHora . 'user_thumb'), 'arquivos');
             $foto = $upload->getResult();
           else :
             $foto = "";
           endif;
+
+
+        //print_r($_FILES['envio_01']);
+
+        if (isset($_FILES['enviando'])) :
+
+          //print_r($_FILES['enviando']);
+
+            if ($_FILES['enviando']['type'] == 'application/pdf') :
+            else :
+              echo '11';
+              exit();
+              break;
+            endif;
+            //$upload = new Upload('../imagens_site/');
+            $upload->File($_FILES['enviando'], md5($dataHora . 'enviando'), 'arquivos');
+            $foto19 = $upload->getResult();
+          else :
+            $foto19 = "";
+          endif;
+
+//print_r($_FILES['envio_02']);
+
+        if (isset($_FILES['envio_02'])) :
+          //print_r($_FILES['envio_02']);
+          if ($_FILES['envio_02']['type'] == 'application/pdf') :
+          else :
+            echo '11';
+            exit();
+            break;
+          endif;
+          //$upload = new Upload('../imagens_site/');
+          $upload->File($_FILES['envio_02'], md5($dataHora . 'envio_02'), 'arquivos');
+          $foto21 = $upload->getResult();
+        else :
+          $foto21 = "";
+        endif;
 
 
           if (isset($_FILES['user_thumb2'])) :
@@ -6780,32 +5400,516 @@ switch ($_POST['acao']) {
               break;
             endif;
 
-            $upload = new Upload('../imagens_site/');
+            //$upload = new Upload('../imagens_site/');
             $upload->File($_FILES['user_thumb2'], md5($dataHora . 'user_thumb2'), 'arquivos');
             $foto2 = $upload->getResult();
           else :
             $foto2 = "";
           endif;
 
-          $Dados = [
-            'block' => '1',
-          ];
+          if (isset($_FILES['user_thumb3'])) :
 
-          $updade = new Update;
-          $updade->ExeUpdate('aluno', $Dados, "WHERE id = :id", "id=" . $c['id'] . "");
+            if ($_FILES['user_thumb3']['type'] == 'application/pdf') :
+            else :
+              echo '11';
+              exit();
+              break;
+            endif;
+
+            //$upload = new Upload('../imagens_site/');
+            $upload->File($_FILES['user_thumb3'], md5($dataHora . 'user_thumb3'), 'arquivos');
+            $foto3 = $upload->getResult();
+          else :
+            $foto3 = "";
+          endif;
+
+          if (isset($_FILES['user_thumb4'])) :
+
+            if ($_FILES['user_thumb4']['type'] == 'application/pdf') :
+            else :
+              echo '11';
+              exit();
+              break;
+            endif;
+
+            //$upload = new Upload('../imagens_site/');
+            $upload->File($_FILES['user_thumb4'], md5($dataHora . 'user_thumb4'), 'arquivos');
+            $foto4 = $upload->getResult();
+          else :
+            $foto4 = "";
+          endif;
+
+          if (isset($_FILES['user_thumb5'])) :
+
+            if ($_FILES['user_thumb5']['type'] == 'application/pdf') :
+            else :
+              echo '11';
+              exit();
+              break;
+            endif;
+
+            //$upload = new Upload('../imagens_site/');
+            $upload->File($_FILES['user_thumb5'], md5($dataHora . 'user_thumb5'), 'arquivos');
+            $foto5 = $upload->getResult();
+          else :
+            $foto5 = "";
+          endif;
+
+          if (isset($_FILES['user_thumb6'])) :
+
+            if ($_FILES['user_thumb6']['type'] == 'application/pdf') :
+            else :
+              echo '11';
+              exit();
+              break;
+            endif;
+
+            //$upload = new Upload('../imagens_site/');
+            $upload->File($_FILES['user_thumb6'], md5($dataHora . 'user_thumb6'), 'arquivos');
+            $foto6 = $upload->getResult();
+          else :
+            $foto6 = "";
+          endif;
+
+          if (isset($_FILES['user_thumb7'])) :
+
+            if ($_FILES['user_thumb7']['type'] == 'application/pdf') :
+            else :
+              echo '11';
+              exit();
+              break;
+            endif;
+
+            //$upload = new Upload('../imagens_site/');
+            $upload->File($_FILES['user_thumb7'], md5($dataHora . 'user_thumb7'), 'arquivos');
+            $foto7 = $upload->getResult();
+          else :
+            $foto7 = "";
+          endif;
+
+          if (isset($_FILES['user_thumb8'])) :
+
+            if ($_FILES['user_thumb8']['type'] == 'application/pdf') :
+            else :
+              echo '11';
+              exit();
+              break;
+            endif;
+
+            //$upload = new Upload('../imagens_site/');
+            $upload->File($_FILES['user_thumb8'], md5($dataHora . 'user_thumb8'), 'arquivos');
+            $foto8 = $upload->getResult();
+          else :
+            $foto8 = "";
+          endif;
+
+          if (isset($_FILES['user_thumb9'])) :
+
+            //if ($_FILES['user_thumb9']['type'] == 'application/pdf') :
+            //else :
+            //  echo '11';
+            //  exit();
+            //  break;
+            // endif;
+            //$upload = new Upload('../imagens_site/');
+            $upload->File($_FILES['user_thumb9'], md5($dataHora . 'user_thumb9'), 'arquivos');
+            $foto9 = $upload->getResult();
+          else :
+            $foto9 = "";
+          endif;
+
+
+          if (isset($_FILES['user_thumb10'])) :
+
+            if ($_FILES['user_thumb10']['type'] == 'application/pdf') :
+            else :
+              echo '11';
+              exit();
+              break;
+            endif;
+            //$upload = new Upload('../imagens_site/');
+            $upload->File($_FILES['user_thumb10'], md5($dataHora . 'user_thumb10'), 'arquivos');
+            $foto10 = $upload->getResult();
+          else :
+            $foto10 = "";
+          endif;
+
+          if (isset($_FILES['user_thumb11'])) :
+
+            if ($_FILES['user_thumb11']['type'] == 'application/pdf') :
+            else :
+              echo '11';
+              exit();
+              break;
+            endif;
+            //$upload = new Upload('../imagens_site/');
+            $upload->File($_FILES['user_thumb11'], md5($dataHora . 'user_thumb11'), 'arquivos');
+            $foto11 = $upload->getResult();
+          else :
+            $foto11 = "";
+          endif;
+
+          if (isset($_FILES['user_thumb12'])) :
+
+            if ($_FILES['user_thumb12']['type'] == 'application/pdf') :
+            else :
+              echo '11';
+              exit();
+              break;
+            endif;
+            //$upload = new Upload('../imagens_site/');
+            $upload->File($_FILES['user_thumb12'], md5($dataHora . 'user_thumb12'), 'arquivos');
+            $foto12 = $upload->getResult();
+          else :
+            $foto12 = "";
+          endif;
+
+          if (isset($_FILES['user_thumb13'])) :
+
+            if ($_FILES['user_thumb13']['type'] == 'application/pdf') :
+            else :
+              echo '11';
+              exit();
+              break;
+            endif;
+           // $upload = new Upload('../imagens_site/');
+            $upload->File($_FILES['user_thumb13'], md5($dataHora . 'user_thumb13'), 'arquivos');
+            $foto13 = $upload->getResult();
+          else :
+            $foto13 = "";
+          endif;
+
+
+          if (isset($_FILES['user_thumb14'])) :
+
+            if ($_FILES['user_thumb14']['type'] == 'application/pdf') :
+            else :
+              echo '11';
+              exit();
+              break;
+            endif;
+            //$upload = new Upload('../imagens_site/');
+            $upload->File($_FILES['user_thumb14'], md5($dataHora . 'user_thumb14'), 'arquivos');
+            $foto14 = $upload->getResult();
+          else :
+            $foto14 = "";
+          endif;
+
+          if (isset($_FILES['user_thumb15'])) :
+
+            if ($_FILES['user_thumb15']['type'] == 'application/pdf') :
+            else :
+              echo '11';
+              exit();
+              break;
+            endif;
+            //$upload = new Upload('../imagens_site/');
+            $upload->File($_FILES['user_thumb15'], md5($dataHora . 'user_thumb15'), 'arquivos');
+            $foto15 = $upload->getResult();
+          else :
+            $foto15 = "";
+          endif;
+
+
+          if (isset($_FILES['user_thumb16'])) :
+
+            if ($_FILES['user_thumb16']['type'] == 'application/pdf') :
+            else :
+              echo '11';
+              exit();
+              break;
+            endif;
+            //$upload = new Upload('../imagens_site/');
+            $upload->File($_FILES['user_thumb16'], md5($dataHora . 'user_thumb16'), 'arquivos');
+            $foto16 = $upload->getResult();
+          else :
+            $foto16 = "";
+          endif;
+
+
+          if (isset($_FILES['user_thumb17'])) :
+
+            if ($_FILES['user_thumb17']['type'] == 'application/pdf') :
+            else :
+              echo '11';
+              exit();
+              break;
+            endif;
+           // $upload = new Upload('../imagens_site/');
+            $upload->File($_FILES['user_thumb17'], md5($dataHora . 'user_thumb17'), 'arquivos');
+            $foto17 = $upload->getResult();
+          else :
+            $foto17 = "";
+          endif;
+
+          if (isset($_FILES['user_thumb18'])) :
+
+            if ($_FILES['user_thumb18']['type'] == 'application/pdf') :
+            else :
+              echo '11';
+              exit();
+              break;
+            endif;
+           // $upload = new Upload('../imagens_site/');
+            $upload->File($_FILES['user_thumb18'], md5($dataHora . 'user_thumb18'), 'arquivos');
+            $foto18 = $upload->getResult();
+          else :
+            $foto18 = "";
+          endif;
+
+        
+          if (isset($_FILES['user_thumb20'])) :
+
+            //if ($_FILES['user_thumb20']['type'] == 'application/pdf') :
+            //else :
+            //  echo '11';
+            //  exit();
+            //  break;
+            //endif;
+            //$upload = new Upload('../imagens_site/');
+            $upload->File($_FILES['user_thumb20'], md5($dataHora . 'user_thumb20'), 'arquivos');
+            $foto20 = $upload->getResult();
+          else :
+            $foto20 = "";
+          endif;
+
+          
+
+          if (isset($_FILES['arq_ori1'])) :
+            //$upload = new Upload('../imagens_site/');
+            $upload->File($_FILES['arq_ori1'], md5($dataHora . 'arq_ori1'), 'arquivos');
+            $fotoo10 = $upload->getResult();
+          else :
+            $fotoo10 = "";
+          endif;
+
+          if (isset($_FILES['arq_ori2'])) :
+            //$upload = new Upload('../imagens_site/');
+            $upload->File($_FILES['arq_ori2'], md5($dataHora . 'arq_ori2'), 'arquivos');
+            $fotoo11 = $upload->getResult();
+          else :
+            $fotoo11 = "";
+          endif;
+
+          if (isset($_FILES['arq_ori3'])) :
+            //$upload = new Upload('../imagens_site/');
+            $upload->File($_FILES['arq_ori3'], md5($dataHora . 'arq_ori3'), 'arquivos');
+            $fotoo12 = $upload->getResult();
+          else :
+            $fotoo12 = "";
+          endif;
+
+          if (isset($_FILES['arq_ori4'])) :
+            //$upload = new Upload('../imagens_site/');
+            $upload->File($_FILES['arq_ori4'], md5($dataHora . 'arq_ori4'), 'arquivos');
+            $fotoo13 = $upload->getResult();
+          else :
+            $fotoo13 = "";
+          endif;
+include 'conexao.php';
+                    $pdo_verifica = $conexao_pdo->prepare("select nome from perfil WHERE id = '".$c['id']."'");
+                     $pdo_verifica->execute();
+                    $i=0;
+            while($fetch = $pdo_verifica->fetch()){
+                $i=$i+1;
+                    $nome = $fetch['nome'];
+            }
+        
+        $pdo_verifica = $conexao_pdo->prepare("select id from orientador WHERE nome = '".$nome."'");
+                     $pdo_verifica->execute();
+                    $i=0;
+            while($fetch = $pdo_verifica->fetch()){
+                $i=$i+1;
+                    $id_ori = $fetch['id'];
+            }
+        
+        
 
           $dados = array(
-            "id_orientador" => '',
-            "nome" => $nome,
-            "arq_1" => $foto,
-            "arq_2" => $foto2,
+              
+              
+            "id_orientador" => $id_ori,
+            "id_co_orientador" => "",
+            "nome" => $c['nome'],
+            "curso" => $c['curso'],
+            "faculdade" => $c['faculdade'],
+            "cpf" => $c['cpf'],
+            "cr" => $c['cr'],
+            "tipo" => $c['tipo'],
+              "entrega" => $c['entrega'],
+              "nota" => '10',
+            "arq_1" => $foto9,
+            "arq_2" => $foto10,
+            "arq_3" => $foto11,
+            "arq_4" => $foto12,
+            "arq_5" => $foto13,
+            "arq_6" => $foto14,
+            "arq_7" => $foto15,
+            "arq_8" => $foto16,
+            "arq_9" => $foto17,
             "data" => $dataStamp2,
             "hora" => $hora,
             "status" => '1',
-            "id_aluno" => $c['id'],
+            "block" => '1',
+            "arq_ori1" => $fotoo10,
+            "arq_ori2" => $fotoo11,
+            "arq_ori3" => $fotoo12,
+            "arq_ori4" => $fotoo13,
+            "arq_ori5" => $foto,
+            "arq_ori6" => $foto2,
+            "arq_ori7" => $foto3,
+            "arq_ori8" => $foto4,
+            "arq_ori9" => $foto5,
+            "arq_ori10" => $foto6,
+            "arq_ori11" => $foto7,
+            "arq_ori12" => $foto8,
+            "nome_coorientado" => $nomecoo,
+            "arq_co" => $foto18,
+            "arq_co2" => $foto19,
+            "arq_co3" => $foto20,
+            "arq_co4" => $foto21,
           );
           $Cadastra = new Create;
-          $Cadastra->ExeCreate('co_orientador', $dados);
+          $Cadastra->ExeCreate('aluno', $dados);
+          if ($Cadastra->getResult()) :
+            echo '1';
+          else :
+            echo '2';
+          endif;
+        //else :
+         // echo '4';
+      //  endif;
+      endif;
+      break;
+        
+    //EDITAR TECNINCO    
+    case 'id_arquivo_alt':
+      $c['id'] = $_POST['id'];
+
+      $ultimo = new Read;
+      $ultimo->ExeRead('tecnico', "WHERE id = :id", 'id=' . $c['id'] . '');
+      foreach ($ultimo->getResult() as $resultado);
+      ?>
+<script>
+    $("select").select2();
+
+</script>
+
+
+<div class="cadastrar_total_contet" style=" background: #fff; padding: 3%">
+    <div class="cadastro_cliente_cv">
+        <h1 class="topo_modal">Editar Informações</h1>
+        <form class="form_linha" method="post" name="cad_orientador">
+            <!-- cad_clientes -->
+            <div class="box box100">
+                <div class="box box33">
+                    <p class="texto_form">Nome completo(Obrigatório)</p>
+                    <input name="nome" type="text" required placeholder="Nome completo" value="<?= $resultado['nome']; ?>" style=" width: 100%;" />
+                </div>
+                <div class="box box33">
+                    <p class="texto_form">E-mail válido</p>
+                    <input name="email" type="email" placeholder="E-mail válido" value="<?= $resultado['email']; ?>" style=" width: 100%;" />
+                </div>
+                <div class="box box33 no-margim">
+                    <p class="texto_form">Matricula</p>
+                    <input name="cpf" type="text" required placeholder="Matrícula do Técnico" value="<?= $resultado['matricula']; ?>" style=" width: 100%;" />
+                </div>
+            </div>
+
+
+            <div class="box box20 no-margim">
+                <button class="btn btn_green fl-left" style="font-size: 0.8em; margin-right: 1%">
+                    <figure class="icon-save2" style="margin-top: -6%;"></figure> Cadastrar
+                </button>
+            </div>
+
+            <!--
+            <div class="limpar"></div>
+            <br>
+            <input type="hidden" name="id" value="<?= $usuario_['id']; ?>" />
+            <span class="carregando2 ds-none"><img src="<?= HOME; ?>imagens_fixas/carregando2.gif" /></span>
+
+            <div class="limpar"></div>
+-->
+        </form>
+    </div>
+
+
+</div>
+
+
+
+<?php
+      break;
+        
+    case 'ex_arquivo':
+      $c['id'] = $_POST['del'];
+
+      $ultimo = new Read;
+      $ultimo->ExeRead('arquivos', "WHERE id = :id", 'id=' . $c['id'] . '');
+      foreach ($ultimo->getResult() as $resultado);
+      unlink("../imagens_site/" . $resultado['arquivo']);
+      $delete = new Delete;
+      $delete->ExeDelete('arquivos', "WHERE id = :id", 'id=' . $c['id'] . '');
+      if ($delete->getResult()) :
+        echo '1';
+      else :
+        echo '2';
+      endif;
+      break;
+//ENVIAR DADOS DO FORMMULARIO
+        
+        
+    case 'ver_agenda':
+      echo $c['id'] = $_POST['id'];
+
+
+      break;
+      //===============================================================================================================================
+      // ORIENTADOR
+      //===============================================================================================================================         
+    case 'cad_orientador2':
+      $c['nome'] = $_POST['nome'];
+      $c['email'] = $_POST['email'];
+      $c['cp'] = $_POST['cpf'];
+      //$senha = Check::NewPass('5', false, true, false);
+      //VERICIAR CAMPOS VAZIOS
+      if (in_array('', $c)) :
+        echo '3';
+      else :
+
+        //VERIFICANDO SE JÁ ESTA CADASTRADO
+        $igual = new Read;
+        $igual->ExeRead('tecnico', 'WHERE email = :id and nome = :id2', "id=" . $c['email'] . "&id2=" . $c['nome'] . "");
+        if (!$igual->getRowCount() >= 1) :
+
+
+
+          $dados = array(
+            "nome" => $c['nome'],
+            //"ilmd" => '',
+            "matricula" => $c['cp'],
+            "email" => $c['email'],
+              "expertise" => '',
+              "rendimento" => '',
+              "mediaproj" => 10,
+              
+            //"senha" => $c['cp'],
+            //"arq_1" => '',
+            //"arq_2" => '',
+            //"arq_3" => '',
+            //"arq_4" => '',
+            //"arq_5" => '',
+            //"arq_6" => '',
+            //"arq_7" => '',
+            //"arq_8" => '',
+            //"arq_9" => '',
+            //"data" => $dataStamp2,
+            //"hora" => $hora,
+            "status" => '1',
+          );
+          $Cadastra = new Create;
+          $Cadastra->ExeCreate('tecnico', $dados);
           if ($Cadastra->getResult()) :
             echo '1';
           else :
@@ -6816,25 +5920,1123 @@ switch ($_POST['acao']) {
         endif;
       endif;
       break;
-    case 'ex_coorientador':
-      $c['id'] = $_POST['del'];
+        
+    case 'modal_alunos':
+      $c['id'] = $_POST['id'];
+    ?>
+<div class="" style=" background: #fff; padding: 3%">
+    <h1 class="topo_modal">Lista de Projetos Cadastrados</h1>
+    <div class="box_conteudo_ lista_atual_modal">
+        <!--LISTA DE CADASTRADOS-->
+        <?php
+          $listagem = new Read;
+          $listagem->ExeRead('aluno', 'where id_orientador = ' . $c['id'] . ' and status <> 3');
+          if ($listagem->getRowCount() >= 1) :
+          ?>
+        <p class="texto_form" style=" margin-top: 0;">Você pode ordenar a lista clicando nos titulos da lista abaixo.</p>
+        <script type="text/javascript" src="<?= HOME; ?>js/sorttable.js"></script>
+        <table class="lista_base_tabela sortable">
+            <!--<caption></caption>-->
+            <tr style=" width: 100%; border-bottom: 1px solid #000; background-color: #000000; color: #FFF; font-size: 0.9em;">
+                <th width="30%" style=" text-align: center; padding: 1%;">Projeto</th>
+                <th width="15%" style=" text-align: center; padding: 1%;">Tecnico</th>
+                <th width="15%" style=" text-align: center; padding: 1%;">Matricula</th>
+                <th width="10%" style=" text-align: center; padding: 1%;">Expertise</th>
+                <th width="10%" style=" text-align: center; padding: 1%;">Andamento</th>
+                <th width="10%" style=" text-align: center; padding: 1%;">Status</th>
+                <th width="1%" style="padding: 0%;"></th>
+                <th width="1%" style="padding: 0%"></th>
+            </tr>
+            <div class="limpar"></div>
+            <?php
+              foreach ($listagem->getResult() as $listagem_) :
+              ?>
+            <tr class="lista_tabela">
+                <td width="30%" data-balloon-length="large" data-balloon="<?= $listagem_['nome']; ?>" data-balloon-pos="up"><?= Check::limitcaracter($listagem_['nome'], 36); ?></td>
+                <td width="15%"><?= $listagem_['curso']; ?></td>
+                <td width="15%"><?= $listagem_['cpf']; ?></td>
+                <td width="10%"><?= $listagem_['faculdade']; ?></td>
+                <td width="10%"><?= $listagem_['cr']; ?></td>
+                <td width="10%">
+                    <?php
+                    if ($listagem_['status'] == '1'){
+                        
+                    
+                    ?>
+                    <p style=" color: green">Ativo</p>
+                    <?php
+                    }
+        if(($listagem_['status'] == '0')){
+            
+                    ?>
+                    <p style=" color: orange">Parado</p>
+                    <?php
+        }
+        if(($listagem_['status'] == '4')){
+                    ?>
+                    <p style=" color: blue">Entregue</p>
+                    <?php
+        }
+        if(($listagem_['status'] == '3')){
+            ?>
+                    <p style=" color: red">Cancelado</p>
+                    <?php
+        }
+        ?>
+                </td>
+                <!-- <td width="1%">
+                   <div class="btn btn_red excluir_modal" data-excluir="ex_usuario" id="<? //= $listagem_['id']; 
+                                                                                        ?>" style="" data-balloon-length="small" data-balloon="Alterar status" data-balloon-pos="up">
+                      <i class="fa fa-times icone-funcao"></i>
+                   </div>
+               </td> 
+                <td width="2%"> 
+                   <div class="btn btn_blue" id="<? //= $listagem_['id']; 
+                                                  ?>" style=" " data-balloon-length="small" data-balloon="Alterar status" data-balloon-pos="up">
+                      <i class="fas fa-exchange-alt"></i>
+                   </div>
+                </td>-->
+                <!-- <td width="2%">
+                    <div class="modal_coorientador btn btn_green_escuro" style="" id="<? //= $listagem_['id']; 
+                                                                                      ?>" data-balloon-length="small" data-balloon="Co-Orientador cadastrado" data-balloon-pos="up">
+                      <figure class="icon-user-circle" style="font-size: 1.3em;"></figure>
+                    </div>
+                  </td> -->
+                <td width="2%">
+                    <div class="id_aluno_alt btn btn_green" style="" id="<?= $listagem_['id']; ?>" data-balloon-length="small" data-balloon="Informações" data-balloon-pos="up">
+                        <figure class="icon-edit-3" style="font-size: 1.3em;"></figure>
+                    </div>
+                </td>
+                <div class="limpar"></div>
+            </tr>
+            <?php
+              endforeach;
+            else :
+              echo '<div class="list" style="color: #000; font-size: 1.1em;"><center>Não há projetos cadastrados!</center></div>';
+            endif;
+            ?>
+            <div class="limpar"></div>
+        </table>
+        <br>
+    </div>
+    <div class="limpar"></div>
+</div>
+<?php
+      break;
+        
+        
+    case 'modal_coorientador':
+      $c['id'] = $_POST['id'];
+    ?>
+<div class="" style=" background: #fff; padding: 3%">
+    <h1 class="topo_modal">Lista de Co-Orientadores</h1>
+    <div class="box_conteudo_ lista_atual_modal">
+        <!--LISTA DE CADASTRADOS-->
+        <?php
+          $listagem = new Read;
+          $listagem->ExeRead('co_orientador', 'where id_aluno = ' . $c['id'] . ' and status =1');
+          if ($listagem->getRowCount() >= 1) :
+            foreach ($listagem->getResult() as $listagem_);
+            if ($listagem_['nome'] == "") :
+          ?>
+        <p style=" text-align: center; font-size: 1.2em;">Não há Supervisor neste projeto</p>
+        <?php
+            else :
+            ?>
+        <p class="texto_form" style=" margin-top: 0;">Você pode ordenar a lista clicando nos titulos da lista abaixo.</p>
+        <script type="text/javascript" src="<?= HOME; ?>js/sorttable.js"></script>
+        <table class="lista_base_tabela sortable">
+            <!--<caption></caption>-->
+            <tr style=" width: 100%; border-bottom: 1px solid #000; background-color: #000000; color: #FFF; font-size: 0.9em;">
+                <th width="60%" style=" text-align: center; padding: 1%;">Projeto</th>
+                <th width="1%" style="padding: 0%"></th>
+            </tr>
+            <div class="limpar"></div>
+            <?php
+                foreach ($listagem->getResult() as $listagem_) :
+                ?>
+            <tr class="lista_tabela">
+                <td width="60%" data-balloon-length="large" data-balloon="<?= $listagem_['nome']; ?>" data-balloon-pos="up"><?= Check::limitcaracter($listagem_['nome'], 36); ?></td>
+                <!--<td width="18%"><? //= $listagem_['cpf']; 
+                                        ?></td>
+                       <td width="25%"><? //= $listagem_['curso']; 
+                                        ?></td> -->
+                <td width="1%">
+                    <div class="id_coorientador_alt btn btn_green" style="" id="<?= $listagem_['id']; ?>" data-balloon-length="small" data-balloon="Alterar" data-balloon-pos="up">
+                        <figure class="icon-edit-3" style="font-size: 1.3em;"></figure>
+                    </div>
+                </td>
+                <div class="limpar"></div>
+            </tr>
+            <?php
 
-      if (in_array('', $c)) {
-        echo '3';
+                endforeach;
+              endif;
+            else :
+              echo '<div class="list" style="color: #000; font-size: 1.1em;"><center>Não há Co-Orientadores cadastrados!</center></div>';
+            endif;
+            ?>
+            <div class="limpar"></div>
+        </table>
+        <br>
+    </div>
+    <div class="limpar"></div>
+</div>
+<?php
+      break;
+    case 'cordenadores_alt':
+      $c['id'] = $_POST['id'];
+
+      $ultimo = new Read;
+      $ultimo->ExeRead('orientador', "WHERE id = :id", 'id=' . $c['id'] . '');
+      foreach ($ultimo->getResult() as $resultado);
+      $ultimo->ExeRead('aluno', "WHERE id_orientador = :id", 'id=' . $c['id'] . '');
+      if ($ultimo->getRowCount() >= 1) {
+        foreach ($ultimo->getResult() as $resultado_or);
       } else {
-        $Dados = [
-          'status' => '2',
-        ];
+        $resultado_or['arq_1'] = '';
+        $resultado_or['arq_2'] = '';
+        $resultado_or['arq_3'] = '';
+        $resultado_or['arq_4'] = '';
+        $resultado_or['arq_5'] = '';
+        $resultado_or['arq_6'] = '';
+        $resultado_or['arq_7'] = '';
+        $resultado_or['arq_8'] = '';
+      }
 
+    ?>
+<script>
+    jQuery(function($) {
+        $("#mascara_celular22").mask("(99)999999999");
+        $("#mascara_telefone22").mask("(99)999999999");
+        $("#mascara_telefone222").mask("(99)999999999");
+        $('#datacompleta2').datepicker({
+            language: 'pt-BR',
+            todayButton: new Date() // Now can select only dates, which goes after today
+        });
+    });
+    $("select").select2();
+
+</script>
+
+<form class="form_linha" method="post" name="editar_orientador" enctype="multipart/form-data">
+    <h1 class="topo_modal">Alterar orientador</h1>
+    <div class="box box100">
+        <div class="box box50">
+            <p class="texto_form">Nome completo(Obrigatório)</p>
+            <input name="nome" type="text" required placeholder="Nome completo" value="<?= $resultado['nome']; ?>" style=" width: 100%;" />
+        </div>
+        <div class="box box50 no-margim">
+            <p class="texto_form">E-mail válido</p>
+            <input name="email" type="email" placeholder="E-mail válido" value="<?= $resultado['email']; ?>" style=" width: 100%;" />
+        </div>
+        <div class="limpar"></div>
+        <div class="box box33">
+            <p class="texto_form">Matricula(Obrigatório)</p>
+            <input name="cpf" type="text" required placeholder="CPF ou CNPJ" style=" width: 100%;" value="<?= $resultado['cpf']; ?>" onkeypress='mascaraMutuario(this, cpfCnpj)' onblur='clearTimeout()' />
+        </div>
+        <div class="box box33">
+            <p class="texto_form">Cargo</p>
+            <input name="ilmd" type="text" required placeholder="Vínculo com o ILMD" value="<?= $resultado['ilmd']; ?>" style=" width: 100%;" />
+        </div>
+        <div class="box box33">
+            <p class="texto_form">Senha(Obrigatório)</p>
+            <input name="senha" type="password" required placeholder="Senha" value="<?= $resultado['senha']; ?>" style=" width: 100%;" />
+        </div>
+        <div class="limpar"></div>
+        <div class="box box50">
+            <p class="texto_form">Resumo do projeto do supervisor(Obrigatório)</p>
+            <?php
+            if ($resultado_or['arq_1'] <> '') :
+            ?>
+            <a href="<?= CORDENADOR; ?>imagens_site/<?= $resultado_or['arq_1']; ?>" target="_blank">Ver arquivo</a>
+            <?php
+            else :
+              echo 'Arquivo não enviado';
+            endif;
+            ?>
+        </div>
+        <div class="box box50">
+            <p class="texto_form">Parecer/protocolo do comitê de ética(Obrigatório)</p>
+            <?php
+            if ($resultado_or['arq_2'] <> '') :
+            ?>
+            <a href="<?= CORDENADOR; ?>imagens_site/<?= $resultado_or['arq_2']; ?>" target="_blank">Ver arquivo</a>
+            <?php
+            else :
+              echo 'Arquivo não enviado';
+            endif;
+            ?>
+        </div>
+        <div class="limpar"></div>
+        <div class="box box50">
+            <p class="texto_form">Comprovante de patrimônio gen.e de conhecimento tradicional(SISGEN)</p>
+            <?php
+            if ($resultado_or['arq_3'] <> '') :
+            ?>
+            <a href="<?= CORDENADOR; ?>imagens_site/<?= $resultado_or['arq_3']; ?>" target="_blank">Ver arquivo</a>
+            <?php
+            else :
+              echo 'Arquivo não enviado';
+            endif;
+            ?>
+        </div>
+        <div class="box box50">
+            <p class="texto_form">Autorização pelo sisbio de coleta de material biológico(Obrigatório)</p>
+            <?php
+            if ($resultado_or['arq_4'] <> '') :
+            ?>
+            <a href="<?= CORDENADOR; ?>imagens_site/<?= $resultado_or['arq_4']; ?>" target="_blank">Ver arquivo</a>
+            <?php
+            else :
+              echo 'Arquivo não enviado';
+            endif;
+            ?>
+        </div>
+        <div class="limpar"></div>
+        <div class="box box50">
+            <p class="texto_form">Currículo na plataforma Lattes do CNPq(Obrigatório)</p>
+            <?php
+            if ($resultado_or['arq_5'] <> '') :
+            ?>
+            <a href="<?= CORDENADOR; ?>imagens_site/<?= $resultado_or['arq_5']; ?>" target="_blank">Ver arquivo</a>
+            <?php
+            else :
+              echo 'Arquivo não enviado';
+            endif;
+            ?>
+        </div>
+        <div class="box box50">
+            <p class="texto_form">Cadastros atualizados do orientador no banco da FAPEAM(Obrigatório)</p>
+            <?php
+            if ($resultado_or['arq_6'] <> '') :
+            ?>
+            <a href="<?= CORDENADOR; ?>imagens_site/<?= $resultado_or['arq_6']; ?>" target="_blank">Ver arquivo</a>
+            <?php
+            else :
+              echo 'Arquivo não enviado';
+            endif;
+            ?>
+        </div>
+        <div class="limpar"></div>
+        <div class="box box50">
+            <p class="texto_form">Cadastro do orientador em grupo de pesquisa ILMD(Obrigatório)</p>
+            <?php
+            if ($resultado_or['arq_7'] <> '') :
+            ?>
+            <a href="<?= CORDENADOR; ?>imagens_site/<?= $resultado_or['arq_7']; ?>" target="_blank">Ver arquivo</a>
+            <?php
+            else :
+              echo 'Arquivo não enviado';
+            endif;
+            ?>
+        </div>
+        <div class="box box50">
+            <p class="texto_form">Declaração de participação na orientação(Obrigatório)</p>
+            <?php
+            if ($resultado_or['arq_8'] <> '') :
+            ?>
+            <a href="<?= CORDENADOR; ?>imagens_site/<?= $resultado_or['arq_8']; ?>" target="_blank">Ver arquivo</a>
+            <?php
+            else :
+              echo 'Arquivo não enviado';
+            endif;
+            ?>
+        </div>
+        <div class="limpar"></div>
+        <!-- <div class="box box50">
+          <p class="texto_form">Avaliação do orientador(no caso de renovação assinada), assinada(Obrigatório)</p>
+          <?php
+          //if ($resultado_or['arq_ori13'] <> ''):
+          ?>
+            <a href="<? //= CORDENADOR; 
+                      ?>imagens_site/<? //= $resultado_or['arq_ori13']; 
+                                      ?>" target="_blank">Ver arquivo</a>
+            <?php
+            // else:
+            //   echo 'Arquivo não enviado';
+            // endif;
+            ?>
+        </div> -->
+
+        <!--<div class="limpar"></div -->
+        <br><br>
+        <button class="btn btn_green fl-left" style="font-size: 0.8em; margin-right: 1%;">
+            <figure class="icon-pencil-square-o" style="margin-top: -4%;"></figure> Alterar
+        </button>
+    </div>
+
+    <div class="limpar"></div>
+    <br>
+    <input type="hidden" name="id" value="<?= $resultado['id']; ?>" />
+    <input type="hidden" name="acao" value="editar_orientador" />
+    <span class="carregando2 ds-none"><img src="<?= HOME; ?>imagens_fixas/carregando2.gif" /></span>
+
+    <div class="limpar"></div>
+</form>
+<?php
+      break;
+    case 'editar_orientador':
+
+      $c['nome'] = $_POST['nome'];
+      $email = $_POST['email'];
+      $c['cpf'] = $_POST['cpf'];
+      $c['ilmd'] = $_POST['ilmd'];
+      $c['senha'] = $_POST['senha'];
+      $id = $_POST['id'];
+
+      //VERICIAR CAMPOS VAZIOS
+      if (in_array('', $c)) :
+        echo '3';
+      else :
+
+        //VERIFICANDO SE JÁ ESTA CADASTRADO
+        $igual = new Read;
+        $igual->ExeRead('orientador', 'WHERE id = :id', "id=" . $id . "");
+        foreach ($igual->getResult() as $resultado);
+
+        $dados = array(
+          "nome" => $c['nome'],
+          "ilmd" => $c['ilmd'],
+          "cpf" => $c['cpf'],
+          "email" => $email,
+          "senha" => $c['senha'],
+        );
         $updade = new Update;
-        $updade->ExeUpdate('co_orientador', $Dados, "WHERE id = :id", "id=" . $c['id'] . "");
+        $updade->ExeUpdate('orientador', $dados, "WHERE id = :id", "id=" . $id . "");
         if ($updade->getResult()) :
           echo '1';
         else :
           echo '2';
         endif;
-      }
+      endif;
       break;
+
+    case 'del_orientador':
+      $c['id'] = $_POST['del'];
+      if (in_array('', $c)) :
+        echo '3';
+      else :
+
+        $Dados = [
+          'status' => '3',
+        ];
+
+        $updade = new Update;
+        $updade->ExeUpdate('orientador', $Dados, "WHERE id = :id", "id=" . $c['id'] . "");
+        if ($updade->getResult()) :
+          echo '1';
+        else :
+          echo '2';
+        endif;
+      endif;
+      break;
+    case 'del_projeto':
+      $c['id'] = $_POST['del'];
+      if (in_array('', $c)) :
+        echo '3';
+      else :
+
+        $Dados = [
+          'status' => '3',
+        ];
+
+        $updade = new Update;
+        $updade->ExeUpdate('orientador', $Dados, "WHERE id = :id", "id=" . $c['id'] . "");
+        if ($updade->getResult()) :
+          echo '1';
+        else :
+          echo '2';
+        endif;
+      endif;
+      break;
+        
+        
+        
+        
+        case 'id_tecnico_alt':
+        
+        echo "Teste";
+      $c['id'] = $_POST['id'];
+
+      $ultimo = new Read;
+      $ultimo->ExeRead('tecnico', "WHERE id = :id", 'id=' . $c['id'] . '');
+      foreach ($ultimo->getResult() as $resultado);
+        
+        
+    
+      break;
+
+
+
+case 'id_aluno_alt':
+$c['id'] = $_POST['id'];
+
+$ultimo = new Read;
+$ultimo->ExeRead('aluno', "WHERE id = :id", 'id=' . $c['id'] . '');
+foreach ($ultimo->getResult() as $resultado);
+
+
+?>
+<script>
+    $("#mascara_cpf").mask("999.999.999-99");
+    $("select").select2();
+
+</script>
+<form class="form_linha" method="post" name="editar_aluno" enctype="multipart/form-data">
+    <h1 class="topo_modal">Alterar informações do Projeto</h1>
+    <div class="box box100">
+        <div class="box box100">
+            <div class="box box33">
+                <p class="texto_form">Projeto</p>
+                <input name="nome" type="text" required placeholder="Nome do Projeto" readonly value="<?= $resultado['nome']; ?>" style=" width: 100%;" />
+            </div>
+            <div class="box box33">
+                <p class="texto_form">Responsável</p>
+                <input name="curso" type="text" required readonly placeholder="Responsável" value="<?= $resultado['curso']; ?>" style=" width: 100%;" />
+            </div>
+            <div class="box box33 no-margim">
+                <p class="texto_form">Expertise</p>
+                <input name="faculdade" type="text" required readonly placeholder="Expertise" value="<?= $resultado['faculdade']; ?>" style=" width: 100%;" />
+            </div>
+            <div class="limpar"></div>
+
+            <div class="box box33">
+                <p class="texto_form">Matricula</p>
+                <input name="cpf" type="text" placeholder="Matricula" readonly autocomplete="off" value="<?= $resultado['cpf']; ?>" style=" width: 100%;" />
+            </div>
+            <div class="box box33">
+                <p class="texto_form">Andamento</p>
+                <input name="cr" type="text" placeholder="Andamento" value="<?= $resultado['cr']; ?>" id="" style=" width: 100%;" />
+            </div>
+            <div class="box box33 no-margim">
+                <p class="texto_form">Tipo</p>
+                <select class="" name="tipo" style=" width: 100%;">
+                    <option <?= ($resultado['tipo'] == "1" ? "selected" : ""); ?>>Inovação</option>
+                    <option <?= ($resultado['tipo'] == "2" ? "selected" : ""); ?>>Melhoria</option>
+                </select>
+            </div>
+            <div class="limpar"></div>
+            <div class="box box33 ">
+                <p class="texto_form">Status</p>
+                <select class="" name="status" style=" width: 100%;">
+                    <option <?= ($resultado['status'] == "0" ? "selected" : ""); ?>>Parado</option>
+                    <option <?= ($resultado['status'] == "1" ? "selected" : ""); ?>>Ativo</option>
+                    <option <?= ($resultado['status'] == "2" ? "selected" : ""); ?>>Parado</option>
+                    <option <?= ($resultado['status'] == "3" ? "selected" : ""); ?>>Cancelado</option>
+                    <option <?= ($resultado['status'] == "4" ? "selected" : ""); ?>>Entregue</option>
+                </select>
+            </div>
+
+            <div class="box box33">
+                <p class=" texto_form">Entrega</p>
+                <input type="date" value="<?= $resultado['entrega']; ?>" name="entrega" style="width: 100%;">
+            </div>
+
+            <div class="box box33">
+                <p class=" texto_form">Avaliação</p>
+                <input type="text" value="<?= $resultado['nota']; ?>" name="nota" style="width: 100%;" min="0" max="10">
+            </div>
+
+            <script>
+                var notas = document.getElementsByName("nota");
+
+                var onNotaInput = function(event) {
+                    var regexp = new RegExp("[^0-9]", "g");
+                    var value = event.target.value.replace(regexp, "");
+                    value = parseInt(value) / 10;
+                    if (value >= event.target.min && value <= event.target.max) {
+                        event.target.dataset.value = value;
+                    } else {
+                        value = parseFloat(event.target.dataset.value);
+                    }
+                    if (isNaN(value)) {
+                        value = 0;
+                    }
+
+                    event.target.value = value.toLocaleString(undefined, {
+                        minimumFractionDigits: 1
+                    });
+                };
+
+                [].forEach.call(notas, function(nota) {
+                    nota.addEventListener("input", onNotaInput);
+                });
+
+            </script>
+
+            <div class="limpar"></div>
+            <?php
+            if ($resultado['tipo'] == '2') :
+            ?>
+            <div class="forms_exta" style=" width: 100%; padding: 2%; background: #f1f1f1; border: 0.9% solid #333; margin-bottom: 3%">
+
+                <h1 style=" text-align: left; font-size: 1.4em; margin-bottom: 2%">Informações extras para renovação </h1>
+
+                <div class="box box100">
+                    <p class="texto_form">Avaliação do orientador(no caso de renovação assinatura), assinada (obrigatório)</p>
+                    <!-- <label class="label_file" for='selecao-arquivo2'>Selecionar um arquivo</label> -->
+                    <input id='' type="file" name="arq_ori4" class="" style=" display: block; width: 100%; border: 1px solid #b1b1b1; padding: 1%" />
+                    <div class="limpar"></div>
+                    <?php if ($resultado["arq_ori4"] == "") : ?>
+                    <p class="texto_form" style=" color: red">Arquivo não enviado!</p>
+                    <?php else : ?>
+                    <a href="<?= CORDENADOR; ?>imagens_site/<?= $resultado["arq_ori4"]; ?>" style=" color: red" target="_blank">Verificar arquivo!</a>
+                    <?php endif; ?>
+                </div>
+
+                <div class="limpar"></div>
+            </div>
+            <?php
+            else :
+            ?>
+            <div class="forms_exta ds-none" style=" width: 100%; padding: 2%; background: #f1f1f1; border: 0.9% solid #333;">
+
+            </div>
+            <?php
+            endif;
+            ?>
+            <!--cordenador-->
+            <div class="box box50">
+                <h1 class="topo_modal">Arquivo Anéxado</h1>
+                <div class="box box100">
+                    <p class="texto_form">Anéxo</p>
+                    <!-- <label class="label_file" for='selecao-arquivo2'>Selecionar um arquivo</label> -->
+                    <input id='' type="file" name="user_thumb" class="" style=" display: block; width: 100%; border: 1px solid #b1b1b1; padding: 1%" />
+                    <?php if ($resultado["arq_ori5"] == "") : ?>
+                    <p class="texto_form" style=" color: red">Arquivo não enviado!</p>
+                    <?php else : ?>
+                    <a href="<?= CORDENADOR; ?>imagens_site/<?= $resultado["arq_ori5"]; ?>" style=" color: red" target="_blank">Verificar arquivo!</a>
+                    <?php endif; ?>
+                </div>
+
+                <!--
+                <div class="box box100">
+                    <p class="texto_form">Parecer/protocolo do comitê de ética (obrigatório)</p>
+                    <!-- <label class="label_file" for='selecao-arquivo2'>Selecionar um arquivo</label> -->
+                <!--
+                    <input id='' type="file" name="user_thumb2" class="" style=" display: block; width: 100%; border: 1px solid #b1b1b1; padding: 1%" />
+                    <?php if ($resultado["arq_ori6"] == "") : ?>
+                    <p class="texto_form" style=" color: red">Arquivo não enviado!</p>
+                    <?php else : ?>
+                    <a href="<?= CORDENADOR; ?>imagens_site/<?= $resultado["arq_ori6"]; ?>" style=" color: red" target="_blank">Verificar arquivo!</a>
+                    <?php endif; ?>
+                </div>
+-->
+                <!--
+                <div class="box box100">
+                    <p class="texto_form">Comprovante de patrimônio Gen. e de conhecimento tradicional(SISGEN) (obrigatório)</p>
+                    <!-- <label class="label_file" for='selecao-arquivo2'>Selecionar um arquivo</label> -->
+                <!--<input id='' type="file" name="user_thumb3" class="" style=" display: block; width: 100%; border: 1px solid #b1b1b1; padding: 1%" />
+                <?php if ($resultado["arq_ori7"] == "") : ?>
+                <p class="texto_form" style=" color: red">Arquivo não enviado!</p>
+                <?php else : ?>
+                <a href="<?= CORDENADOR; ?>imagens_site/<?= $resultado["arq_ori7"]; ?>" style=" color: red" target="_blank">Verificar arquivo!</a>
+                <?php endif; ?>
+            </div>-->
+                <!--
+            <div class="box box100">
+                <p class="texto_form">Autorização pelo sisbio de coleta de material biológico (obrigatório)</p>
+                <!-- <label class="label_file" for='selecao-arquivo2'>Selecionar um arquivo</label> -->
+                <!--
+                <input id='' type="file" name="user_thumb4" class="" style=" display: block; width: 100%; border: 1px solid #b1b1b1; padding: 1%" />
+                <?php if ($resultado["arq_ori8"] == "") : ?>
+                <p class="texto_form" style=" color: red">Arquivo não enviado!</p>
+                <?php else : ?>
+                <a href="<?= CORDENADOR; ?>imagens_site/<?= $resultado["arq_ori8"]; ?>" style=" color: red" target="_blank">Verificar arquivo!</a>
+                <?php endif; ?>
+            </div>
+-->
+
+
+                <div class="limpar"></div>
+            </div>
+            <!-- aluno -->
+
+            <div class="limpar"></div>
+            <br>
+            <!--Co-orientado-->
+
+            <br>
+            <div class="limpar"></div>
+            <br>
+            <input type="hidden" name="id" value="<?= $resultado['id']; ?>" />
+            <input type="hidden" name="acao" value="editar_aluno" />
+            <span class="carregando2 ds-none"><img src="<?= HOME; ?>imagens_fixas/carregando2.gif" /></span>
+            <button class="btn btn_green fl-left" style="font-size: 0.8em; margin-right: 1%; width: 9%;">
+                <figure class="icon-pencil-square-o" style="margin-top: -4%;"></figure> Alterar
+            </button>
+            <div class="limpar"></div>
+        </div>
+    </div>
+</form>
+<?php
+      break;
+        
+        
+    case 'editar_aluno':
+        $temp;
+      $c['nome'] = $_POST['nome'];
+      $c['curso'] = $_POST['curso'];
+      $c['faculdade'] = $_POST['faculdade'];
+      $c['cpf'] = $_POST['cpf'];
+      $c['cr'] = $_POST['cr'];
+      $c['tipo'] = $_POST['tipo'];
+      $c['id'] = $_POST['id'];
+        $c['nota'] = $_POST['nota'];
+        
+        if($_POST['status'] == "Ativo"){
+            $temp = "1";
+        }
+        if($_POST['status'] == "Parado"){
+            $temp = "0";
+        }
+        if($_POST['status'] == "Entregue"){
+            $temp = "4";
+        }
+        if($_POST['status'] == "Cancelado"){
+            $temp = "3";
+        }
+        $c['status'] = $temp;
+        $c['entrega'] = $_POST['entrega'];
+
+      //$nomecoo = $_POST['nomecoo'];
+
+      if (isset($_POST['cooo'])) :
+        $cooo = $_POST['cooo'];
+      else :
+        $cooo = "";
+      endif;
+
+      //$opcao = $_POST['opcao'];
+      //$c['email'] = $_POST['email'];
+      //VERICIAR CAMPOS VAZIOS
+
+        $upload = new Upload('../../projeto/imagens_site/');
+
+        // $opcao = $_POST['opcao'];
+
+        $ultimo = new Read;
+        $ultimo->ExeRead('aluno', "WHERE id = :id", 'id=' . $c['id'] . '');
+        foreach ($ultimo->getResult() as $resultado);
+
+        if (isset($_FILES['user_thumb'])) :
+          //$upload = new Upload('../imagens_site/');
+          $upload->File($_FILES['user_thumb'], md5($dataHora . 'user_thumb'), 'arquivos');
+          $foto = $upload->getResult();
+        else :
+          $foto = $resultado['arq_ori5'];
+        endif;
+
+
+        //print_r($_FILES['envio_01']);
+
+        if (isset($_FILES['enviando'])) :
+
+          //print_r($_FILES['enviando']);
+
+          if ($_FILES['enviando']['type'] == 'application/pdf') :
+          else :
+            echo '11';
+            exit();
+            break;
+          endif;
+          //$upload = new Upload('../imagens_site/');
+          $upload->File($_FILES['enviando'], md5($dataHora . 'enviando'), 'arquivos');
+          $foto19 = $upload->getResult();
+        else :
+          $foto19 = $resultado['arq_co2'];
+        endif;
+
+        //print_r($_FILES['envio_02']);
+
+        if (isset($_FILES['envio_02'])) :
+          //print_r($_FILES['envio_02']);
+          if ($_FILES['envio_02']['type'] == 'application/pdf') :
+          else :
+            echo '11';
+            exit();
+            break;
+          endif;
+          //$upload = new Upload('../imagens_site/');
+          $upload->File($_FILES['envio_02'], md5($dataHora . 'envio_02'), 'arquivos');
+          $foto21 = $upload->getResult();
+        else :
+          $foto21 = $resultado['arq_co4'];
+        endif;
+
+
+        if (isset($_FILES['user_thumb2'])) :
+
+          if ($_FILES['user_thumb2']['type'] == 'application/pdf') :
+          else :
+            echo '11';
+            exit();
+            break;
+          endif;
+
+          //$upload = new Upload('../imagens_site/');
+          $upload->File($_FILES['user_thumb2'], md5($dataHora . 'user_thumb2'), 'arquivos');
+          $foto2 = $upload->getResult();
+        else :
+          $foto2 = $resultado['arq_ori6'];
+        endif;
+
+        if (isset($_FILES['user_thumb3'])) :
+
+          if ($_FILES['user_thumb3']['type'] == 'application/pdf') :
+          else :
+            echo '11';
+            exit();
+            break;
+          endif;
+
+          //$upload = new Upload('../imagens_site/');
+          $upload->File($_FILES['user_thumb3'], md5($dataHora . 'user_thumb3'), 'arquivos');
+          $foto3 = $upload->getResult();
+        else :
+          $foto3 = $resultado['arq_ori7'];
+        endif;
+
+        if (isset($_FILES['user_thumb4'])) :
+
+          if ($_FILES['user_thumb4']['type'] == 'application/pdf') :
+          else :
+            echo '11';
+            exit();
+            break;
+          endif;
+
+          //$upload = new Upload('../imagens_site/');
+          $upload->File($_FILES['user_thumb4'], md5($dataHora . 'user_thumb4'), 'arquivos');
+          $foto4 = $upload->getResult();
+        else :
+          $foto4 = $resultado['arq_ori8'];
+        endif;
+
+        if (isset($_FILES['user_thumb5'])) :
+
+          if ($_FILES['user_thumb5']['type'] == 'application/pdf') :
+          else :
+            echo '11';
+            exit();
+            break;
+          endif;
+
+          //$upload = new Upload('../imagens_site/');
+          $upload->File($_FILES['user_thumb5'], md5($dataHora . 'user_thumb5'), 'arquivos');
+          $foto5 = $upload->getResult();
+        else :
+          $foto5 = $resultado['arq_ori9'];
+        endif;
+
+        if (isset($_FILES['user_thumb6'])) :
+
+          if ($_FILES['user_thumb6']['type'] == 'application/pdf') :
+          else :
+            echo '11';
+            exit();
+            break;
+          endif;
+
+          //$upload = new Upload('../imagens_site/');
+          $upload->File($_FILES['user_thumb6'], md5($dataHora . 'user_thumb6'), 'arquivos');
+          $foto6 = $upload->getResult();
+        else :
+          $foto6 = $resultado['arq_ori10'];
+        endif;
+
+        if (isset($_FILES['user_thumb7'])) :
+
+          if ($_FILES['user_thumb7']['type'] == 'application/pdf') :
+          else :
+            echo '11';
+            exit();
+            break;
+          endif;
+
+          //$upload = new Upload('../imagens_site/');
+          $upload->File($_FILES['user_thumb7'], md5($dataHora . 'user_thumb7'), 'arquivos');
+          $foto7 = $upload->getResult();
+        else :
+          $foto7 = $resultado['arq_ori11'];
+        endif;
+
+        if (isset($_FILES['user_thumb8'])) :
+
+          if ($_FILES['user_thumb8']['type'] == 'application/pdf') :
+          else :
+            echo '11';
+            exit();
+            break;
+          endif;
+
+          //$upload = new Upload('../imagens_site/');
+          $upload->File($_FILES['user_thumb8'], md5($dataHora . 'user_thumb8'), 'arquivos');
+          $foto8 = $upload->getResult();
+        else :
+          $foto8 = $resultado['arq_ori12'];
+        endif;
+
+        if (isset($_FILES['user_thumb9'])) :
+
+          //if ($_FILES['user_thumb9']['type'] == 'application/pdf') :
+          //else :
+          //  echo '11';
+          //  exit();
+          //  break;
+          // endif;
+          //$upload = new Upload('../imagens_site/');
+          $upload->File($_FILES['user_thumb9'], md5($dataHora . 'user_thumb9'), 'arquivos');
+          $foto9 = $upload->getResult();
+        else :
+          $foto9 = $resultado['arq_1'];
+        endif;
+
+
+        if (isset($_FILES['user_thumb10'])) :
+
+          if ($_FILES['user_thumb10']['type'] == 'application/pdf') :
+          else :
+            echo '11';
+            exit();
+            break;
+          endif;
+          //$upload = new Upload('../imagens_site/');
+          $upload->File($_FILES['user_thumb10'], md5($dataHora . 'user_thumb10'), 'arquivos');
+          $foto10 = $upload->getResult();
+        else :
+          $foto10 = $resultado['arq_2'];
+        endif;
+
+        if (isset($_FILES['user_thumb11'])) :
+
+          if ($_FILES['user_thumb11']['type'] == 'application/pdf') :
+          else :
+            echo '11';
+            exit();
+            break;
+          endif;
+          //$upload = new Upload('../imagens_site/');
+          $upload->File($_FILES['user_thumb11'], md5($dataHora . 'user_thumb11'), 'arquivos');
+          $foto11 = $upload->getResult();
+        else :
+          $foto11 = $resultado['arq_3'];
+        endif;
+
+        if (isset($_FILES['user_thumb12'])) :
+
+          if ($_FILES['user_thumb12']['type'] == 'application/pdf') :
+          else :
+            echo '11';
+            exit();
+            break;
+          endif;
+          //$upload = new Upload('../imagens_site/');
+          $upload->File($_FILES['user_thumb12'], md5($dataHora . 'user_thumb12'), 'arquivos');
+          $foto12 = $upload->getResult();
+        else :
+          $foto12 = $resultado['arq_4'];
+        endif;
+
+        if (isset($_FILES['user_thumb13'])) :
+
+          if ($_FILES['user_thumb13']['type'] == 'application/pdf') :
+          else :
+            echo '11';
+            exit();
+            break;
+          endif;
+          // $upload = new Upload('../imagens_site/');
+          $upload->File($_FILES['user_thumb13'], md5($dataHora . 'user_thumb13'), 'arquivos');
+          $foto13 = $upload->getResult();
+        else :
+          $foto13 = $resultado['arq_5'];
+        endif;
+
+
+        if (isset($_FILES['user_thumb14'])) :
+
+          if ($_FILES['user_thumb14']['type'] == 'application/pdf') :
+          else :
+            echo '11';
+            exit();
+            break;
+          endif;
+          //$upload = new Upload('../imagens_site/');
+          $upload->File($_FILES['user_thumb14'], md5($dataHora . 'user_thumb14'), 'arquivos');
+          $foto14 = $upload->getResult();
+        else :
+          $foto14 = $resultado['arq_6'];
+        endif;
+
+        if (isset($_FILES['user_thumb15'])) :
+
+          if ($_FILES['user_thumb15']['type'] == 'application/pdf') :
+          else :
+            echo '11';
+            exit();
+            break;
+          endif;
+          //$upload = new Upload('../imagens_site/');
+          $upload->File($_FILES['user_thumb15'], md5($dataHora . 'user_thumb15'), 'arquivos');
+          $foto15 = $upload->getResult();
+        else :
+          $foto15 = $resultado['arq_7'];
+        endif;
+
+
+        if (isset($_FILES['user_thumb16'])) :
+
+          if ($_FILES['user_thumb16']['type'] == 'application/pdf') :
+          else :
+            echo '11';
+            exit();
+            break;
+          endif;
+          //$upload = new Upload('../imagens_site/');
+          $upload->File($_FILES['user_thumb16'], md5($dataHora . 'user_thumb16'), 'arquivos');
+          $foto16 = $upload->getResult();
+        else :
+          $foto16 = $resultado['arq_8'];
+        endif;
+
+
+        if (isset($_FILES['user_thumb17'])) :
+
+          if ($_FILES['user_thumb17']['type'] == 'application/pdf') :
+          else :
+            echo '11';
+            exit();
+            break;
+          endif;
+          // $upload = new Upload('../imagens_site/');
+          $upload->File($_FILES['user_thumb17'], md5($dataHora . 'user_thumb17'), 'arquivos');
+          $foto17 = $upload->getResult();
+        else :
+          $foto17 = $resultado['arq_9'];
+        endif;
+
+        if (isset($_FILES['user_thumb18'])) :
+
+          if ($_FILES['user_thumb18']['type'] == 'application/pdf') :
+          else :
+            echo '11';
+            exit();
+            break;
+          endif;
+          // $upload = new Upload('../imagens_site/');
+          $upload->File($_FILES['user_thumb18'], md5($dataHora . 'user_thumb18'), 'arquivos');
+          $foto18 = $upload->getResult();
+        else :
+          $foto18 = $resultado['arq_co'];
+        endif;
+
+
+        if (isset($_FILES['user_thumb20'])) :
+
+          //if ($_FILES['user_thumb20']['type'] == 'application/pdf') :
+          //else :
+          //  echo '11';
+          //  exit();
+          //  break;
+          //endif;
+          //$upload = new Upload('../imagens_site/');
+          $upload->File($_FILES['user_thumb20'], md5($dataHora . 'user_thumb20'), 'arquivos');
+          $foto20 = $upload->getResult();
+        else :
+          $foto20 = $resultado['arq_co3'];
+        endif;
+
+
+
+        if (isset($_FILES['arq_ori1'])) :
+          //$upload = new Upload('../imagens_site/');
+          $upload->File($_FILES['arq_ori1'], md5($dataHora . 'arq_ori1'), 'arquivos');
+          $fotoo10 = $upload->getResult();
+        else :
+          $fotoo10 = $resultado['arq_ori1'];
+        endif;
+
+        if (isset($_FILES['arq_ori2'])) :
+          //$upload = new Upload('../imagens_site/');
+          $upload->File($_FILES['arq_ori2'], md5($dataHora . 'arq_ori2'), 'arquivos');
+          $fotoo11 = $upload->getResult();
+        else :
+          $fotoo11 = $resultado['arq_ori2'];
+        endif;
+
+        if (isset($_FILES['arq_ori3'])) :
+          //$upload = new Upload('../imagens_site/');
+          $upload->File($_FILES['arq_ori3'], md5($dataHora . 'arq_ori3'), 'arquivos');
+          $fotoo12 = $upload->getResult();
+        else :
+          $fotoo12 = $resultado['arq_ori3'];
+        endif;
+
+        if (isset($_FILES['arq_ori4'])) :
+          //$upload = new Upload('../imagens_site/');
+          $upload->File($_FILES['arq_ori4'], md5($dataHora . 'arq_ori4'), 'arquivos');
+          $fotoo13 = $upload->getResult();
+        else :
+          $fotoo13 = $resultado['arq_ori4'];
+        endif;
+
+
+        $dados = array(
+          //"id_orientador" => $c['id'],
+          //"id_co_orientador" => "",
+          "nome" => $c['nome'],
+          "curso" => $c['curso'],
+          "faculdade" => $c['faculdade'],
+          "cpf" => $c['cpf'],
+          "cr" => $c['cr'],
+          "tipo" => $c['tipo'],
+          "arq_1" => $foto9,
+          "arq_2" => $foto10,
+          "arq_3" => $foto11,
+          "arq_4" => $foto12,
+          "arq_5" => $foto13,
+          "arq_6" => $foto14,
+          "arq_7" => $foto15,
+          "arq_8" => $foto16,
+          "arq_9" => $foto17,
+          "data" => $dataStamp2,
+          "hora" => $hora,
+          "status" => $c['status'],
+            "entrega" => $c['entrega'],
+            "nota" => $c['nota'],
+          //"block" => '1',
+          "arq_ori1" => $fotoo10,
+          "arq_ori2" => $fotoo11,
+          "arq_ori3" => $fotoo12,
+          "arq_ori4" => $fotoo13,
+          "arq_ori5" => $foto,
+          "arq_ori6" => $foto2,
+          "arq_ori7" => $foto3,
+          "arq_ori8" => $foto4,
+          "arq_ori9" => $foto5,
+          "arq_ori10" => $foto6,
+          "arq_ori11" => $foto7,
+          "arq_ori12" => $foto8,
+          //"nome_coorientado" => $nomecoo,
+          "arq_co" => $foto18,
+          "arq_co2" => $foto19,
+          "arq_co3" => $foto20,
+          "arq_co4" => $foto21,
+        );
+        $updade = new Update;
+        $updade->ExeUpdate('aluno', $dados, "WHERE id = :id", "id=" . $c['id'] . "");
+        if ($updade->getResult()) :
+          echo '1';
+        else :
+          echo '2';
+        endif;
+
+      break;
+
+
+
     case 'id_coorientador_alt':
       $c['id'] = $_POST['id'];
 
@@ -6859,7 +7061,7 @@ switch ($_POST['acao']) {
                 <?php if ($resultado["arq_1"] == "") : ?>
                 <p class="texto_form" style=" color: red">Arquivo não enviado!</p>
                 <?php else : ?>
-                <a href="<?= HOME; ?>imagens_site/<?= $resultado["arq_1"]; ?>" style=" color: red" target="_blank">Verificar arquivo!</a>
+                <a href="<?= CORDENADOR; ?>imagens_site/<?= $resultado["arq_1"]; ?>" style=" color: red" target="_blank">Verificar arquivo!</a>
                 <?php endif; ?>
             </div>
             <div class="box box50 no-margim">
@@ -6870,7 +7072,7 @@ switch ($_POST['acao']) {
                 <?php if ($resultado["arq_2"] == "") : ?>
                 <p class="texto_form" style=" color: red">Arquivo não enviado!</p>
                 <?php else : ?>
-                <a href="<?= HOME; ?>imagens_site/<?= $resultado["arq_2"]; ?>" style=" color: red" target="_blank">Verificar arquivo!</a>
+                <a href="<?= CORDENADOR; ?>imagens_site/<?= $resultado["arq_2"]; ?>" style=" color: red" target="_blank">Verificar arquivo!</a>
                 <?php endif; ?>
             </div>
             <div class="limpar"></div>
@@ -6888,6 +7090,8 @@ switch ($_POST['acao']) {
 </form>
 <?php
       break;
+        
+        //EDITAR TECNICO
     case 'editar_coorientador':
       $c['nome'] = $_POST['nome'];
       $c['id'] = $_POST['id'];
@@ -6904,7 +7108,7 @@ switch ($_POST['acao']) {
           break;
         endif;
 
-        $upload = new Upload('../imagens_site/');
+        $upload = new Upload('../../projeto/imagens_site/');
         $upload->File($_FILES['user_thumb'], md5($dataHora . 'user_thumb'), 'arquivos');
         $foto = $upload->getResult();
       else :
@@ -6921,7 +7125,7 @@ switch ($_POST['acao']) {
           break;
         endif;
 
-        $upload = new Upload('../imagens_site/');
+        $upload = new Upload('../../projeto/imagens_site/');
         $upload->File($_FILES['user_thumb2'], md5($dataHora . 'user_thumb2'), 'arquivos');
         $foto2 = $upload->getResult();
       else :
@@ -6943,52 +7147,5 @@ switch ($_POST['acao']) {
         echo '2';
       endif;
 
-      break;
-
-
-    case 'cad_cordenador':
-      $c['id'] = $_POST['id'];
-    ?>
-<h1 class="topo_modal">Cadastra Co-orientadores</h1>
-<form class="form_linha" method="post" name="cad_coorientador">
-    <div class="box box100">
-
-        <INPUT TYPE="checkbox" NAME="cooo" VALUE="1" required style=" margin-top: -0.5%; margin-right: 1%">O projeto não possui coorientador
-
-        <div class="box box100">
-            <p class="texto_form">Nome completo (obrigatório)</p>
-            <input name="nome" type="text" placeholder="Nome completo" style=" width: 100%;" />
-        </div>
-        <div class="limpar"></div>
-        <div class="box box50">
-            <p class="texto_form">Declaração de partipação na coautoria (obrigatório)</p>
-            <!-- <label class="label_file" for='selecao-arquivo2'>Selecionar um arquivo</label> -->
-            <input id='' type="file" name="user_thumb" class="" style=" display: block; width: 100%; border: 1px solid #b1b1b1; padding: 1%" />
-        </div>
-        <div class="box box50 no-margim">
-            <p class="texto_form">Currículo lattes do co-autor (obrigatório)</p>
-            <!-- <label class="label_file" for='selecao-arquivo2'>Selecionar um arquivo</label> -->
-            <input id='' type="file" name="user_thumb2" class="" style=" display: block; width: 100%; border: 1px solid #b1b1b1; padding: 1%" />
-        </div>
-        <div class="limpar"></div>
-        <br>
-        <INPUT TYPE="checkbox" NAME="opcao" VALUE="1" required style=" margin-top: -0.5%; margin-right: 1%"> Declaro que são verdadeiras todas as informações...
-        <p>
-            Você tem certeza que deseja enviar o projeto para avaliação?<br>
-            Após a finalização e envio dos arquivos, o orientador não poderá editar e nem excluir os documentos, apenas visualizá-los.
-        </p>
-        <div class="limpar"></div>
-    </div>
-
-    <div class="limpar"></div>
-    <br>
-    <input type="hidden" name="id" value="<?= $c['id']; ?>" />
-    <span class="carregando2 ds-none"><img src="<?= HOME; ?>imagens_fixas/carregando2.gif" /></span>
-    <button class="btn btn_green fl-left" style="font-size: 0.8em; margin-right: 1%">
-        <figure class="icon-save2" style="margin-top: -6%;"></figure> Cadastrar co-orientador
-    </button>
-    <div class="limpar"></div>
-</form>
-<?php
       break;
   }
