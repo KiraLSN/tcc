@@ -5272,6 +5272,7 @@ switch ($_POST['acao']) {
         $c['email'] = $_POST['email'];
         $c['expertise'] = $_POST['expertise'];
       
+      
         include "conexao.php";
         
 
@@ -5301,7 +5302,7 @@ switch ($_POST['acao']) {
         //else :
          // echo '4';
       //  endif;
-      
+      endif;
       break;    
         
     case 'cad_orientador':

@@ -153,7 +153,6 @@ $sessao = new Session;
                  // if (cliente == 'ON'):
                  //    echo ((in_array('7', $arr_permisao)) ? '<a href="' . HOME . 'cliente"><figure class="icon-office" style="margin-right: 4%; margin-top: -1.5%; font-size: 1.3em;"></figure> Empresas</a>' : '' );
                  // endif;
-
                  // if (cliente_usuario == 'ON'):
                  //    echo ((in_array('8', $arr_permisao)) ? '<a href="' . HOME . 'cliente_usuario"><figure class="icon-users5" style="margin-right: 4%; margin-top: -1.5%; font-size: 1.3em;"></figure> Clientes</a>' : '' );
                  // endif;
