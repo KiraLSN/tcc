@@ -6,7 +6,7 @@ $pdo_verifica = $conexao_pdo->prepare("select id from orientador WHERE nome = '"
             while($fetch = $pdo_verifica->fetch()){
                 $myid = $fetch['id'];
             }
-echo $usuario_['nome'];
+
 
 $cont = 0;
 $cont2 = 0;
@@ -38,12 +38,12 @@ $pdo_verifica = $conexao_pdo->prepare("select status from aluno WHERE id_orienta
             }
 
 
-$pdo_verifica = $conexao_pdo->prepare("select * from aluno WHERE id_orientador = ".$myid." AND status = 1 ");
+$pdo_verifica = $conexao_pdo->prepare("select * from aluno WHERE id_orientador = ".$myid." AND (status = 1 OR status = 0)  order by status desc");
                      $pdo_verifica->execute();
             while($fetch = $pdo_verifica->fetch()){
                 $projeto[$i] = $fetch['nome'];
                 $andamento[$i] = $fetch['cr'];
-                echo $projeto[$i];
+                
                 $i = $i +1;
             }
 
@@ -96,21 +96,7 @@ $pdo_verifica = $conexao_pdo->prepare("select * from aluno WHERE id_orientador =
 
             </script>
 
-            <p>Nome: <?= $usuario_['nome']; ?></p>
-            <p>IP: <?= $_SERVER['REMOTE_ADDR']; ?></p>
-            <?php
-      $Browser = $_SESSION['useronline']['online_agent'];
-      if (strpos($Browser, 'Chrome')) :
-        $Browser = 'Chrome';
-      elseif (strpos($Browser, 'Firefox')) :
-        $Browser = 'Firefox';
-      elseif (strpos($Browser, 'MSIE') || strpos($Browser, 'Trident/')) :
-        $Browser = 'IE';
-      else :
-        $Browser = 'Outros';
-      endif;
-      ?>
-            <p>Navegador: <?= $Browser ?></p>
+
         </div>
     </article>
 
@@ -128,9 +114,9 @@ $pdo_verifica = $conexao_pdo->prepare("select * from aluno WHERE id_orientador =
             <script>
                 var ctx = document.getElementById('myChart2').getContext('2d');
                 var myChart = new Chart(ctx, {
-                    type: 'bar',
+                    type: 'horizontalBar',
                     data: {
-                        labels: [$projeto[0], $projeto[1], $projeto[2]],
+                        labels: ['<?= $projeto[0];?>', '<?= $projeto[1];?>', '<?= $projeto[2];?>'],
                         datasets: [{
                             label: 'quantidade',
                             data: [<?= $andamento[0]; ?>, <?= $andamento[1];?>, <?= $andamento[2];?>, <?= $cont4;?>],
@@ -151,7 +137,8 @@ $pdo_verifica = $conexao_pdo->prepare("select * from aluno WHERE id_orientador =
                     },
                     options: {
                         scales: {
-                            yAxes: [{
+
+                            xAxes: [{
                                 ticks: {
                                     beginAtZero: true
                                 }
@@ -162,21 +149,6 @@ $pdo_verifica = $conexao_pdo->prepare("select * from aluno WHERE id_orientador =
 
             </script>
 
-            <p>Nome: <?= $usuario_['nome']; ?></p>
-            <p>IP: <?= $_SERVER['REMOTE_ADDR']; ?></p>
-            <?php
-      $Browser = $_SESSION['useronline']['online_agent'];
-      if (strpos($Browser, 'Chrome')) :
-        $Browser = 'Chrome';
-      elseif (strpos($Browser, 'Firefox')) :
-        $Browser = 'Firefox';
-      elseif (strpos($Browser, 'MSIE') || strpos($Browser, 'Trident/')) :
-        $Browser = 'IE';
-      else :
-        $Browser = 'Outros';
-      endif;
-      ?>
-            <p>Navegador: <?= $Browser ?></p>
         </div>
     </article>
 

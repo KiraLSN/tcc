@@ -1,6 +1,9 @@
 <?php
 unset($_SESSION['usuario']);
+//header('Location: ../');
 ?>
 <script>
-history.back();
+    window.location.href = "../"
+    //history.back();
+
 </script>
