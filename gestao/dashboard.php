@@ -38,7 +38,7 @@ $pdo_verifica = $conexao_pdo->prepare("select status from aluno WHERE id_orienta
             }
 
 
-$pdo_verifica = $conexao_pdo->prepare("select * from aluno WHERE id_orientador = ".$myid." AND (status = 1 OR status = 0)  order by status desc");
+$pdo_verifica = $conexao_pdo->prepare("select * from aluno WHERE id_orientador = ".$myid." AND (status = 1 OR status = 0)  order by cr desc");
                      $pdo_verifica->execute();
             while($fetch = $pdo_verifica->fetch()){
                 $projeto[$i] = $fetch['nome'];

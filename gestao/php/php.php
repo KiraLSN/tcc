@@ -182,10 +182,10 @@ switch ($_POST['acao']) {
     $cel = $_POST['cel'];
     $c['acesso'] = $_POST['acesso'];
     $c['id'] = $_POST['id'];
-    $senha = Check::NewPass('5', false, true, true);
+    $senha = $_POST['senha'];
 
     if (in_array('', $c)) {
-      echo '3';
+      echo '1';
     } else {
 
       //buscar igual
@@ -216,9 +216,22 @@ switch ($_POST['acao']) {
           'status' => '1',
           'avatar' => $foto,
         ];
+        
+        $Dados2 = [
+          'nome' => $c['nome'],
+          'ilmd' => $c['cargo'],
+          'email' => $c['email'],
+          'senha' => $senha,
+          'senha' => $senha,
+          'status' => '1',
+        ];
+
 
         $Cadastra = new Create;
         $Cadastra->ExeCreate('perfil', $Dados);
+        
+        $Cadastra2 = new Create;
+        $Cadastra2->ExeCreate('orientador', $Dados2);
         if ($Cadastra->getResult()) :
 
 
@@ -297,10 +310,10 @@ switch ($_POST['acao']) {
             echo '2';
           endif;
         else :
-          echo '4';
+          echo '3';
         endif;
       else :
-        echo '5';
+        echo '1';
       endif;
     }
     break;

@@ -1066,7 +1066,7 @@ $(function () {
                     $('.moldura2').fadeIn();
                     $('.carregando2').fadeOut();
                     triggerNotify({
-                        title: "Erro ao enviar, consultem um administrador",
+                        title: "Erro ao enviar, consultem um administrador cliente usuario Lu",
                         icon: "icon-thumbs-down2",
                         color: "red",
                         timer: 4000
