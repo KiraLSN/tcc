@@ -106,7 +106,7 @@ $titulo_alterar = 'Alterar cadastro de Supervisor';
                     <td width="15%"><?= $listagem_['email']; ?></td>
                     <td width="10%"><?= $listagem_['expertise']; ?></td>
                     <td width="15%"><?= $listagem_['rendimento']; ?></td>
-                    <td width="10%"><?= $listagem_['mediaproj']; ?>%</td>
+                    <td width="10%"><?= $listagem_['mediaproj']; ?></td>
                     <td width="2%">
                         <div class="btn id_arquivo_alt btn_green" id="<?= $listagem_['id']; ?>" style="" data-balloon-length="small" data-balloon="Editar Informações" data-balloon-pos="up">
                             <figure class="icon-edit-3" style="font-size: 1.3em;"></figure>

@@ -4368,7 +4368,7 @@ $(function () {
                 } else if (resposta == 2) {
                     carregandoOut();
                     triggerNotify({
-                        title: "Erro ao enviar, consultem um administrador",
+                        title: "Erro ao enviar, consultem um administrador teste",
                         icon: "icon-thumbs-down2",
                         color: "red",
                         timer: 4000

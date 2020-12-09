@@ -5318,7 +5318,8 @@ switch ($_POST['acao']) {
       break;    
         
     case 'cad_orientador':
-
+        
+    
       $c['nome'] = $_POST['nome'];
       $c['curso'] = $_POST['curso']; //Nome do tecnico
         include "conexao.php";
@@ -5792,7 +5793,9 @@ include 'conexao.php';
          // echo '4';
       //  endif;
       endif;
+        
       break;
+        
         
     //EDITAR TECNINCO    
     case 'id_arquivo_alt':
