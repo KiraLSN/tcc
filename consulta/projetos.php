@@ -136,7 +136,7 @@ $titulo_alterar = 'Alterar cadastro de Supervisor';
                     </td>
                     <td width="2%">
                         <div class="btn id_aluno_alt btn_green" id="<?= $listagem_['id']; ?>" style="" data-balloon-length="small" data-balloon="Projetos Cadastrados" data-balloon-pos="up">
-                            <figure class="icon-edit-3" style="font-size: 1.3em;"></figure>
+                            <figure class="icon-search-plus" style="font-size: 1.3em;"></figure>
                         </div>
                     </td>
                     <!-- <td width="2%"> 

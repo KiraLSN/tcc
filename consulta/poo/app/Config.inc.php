@@ -59,7 +59,7 @@ define("orientador", "ON");
 
 /////////////////////////////////////////////////////////////////////////
 // URL AMIGAVEL  ############################################################
-$atual = (isset($_GET['pg'])) ? $_GET['pg'] : 'projetos';
+$atual = (isset($_GET['pg'])) ? $_GET['pg'] : 'dashboard';
 $permissao = array(
     'home', '404','agenda','sac','blog','crm','orientador','zeropape','dashboard','projetos','tecnicos','noticia','newsletter','modais','depoimentos','sair','perfil','cadastrar_usuario','cliente','cliente_usuario','cadastro_programa','cadastro_periodicos',
 );
